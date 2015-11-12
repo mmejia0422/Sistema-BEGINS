@@ -106,14 +106,11 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    //public boolean delete(Usuario usuario) {
     public boolean delete(Integer id) {
         boolean flag;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
         try {
-            //UsuarioId usuariodb = (UsuarioId) sesion.load(UsuarioId.class, id); //posiblemente al hacer el cast a Usuario da error debe de ser al UsuarioId
-            //Usuario usuariodb = (Usuario) sesion.load(Usuario.class, usuario.getId());
             Query q = sesion.createQuery("from Usuario where id_usuario = :id_usuario");
             q.setParameter("id_usuario", id);
             Usuario usuariodb = (Usuario) q.list().get(0);

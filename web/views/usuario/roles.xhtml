@@ -32,14 +32,14 @@
                         <p:column headerText="Estado">
                             <h:outputText value="#{rol.estado}" />
                         </p:column>
-                        <!--<p:column headerText="Accion" style="width:100px;text-align: center">
-                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogUsuarioUpdate').show()" icon="icon-edit" title="Modificar">
-                                <f:setPropertyActionListener value="" target="" />
+                        <p:column headerText="Accion" style="width:100px;text-align: center">
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogRolUpdate').show()" icon="icon-edit" title="Modificar">
+                                <f:setPropertyActionListener value="#{rol}" target="#{rolBean.selectedRol}" />
                             </p:commandButton>
-                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogUsuarioDelete').show()" icon="icon-delete" title="Eliminar">
+                        <!--    <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogUsuarioDelete').show()" icon="icon-delete" title="Eliminar">
                                 <f:setPropertyActionListener value="" target="" />
-                            </p:commandButton>
-                        </p:column>-->
+                            </p:commandButton>-->
+                        </p:column>
                     </p:dataTable>
                 </h:form>
                 <h:form id="formCreate">
@@ -57,47 +57,35 @@
                                 <f:selectItem itemLabel="Inactivo" itemValue="N" />
                             </p:selectOneMenu>
                             <f:facet name="footer">
-                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogRolCreate').hide()" actionListener="#{rolBean.btnCreateUsuario(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogRolCreate').hide()" actionListener="#{rolBean.btnCreateRol(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
                                 <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogRolCreate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
                             </f:facet>
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>
-                <!--<h:form id="formUpdate">
-                    <p:dialog header="Modificar usuario" id="dlgUsuarioUpdate" widgetVar="dialogUsuarioUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
-                        <h:inputHidden value="#{usuarioBean.selectedUsuario.id.idUsuario}" />
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar Rol" id="dlgRolUpdate" widgetVar="dialogRolUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <h:inputHidden value="#{rolBean.selectedRol.idRol}" />
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
-                            <h:outputText value="Usuario" />
-                            <p:inputText value="#{usuarioBean.selectedUsuario.usuario}">
-                                <f:validateLength minimum="5" maximum="10"/>
+                            <h:outputText value="Rol" />
+                            <p:inputText value="#{rolBean.selectedRol.descripcion}">
+                                <f:validateLength minimum="5" maximum="20"/>
                                 <f:validateRegex pattern="^[0-9a-zA-Z ]+$"/>
                             </p:inputText>
-
-                            <h:outputText value="Clave" />
-                            <p:password value="#{usuarioBean.selectedUsuario.contrasena}">
-                                <f:validateLength minimum="8" maximum="15"/>
-                                <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!.$%]).{6,20})" />
-                            </p:password>
-
-                            <h:outputText value="Rol" />
-                            <p:selectOneMenu value="#{usuarioBean.selectedUsuario.id.rolIdRol}">
-                                <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                <f:selectItems value="#{rolBean.selectOneItemsRol}" />
-                            </p:selectOneMenu>
                             <h:outputText value="Estado" />
-                            <p:selectOneMenu value="#{usuarioBean.selectedUsuario.estado}">
+                            <p:selectOneMenu value="#{rolBean.selectedRol.estado}">
                                 <f:selectItem itemLabel="Activo" itemValue="Y" />
                                 <f:selectItem itemLabel="Inactivo" itemValue="N" />
                             </p:selectOneMenu>
                             <f:facet name="footer">
-                                <p:commandButton actionListener="#{usuarioBean.btnUpdateUsuario(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogUsuarioUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
-                                <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogUsuarioUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                                <p:commandButton actionListener="#{rolBean.btnUpdateRol(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogRolUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogRolUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
                             </f:facet>
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>
-                <h:form id="formDelete">
+                <!--<h:form id="formDelete">
                     <p:confirmDialog id="confirmDialog" widgetVar="dialogUsuarioDelete" severity="alert" message="¿Esta seguro de eliminar?"
                                      showEffect="fade" hideEffect="explode" header="Eliminar usuario">
                         <h:inputHidden value="#{usuarioBean.selectedUsuario.id.idUsuario}" />

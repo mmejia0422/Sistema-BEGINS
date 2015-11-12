@@ -57,10 +57,8 @@ public class rolBean {
      * @return the roles
      */
     public List<Rol> getRoles() {
-        //put the code similar to:
         RolDao rolDao = new RolDaoImpl();
         this.roles = rolDao.findAll();
-        //which is on usuarioBean
         return roles;
     }
 
@@ -79,7 +77,7 @@ public class rolBean {
         this.selectedRol = selectedRol;
     }
 
-    public void btnCreateUsuario(ActionEvent actionEvent) {
+    public void btnCreateRol(ActionEvent actionEvent) {
         RolDao rolDao = new RolDaoImpl();
         String msg;
 
@@ -93,6 +91,20 @@ public class rolBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
+    }
+    
+    public void btnUpdateRol(ActionEvent actionEvent) {
+        RolDao rolDao = new RolDaoImpl();
+        String msg;
+        if (rolDao.update(this.selectedRol)) {
+            msg = "Se modifico correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al modificar el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
 
 }

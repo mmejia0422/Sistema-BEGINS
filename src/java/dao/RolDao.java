@@ -16,4 +16,5 @@ public interface RolDao {
     public List<Rol> selectItems();
     public List<Rol> findAll();
     public boolean create(Rol rol);
+    public boolean update(Rol rol);
 }

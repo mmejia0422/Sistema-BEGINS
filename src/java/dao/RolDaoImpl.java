@@ -64,5 +64,24 @@ public class RolDaoImpl implements RolDao {
         }
         return flag;
     }
+
+    @Override
+    public boolean update(Rol rol) {
+        boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        try {
+            Rol roldb = (Rol) sesion.load(Rol.class, rol.getIdRol());
+            roldb.setDescripcion(rol.getDescripcion());
+            roldb.setEstado(rol.getEstado());
+            sesion.update(roldb);
+            tx.commit();
+            flag = true;
+        } catch (Exception e) {
+            flag = false;
+            tx.rollback();
+        }
+        return flag;
+    }
     
 }
