@@ -56,12 +56,9 @@ public class UsuarioDaoImpl implements UsuarioDao {
         Transaction tx = sesion.beginTransaction();
         String sql = "FROM Usuario u left join fetch u.rol";
         try {
-            //sesion.beginTransaction();
             listado = sesion.createQuery(sql).list();
-            //sesion.beginTransaction().commit();
             tx.commit();
         } catch (Exception e) {
-            //sesion.beginTransaction().rollback();
             tx.rollback();
         }
         return listado;

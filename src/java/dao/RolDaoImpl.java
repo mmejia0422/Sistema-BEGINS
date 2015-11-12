@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import model.Rol;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -80,6 +81,27 @@ public class RolDaoImpl implements RolDao {
         } catch (Exception e) {
             flag = false;
             tx.rollback();
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        try {
+            Query q = sesion.createQuery("from Rol where id_rol = :id_rol");
+            q.setParameter("id_rol", id);
+            Rol roldb = (Rol) q.list().get(0);
+
+            sesion.delete(roldb);
+            tx.commit();
+            flag = true;
+        } catch (Exception e) {
+            flag = false;
+            tx.rollback();
+            e.printStackTrace();
         }
         return flag;
     }

@@ -17,4 +17,5 @@ public interface RolDao {
     public List<Rol> findAll();
     public boolean create(Rol rol);
     public boolean update(Rol rol);
+    public boolean delete(Integer id);
 }

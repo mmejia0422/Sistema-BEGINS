@@ -106,5 +106,20 @@ public class rolBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
+    
+    public void btnDeleteRol(ActionEvent actionEvent) {
+        RolDao rolDao = new RolDaoImpl();
+        String msg;
+        if (rolDao.delete(this.selectedRol.getIdRol())) {
+            msg = "Se elimino correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al eliminar el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
 
 }

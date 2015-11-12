@@ -36,9 +36,9 @@
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogRolUpdate').show()" icon="icon-edit" title="Modificar">
                                 <f:setPropertyActionListener value="#{rol}" target="#{rolBean.selectedRol}" />
                             </p:commandButton>
-                        <!--    <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogUsuarioDelete').show()" icon="icon-delete" title="Eliminar">
-                                <f:setPropertyActionListener value="" target="" />
-                            </p:commandButton>-->
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogRolDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{rol}" target="#{rolBean.selectedRol}" />
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -85,14 +85,14 @@
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>
-                <!--<h:form id="formDelete">
-                    <p:confirmDialog id="confirmDialog" widgetVar="dialogUsuarioDelete" severity="alert" message="¿Esta seguro de eliminar?"
+                <h:form id="formDelete">
+                    <p:confirmDialog id="confirmDialog" widgetVar="dialogRolDelete" severity="alert" message="¿Esta seguro de eliminar?"
                                      showEffect="fade" hideEffect="explode" header="Eliminar usuario">
-                        <h:inputHidden value="#{usuarioBean.selectedUsuario.id.idUsuario}" />
-                        <p:commandButton actionListener="#{usuarioBean.btnDeleteUsuario(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogUsuarioDelete').hide()" icon="icon-check" value="Si"/>
-                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogUsuarioDelete').hide()" icon="icon-cancel" />
+                        <h:inputHidden value="#{rolBean.selectedRol.idRol}" />
+                        <p:commandButton actionListener="#{rolBean.btnDeleteRol(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogRolDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogRolDelete').hide()" icon="icon-cancel" />
                     </p:confirmDialog>
-                </h:form>-->
+                </h:form>
             </ui:define>
         </ui:composition>
 
