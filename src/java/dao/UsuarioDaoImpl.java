@@ -24,7 +24,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         Usuario model = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Usuario WHERE usuario = '" + usuario.getUsuario() + "'";
+        String sql = "FROM Usuario WHERE estado = 'Y' and usuario = '" + usuario.getUsuario() + "'";
         try {
             //sesion.beginTransaction();
             model = (Usuario) sesion.createQuery(sql).uniqueResult();
