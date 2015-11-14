@@ -1,14 +1,110 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../Template.xhtml">
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:commandButton id="btnPaisCreate" update=":formCreate" oncomplete="PF('dialogPaisCreate').show()" icon="icon-new" title="Crear" value="Crear"/>
+                </h:form>-
+                <h:form id="formDataTable">
 
+                    <p:dataTable id="basicDT" var="pais" value="#{paisBean.paises}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15">
+                        <f:facet name="header">
+                            Listado de paises
+                        </f:facet>
+                        <p:column headerText="Id">
+                            <h:outputText value="#{pais.idpais}" />
+                        </p:column>
+                        <p:column headerText="Pais" filterBy="#{pais.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{pais.nombre}" />
+                        </p:column>
+                        <p:column headerText="Codigo Postal">
+                            <h:outputText value="#{pais.codigopostal}" />
+                        </p:column>
+                        <!--<p:column headerText="Accion" style="width:100px;text-align: center">
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogUsuarioUpdate').show()" icon="icon-edit" title="Modificar">
+                                <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.selectedUsuario}" />
+                            </p:commandButton>
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogUsuarioDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.selectedUsuario}" />
+                            </p:commandButton>
+                        </p:column>-->
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Crear usuario" id="dlgPaisCreate" widgetVar="dialogPaisCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
+                            <h:outputText value="Pais" />
+                            <p:inputText id="inPais" value="#{paisBean.selectedPais.nombre}">
+                                <f:validateLength minimum="3" maximum="50"/>
+                                <f:validateRegex pattern="^[a-zA-Z ]+$"/>
+                            </p:inputText>
+
+                            <h:outputText value="Codigo Postal" />
+                            <p:inputText value="#{paisBean.selectedPais.codigopostal}" converterMessage="Solo se permiten numeros">
+                            </p:inputText>
+                            <f:facet name="footer">
+                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogPaisCreate').hide()" actionListener="#{paisBean.btnCreateUsuario(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogPaisCreate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <!--<h:form id="formUpdate">
+                    <p:dialog header="Modificar usuario" id="dlgUsuarioUpdate" widgetVar="dialogUsuarioUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <h:inputHidden value="#{usuarioBean.selectedUsuario.id.idUsuario}" />
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
+
+                            <h:outputText value="Usuario" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.usuario}">
+                                <f:validateLength minimum="5" maximum="10"/>
+                                <f:validateRegex pattern="^[0-9a-zA-Z ]+$"/>
+                            </p:inputText>
+
+                            <h:outputText value="Clave" />
+                            <p:password value="#{usuarioBean.selectedUsuario.contrasena}">
+                                <f:validateLength minimum="8" maximum="15"/>
+                                <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!.$%]).{6,20})" />
+                            </p:password>
+
+                            <h:outputText value="Rol" />
+                            <p:selectOneMenu value="#{usuarioBean.selectedUsuario.id.rolIdRol}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{rolBean.selectOneItemsRol}" />
+                            </p:selectOneMenu>
+                            <h:outputText value="Estado" />
+                            <p:selectOneMenu value="#{usuarioBean.selectedUsuario.estado}">
+                                <f:selectItem itemLabel="Activo" itemValue="Y" />
+                                <f:selectItem itemLabel="Inactivo" itemValue="N" />
+                            </p:selectOneMenu>
+                            <f:facet name="footer">
+                                <p:commandButton actionListener="#{usuarioBean.btnUpdateUsuario(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogUsuarioUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogUsuarioUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formDelete">
+                    <p:confirmDialog id="confirmDialog" widgetVar="dialogUsuarioDelete" severity="alert" message="¿Esta seguro de eliminar?"
+                                     showEffect="fade" hideEffect="explode" header="Eliminar usuario">
+                        <h:inputHidden value="#{usuarioBean.selectedUsuario.id.idUsuario}" />
+                        <p:commandButton actionListener="#{usuarioBean.btnDeleteUsuario(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogUsuarioDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogUsuarioDelete').hide()" icon="icon-cancel" />
+                    </p:confirmDialog>
+                </h:form>-->
+            </ui:define>
         </ui:composition>
-
     </body>
 </html>
