@@ -35,7 +35,7 @@ public class Rol  implements java.io.Serializable {
 
     @PostConstruct
 public void init() {
-    this.idRol = 0;
+    this.idRol = 0; 
 }
 	
     public Rol(int idRol, String descripcion, String estado) {
