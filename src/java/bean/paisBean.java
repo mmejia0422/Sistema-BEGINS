@@ -57,7 +57,7 @@ public class paisBean {
         this.selectedPais = selectedPais;
     }
     
-     public void btnCreateUsuario(ActionEvent actionEvent) {
+     public void btnCreatePais(ActionEvent actionEvent) {
         PaisDao paisDao = new PaisDaoImpl();
         String msg;
 
@@ -67,6 +67,35 @@ public class paisBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
         } else {
             msg = "Error al crear el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+     
+      public void btnUpdatePais(ActionEvent actionEvent) {
+        PaisDao paisDao = new PaisDaoImpl();
+        String msg;
+        if (paisDao.update(this.selectedPais)) {
+            msg = "Se modifico correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al modificar el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+      
+       public void btnDeletePais(ActionEvent actionEvent) {
+        PaisDao paisDao = new PaisDaoImpl();
+        String msg;
+        if (paisDao.delete(this.selectedPais.getIdpais())) {
+            msg = "Se elimino correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al eliminar el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
         }

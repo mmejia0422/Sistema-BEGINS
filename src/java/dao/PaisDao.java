@@ -15,4 +15,6 @@ import model.Pais;
 public interface PaisDao {
     public List<Pais> findAll();
     public boolean create(Pais pais);
+    public boolean update(Pais pais);
+    public boolean delete(Integer id);
 }
