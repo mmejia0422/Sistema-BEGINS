@@ -5,43 +5,47 @@
  */
 package model;
 
-/*import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;*7
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
 
 /**
  *
  * @author Mario
  */
-/*@Entity
+@Entity
 @Table(name="pais"
     ,catalog="gasisw_bd"
-)*/
+)
 
 public class Pais implements java.io.Serializable{
     private int idpais;
     private String nombre;
     private int codigopostal;
+    private Set pais = new HashSet(0);
 
     public Pais() {
         this.idpais = 0;
     }
     
-    public Pais(int idpais, String nombre, int codigopostal) {
+    public Pais(int idpais, String nombre, int codigopostal, Set pais) {
         this.idpais = idpais;
         this.nombre = nombre;
         this.codigopostal = codigopostal;
+        this.pais = pais;
     }
-   // @Id 
 
-    //@Column(name="id_pais", unique=true, nullable=false)
+    @Id 
+
+    
+    @Column(name="id_pais", unique=true, nullable=false)
     public int getIdpais() {
         return idpais;
     }
@@ -50,7 +54,7 @@ public class Pais implements java.io.Serializable{
         this.idpais = idpais;
     }
 
-    //@Column(name="nombre", nullable=false, length=50)
+    @Column(name="nombre", length=50)
     public String getNombre() {
         return nombre;
     }
@@ -59,13 +63,23 @@ public class Pais implements java.io.Serializable{
         this.nombre = nombre;
     }
 
-    //@Column(name="codigo_postal", nullable=false)
+    @Column(name="codigo_postal", nullable = false)
     public int getCodigopostal() {
         return codigopostal;
     }
 
     public void setCodigopostal(int codigopostal) {
         this.codigopostal = codigopostal;
+    }
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="pais")
+
+    public Set getPais() {
+        return pais;
+    }
+
+    public void setPais(Set pais) {
+        this.pais = pais;
     }
 
 }

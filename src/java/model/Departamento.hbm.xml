@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="model.Departamento" table="departamento" catalog="gasisw_bd" optimistic-lock="version">
+      <id name="idDpto" type="int">
+            <column name="id_depto"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true" />
+        </property>
+        <many-to-one name="pais" class="model.Pais" fetch="select">
+            <column name="pais_id_pais" not-null="true" />
+        </many-to-one>
+  </class>
+</hibernate-mapping>
