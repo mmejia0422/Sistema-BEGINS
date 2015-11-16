@@ -5,11 +5,17 @@
  */
 package bean;
 
+import dao.DepartamentoDao;
+import dao.DepartamentoDaoImpl;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import model.Departamento;
 
 /**
@@ -36,6 +42,8 @@ public class departamentoBean {
     }
 
     public List<Departamento> getDepartamentos() {
+        DepartamentoDao deptoDao = new DepartamentoDaoImpl();
+        this.departamentos = deptoDao.findAll();
         return departamentos;
     }
 
@@ -51,5 +59,36 @@ public class departamentoBean {
         this.selectedDptos = selectedDptos;
     }
     
+    public void btnCreateDepartamento(ActionEvent actionEvent) {
+        DepartamentoDao departamentoDao = new DepartamentoDaoImpl();
+        String msg;
+
+        if (departamentoDao.create(this.selectedDptos)) {
+            msg = "Se guardo correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al crear el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+    
+    public void btnUpdateDepartamento(ActionEvent actionEvent) {
+        DepartamentoDao departamentoDao = new DepartamentoDaoImpl();
+        String msg;
+
+        if (departamentoDao.update(this.selectedDptos)) {
+            msg = "Se guardo correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al crear el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
     
 }

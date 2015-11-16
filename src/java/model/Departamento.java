@@ -5,6 +5,7 @@
  */
 package model;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,13 @@ public class Departamento implements java.io.Serializable{
     
     public Departamento (){
         this.idDpto = 0;
+        this.pais = new Pais();
     }
+    
+    @PostConstruct
+public void init() {
+    this.pais = new Pais();
+}
 
     public Departamento(int idDpto, String nombre, Pais pais) {
         this.idDpto = idDpto;

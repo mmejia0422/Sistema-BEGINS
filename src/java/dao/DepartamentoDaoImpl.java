@@ -35,12 +35,41 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
 
     @Override
     public boolean create(Departamento departamento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        try {
+            sesion.save(departamento);
+            tx.commit();
+            flag = true;
+        }catch (Exception e) {
+            flag = false;
+            tx.rollback();
+            e.printStackTrace();
+        }
+        
+        return flag;
     }
 
     @Override
     public boolean update(Departamento departamento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        try {
+            Departamento dptoBd = (Departamento) sesion.load(Departamento.class, departamento.getIdDpto());
+            dptoBd.setNombre(departamento.getNombre());
+            dptoBd.setPais(departamento.getPais());
+            sesion.update(dptoBd);
+            tx.commit();
+            flag = true;
+        }catch(Exception e){
+            flag = false;
+            tx.rollback();
+            e.printStackTrace();
+        }
+        
+        return flag;
     }
 
     @Override

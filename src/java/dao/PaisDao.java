@@ -17,4 +17,5 @@ public interface PaisDao {
     public boolean create(Pais pais);
     public boolean update(Pais pais);
     public boolean delete(Integer id);
+    public List<Pais> selectItems();
 }

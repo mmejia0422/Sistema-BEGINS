@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import model.Pais;
 
 /**
@@ -27,6 +28,7 @@ public class paisBean {
 
     private List<Pais> paises;
     private Pais selectedPais;
+    private List<SelectItem> selectOneItemsPais;
     /**
      * Creates a new instance of paisBean
      */
@@ -39,6 +41,18 @@ public class paisBean {
         this.selectedPais = new Pais();
     }
 
+    
+    public List<SelectItem> getSelectOneItemsPais() {
+        this.selectOneItemsPais = new ArrayList<SelectItem>();
+        PaisDao paisDao = new PaisDaoImpl();
+        List<Pais> ps = paisDao.selectItems();
+        for (Pais pais : ps) {
+            SelectItem selectItem = new SelectItem(pais.getIdpais(), pais.getNombre());
+            this.selectOneItemsPais.add(selectItem);
+        }
+        return selectOneItemsPais;
+    }
+    
     public List<Pais> getPaises() {
         PaisDao paisDao = new PaisDaoImpl();
         this.paises = paisDao.findAll();

@@ -90,5 +90,21 @@ public class PaisDaoImpl implements PaisDao {
         return flag;
     
     }
+
+    @Override
+    public List<Pais> selectItems() {
+        List<Pais> listado = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Pais";
+        try{
+            listado = sesion.createQuery(sql).list();
+            tx.commit();
+        } catch(Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+        return listado;
+    }
     
 }

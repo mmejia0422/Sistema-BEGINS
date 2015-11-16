@@ -63,7 +63,7 @@ public void init() {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="rol_id_rol", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="rol_id_rol", nullable=false)
     public Rol getRol() {
         return this.rol;
     }
