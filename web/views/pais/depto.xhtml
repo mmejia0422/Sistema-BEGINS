@@ -36,9 +36,9 @@
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogDptoUpdate').show()" icon="icon-edit" title="Modificar">
                                 <f:setPropertyActionListener value="#{departamento}" target="#{departamentoBean.selectedDptos}" />
                             </p:commandButton>
-                            <!--<p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogUsuarioDelete').show()" icon="icon-delete" title="Eliminar">
-                                <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.selectedUsuario}" />
-                            </p:commandButton>-->
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogDptoDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{departamento}" target="#{departamentoBean.selectedDptos}" />
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -87,14 +87,14 @@
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>
-                <!--<h:form id="formDelete">
-                    <p:confirmDialog id="confirmDialog" widgetVar="dialogUsuarioDelete" severity="alert" message="¿Esta seguro de eliminar?"
+                <h:form id="formDelete">
+                    <p:confirmDialog id="confirmDialog" widgetVar="dialogDptoDelete" severity="alert" message="¿Esta seguro de eliminar?"
                                      showEffect="fade" hideEffect="explode" header="Eliminar usuario">
-                        <h:inputHidden value="#{usuarioBean.selectedUsuario.id.idUsuario}" />
-                        <p:commandButton actionListener="#{usuarioBean.btnDeleteUsuario(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogUsuarioDelete').hide()" icon="icon-check" value="Si"/>
-                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogUsuarioDelete').hide()" icon="icon-cancel" />
+                        <h:inputHidden value="#{departamentoBean.selectedDptos.idDpto}" />
+                        <p:commandButton actionListener="#{departamentoBean.btnDeleteDpto(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogDptoDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogDptoDelete').hide()" icon="icon-cancel" />
                     </p:confirmDialog>
-                </h:form>-->
+                </h:form>
             </ui:define>
         </ui:composition>
 

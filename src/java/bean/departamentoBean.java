@@ -91,4 +91,20 @@ public class departamentoBean {
 
     }
     
+    public void btnDeleteDpto(ActionEvent actionEvent) {
+        DepartamentoDao deptoDao = new DepartamentoDaoImpl();
+        String msg;
+        //if (usuarioDao.delete(this.selectedUsuario)) {
+        if (deptoDao.delete(this.selectedDptos.getIdDpto())) {
+            msg = "Se elimino correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al eliminar el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+    
 }

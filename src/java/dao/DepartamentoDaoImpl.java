@@ -74,7 +74,23 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
 
     @Override
     public boolean delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        
+        try {
+            Query q = sesion.createQuery("from Departamento where id_depto = :id_depto");
+            q.setParameter("id_depto", id);
+            Departamento deptoDb = (Departamento) q.list().get(0);
+
+            sesion.delete(deptoDb);
+            tx.commit();
+            flag = true;
+        }catch(Exception e){
+            flag = false;
+        }
+    return flag;
     }
+    
     
 }
