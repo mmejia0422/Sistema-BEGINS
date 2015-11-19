@@ -4,6 +4,7 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,9 +32,15 @@ public class Departamento  implements java.io.Serializable {
      private Set municipios = new HashSet(0);
 
     public Departamento() {
+        this.idDepto = 0;
         this.pais = new Pais();
     }
 
+    @PostConstruct
+    public void init(){
+        this.idDepto = 0;
+        this.pais = new Pais();
+    }
 	
     public Departamento(Pais pais) {
         this.pais = pais;

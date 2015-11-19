@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../Template.xhtml">
+  <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:commandButton id="btnClienteCreate" update=":formCreate" oncomplete="PF('dialogClCreate').show()" icon="icon-new" title="Crear" value="Crear"/>
+                </h:form>
+                <h:form id="formDataTable">
+
+                    <p:dataTable id="basicDT" var="cliente" value="#{clienteBean.clientes}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15">
+                        <f:facet name="header">
+                            Listado de clientes
+                        </f:facet>
+                        <p:column headerText="Id">
+                            <h:outputText value="#{cliente.idCliente}" />
+                        </p:column>
+                        <p:column headerText="Nombre" filterBy="#{cliente.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{cliente.nombre}" />
+                        </p:column>
+                        <p:column headerText="Apellido" filterMatchMode="contains" filterBy="#{cliente.apellido}">
+                            <h:outputText value="#{cliente.apellido}"/>
+                        </p:column>
+                        <p:column headerText="Dui" filterMatchMode="contains" filterBy="#{cliente.dui}">
+                            <h:outputText value="#{cliente.dui}"/>
+                        </p:column>
+                        <p:column headerText="Nit" filterMatchMode="contains" filterBy="#{cliente.nit}">
+                            <h:outputText value="#{cliente.nit}"/>
+                        </p:column>
+                        <p:column headerText="Telefono" filterMatchMode="contains" filterBy="#{cliente.telefono}">
+                            <h:outputText value="#{cliente.telefono}"/>
+                        </p:column>
+                        <p:column headerText="Municipio" filterMatchMode="contains" filterBy="#{cliente.municipio.nombre}">
+                            <h:outputText value="#{cliente.municipio.nombre}"/>
+                        </p:column>
+                        <!--<p:column headerText="Departamento" filterMatchMode="contains" filterBy="#{cliente.municipio.departamento.nombre}">
+                            <h:outputText value="#{cliente.municipio.departamento.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Pais" filterMatchMode="contains" filterBy="#{cliente.municipio.departamento.pais.nombre}">
+                            <h:outputText value="#{cliente.municipio.departamento.pais.nombre}"/>
+                        </p:column>-->
+                        <p:column headerText="Accion" style="width:100px;text-align: center">
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogClUpdate').show()" icon="icon-edit" title="Modificar">
+                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}" />
+                            </p:commandButton>
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogClDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Crear cliente" id="dlgDeptoCreate" widgetVar="dialogClCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
+
+                            <h:outputText value="Nombre" />
+                            <p:inputText id="inCl" value="#{clienteBean.selectedCliente.nombre}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                                <f:validateRegex pattern="^[a-zA-Z ]+$"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Apellido" />
+                            <p:inputText value="#{clienteBean.selectedCliente.apellido}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                                <f:validateRegex pattern="^[a-zA-Z ]+$"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Dui" />
+                            <p:inputText value="#{clienteBean.selectedCliente.dui}">
+                                <f:validateLength minimum="10" maximum="10"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Nit" />
+                            <p:inputText value="#{clienteBean.selectedCliente.nit}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Telefono" />
+                            <p:inputText value="#{clienteBean.selectedCliente.telefono}">
+                                <f:validateLength minimum="8" maximum="8"/>
+                            </p:inputText>
+
+                            <h:outputText value="Municipio" />
+                            <p:selectOneMenu value="#{clienteBean.selectedCliente.municipio.idMunicipio}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{municipioBean.selectOneItemsMuni}" />
+                            </p:selectOneMenu>
+                            <f:facet name="footer">
+                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogClCreate').hide()" actionListener="#{clienteBean.btnCreateCliente(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogClCreate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar cliente" id="dlgUsuarioUpdate" widgetVar="dialogClUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <h:inputHidden value="#{clienteBean.selectedCliente.idCliente}" />
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
+
+                           <h:outputText value="Nombre" />
+                            <p:inputText id="inCl" value="#{clienteBean.selectedCliente.nombre}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                                <f:validateRegex pattern="^[a-zA-Z ]+$"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Apellido" />
+                            <p:inputText value="#{clienteBean.selectedCliente.apellido}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                                <f:validateRegex pattern="^[a-zA-Z ]+$"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Dui" />
+                            <p:inputText value="#{clienteBean.selectedCliente.dui}">
+                                <f:validateLength minimum="10" maximum="10"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Nit" />
+                            <p:inputText value="#{clienteBean.selectedCliente.nit}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Telefono" />
+                            <p:inputText value="#{clienteBean.selectedCliente.telefono}">
+                                <f:validateLength minimum="8" maximum="8"/>
+                            </p:inputText>
+
+                            <h:outputText value="Municipio" />
+                            <p:selectOneMenu value="#{clienteBean.selectedCliente.municipio.idMunicipio}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{municipioBean.selectOneItemsMuni}" />
+                            </p:selectOneMenu>
+                            <f:facet name="footer">
+                                <p:commandButton actionListener="#{clienteBean.btnUpdateCliente(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogClUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogClUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formDelete">
+                    <p:confirmDialog id="confirmDialog" widgetVar="dialogClDelete" severity="alert" message="¿Esta seguro de eliminar?"
+                                     showEffect="fade" hideEffect="explode" header="Eliminar cliente">
+                        <h:inputHidden value="#{clienteBean.selectedCliente.idCliente}" />
+                        <p:commandButton actionListener="#{clienteBean.btnDeleteCliente(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogClDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogClDelete').hide()" icon="icon-cancel" />
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

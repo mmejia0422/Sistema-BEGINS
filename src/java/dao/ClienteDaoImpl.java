@@ -6,7 +6,7 @@
 package dao;
 
 import java.util.List;
-import model.Municipio;
+import model.Cliente;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,14 +16,14 @@ import util.HibernateUtil;
  *
  * @author Mario
  */
-public class MunicipioDaoImpl implements MunicipioDao{
+public class ClienteDaoImpl implements ClienteDao{
 
     @Override
-    public List<Municipio> findAll() {
-         List<Municipio> listado = null;
+    public List<Cliente> findAll() {
+       List<Cliente> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Municipio m, Departamento d left join fetch m.departamento left join fetch d.pais";
+        String sql = "FROM Cliente c left join fetch c.municipio";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();
@@ -34,12 +34,12 @@ public class MunicipioDaoImpl implements MunicipioDao{
     }
 
     @Override
-    public boolean create(Municipio municipio) {
-        boolean flag;
+    public boolean create(Cliente cliente) {
+       boolean flag;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
         try {
-            sesion.save(municipio);
+            sesion.save(cliente);
             tx.commit();
             flag = true;
         }catch (Exception e) {
@@ -52,15 +52,19 @@ public class MunicipioDaoImpl implements MunicipioDao{
     }
 
     @Override
-    public boolean update(Municipio municipio) {
-          boolean flag;
+    public boolean update(Cliente cliente) {
+         boolean flag;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
         try {
-            Municipio municipioBd = (Municipio) sesion.load(Municipio.class, municipio.getIdMunicipio());
-            municipioBd.setNombre(municipio.getNombre());
-            municipioBd.setDepartamento(municipio.getDepartamento());
-            sesion.update(municipioBd);
+            Cliente clienteBd = (Cliente) sesion.load(Cliente.class, cliente.getIdCliente());
+            clienteBd.setNombre(cliente.getNombre());
+            clienteBd.setApellido(cliente.getApellido());
+            clienteBd.setDui(cliente.getDui());
+            clienteBd.setNit(cliente.getNit());
+            clienteBd.setTelefono(cliente.getTelefono());
+            clienteBd.setMunicipio(cliente.getMunicipio());
+            sesion.update(clienteBd);
             tx.commit();
             flag = true;
         }catch(Exception e){
@@ -74,38 +78,23 @@ public class MunicipioDaoImpl implements MunicipioDao{
 
     @Override
     public boolean delete(Integer id) {
-       boolean flag;
+        boolean flag;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
         
         try {
-            Query q = sesion.createQuery("from Municipio where id_municipio = :id_municipio");
-            q.setParameter("id_municipio", id);
-            Municipio municipioDb = (Municipio) q.list().get(0);
+            Query q = sesion.createQuery("from Cliente where id_cliente = :id_cliente");
+            q.setParameter("id_cliente", id);
+            Cliente clienteDb = (Cliente) q.list().get(0);
 
-            sesion.delete(municipioDb);
+            sesion.delete(clienteDb);
             tx.commit();
             flag = true;
         }catch(Exception e){
             flag = false;
-        }
-    return flag;
-    }
-
-    @Override
-    public List<Municipio> selectItems() {
-       List<Municipio> listado = null;
-        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Municipio";
-        try{
-            listado = sesion.createQuery(sql).list();
-            tx.commit();
-        } catch(Exception e) {
-            e.printStackTrace();
             tx.rollback();
         }
-        return listado;
+    return flag;
     }
     
 }

@@ -4,6 +4,7 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,8 +30,13 @@ public class Pais  implements java.io.Serializable {
      private Set departamentos = new HashSet(0);
 
     public Pais() {
+        this.idPais = 0;
     }
 
+    @PostConstruct
+    public void init(){
+         this.idPais = 0;
+    }
 	
     public Pais(String nombre) {
         this.nombre = nombre;

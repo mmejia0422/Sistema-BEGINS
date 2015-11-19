@@ -5,10 +5,8 @@
  */
 package bean;
 
-import dao.DepartamentoDao;
-import dao.DepartamentoDaoImpl;
-import dao.MunicipioDao;
-import dao.MunicipioDaoImpl;
+import dao.ClienteDao;
+import dao.ClienteDaoImpl;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,58 +15,54 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import model.Departamento;
-import model.Municipio;
+import model.Cliente;
 
 /**
  *
  * @author Mario
  */
-@ManagedBean (name = "municipioBean")
+@ManagedBean (name = "clienteBean")
 @RequestScoped
-public class municipioBean {
+public class clienteBean {
 
-    private List<Municipio> municipios;
-    private Municipio selectedMunicipio;
-    private List<SelectItem> selectOneItemsMuni;
+    private List<Cliente> clientes;
+    private Cliente selectedCliente;
     
     /**
-     * Creates a new instance of municipioBean
+     * Creates a new instance of clienteBean
      */
-    public municipioBean() {
-        this.municipios = new ArrayList<Municipio>();
+    public clienteBean() {
+        this.clientes = new ArrayList<Cliente>();
     }
     
     @PostConstruct
-    public void init() {
-        this.selectedMunicipio = new Municipio();
+    public void init(){
+        this.selectedCliente = new Cliente();
     }
 
-    public List<Municipio> getMunicipios() {
-        MunicipioDao MmnicipioDao = new MunicipioDaoImpl();
-        this.municipios = MmnicipioDao.findAll();
-        return municipios;
+    public List<Cliente> getClientes() {
+        ClienteDao clienteDao = new ClienteDaoImpl();
+        this.clientes = clienteDao.findAll();
+        return clientes;
     }
 
-    public void setMunicipios(List<Municipio> municipios) {
-        this.municipios = municipios;
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
-    public Municipio getSelectedMunicipio() {
-        return selectedMunicipio;
+    public Cliente getSelectedCliente() {
+        return selectedCliente;
     }
 
-    public void setSelectedMunicipio(Municipio selectedMunicipio) {
-        this.selectedMunicipio = selectedMunicipio;
+    public void setSelectedCliente(Cliente selectedCliente) {
+        this.selectedCliente = selectedCliente;
     }
- 
     
-     public void btnCreateMunicipio(ActionEvent actionEvent) {
-        MunicipioDao municipioDao = new MunicipioDaoImpl();
+     public void btnCreateCliente(ActionEvent actionEvent) {
+        ClienteDao clienteDao = new ClienteDaoImpl();
         String msg;
 
-        if (municipioDao.create(this.selectedMunicipio)) {
+        if (clienteDao.create(this.selectedCliente)) {
             msg = "Se guardo correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -80,11 +74,11 @@ public class municipioBean {
 
     }
     
-    public void btnUpdateMunicipio(ActionEvent actionEvent) {
-        MunicipioDao municipioDao = new MunicipioDaoImpl();
+    public void btnUpdateCliente(ActionEvent actionEvent) {
+        ClienteDao clienteDao = new ClienteDaoImpl();
         String msg;
 
-        if (municipioDao.update(this.selectedMunicipio)) {
+        if (clienteDao.update(this.selectedCliente)) {
             msg = "Se guardo correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -96,10 +90,10 @@ public class municipioBean {
 
     }
     
-    public void btnDeleteMuni(ActionEvent actionEvent) {
-        MunicipioDao municipioDao = new MunicipioDaoImpl();
+    public void btnDeleteCliente(ActionEvent actionEvent) {
+        ClienteDao clienteDao = new ClienteDaoImpl();
         String msg;
-        if (municipioDao.delete(this.selectedMunicipio.getIdMunicipio())) {
+        if (clienteDao.delete(this.selectedCliente.getIdCliente())) {
             msg = "Se elimino correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -110,17 +104,4 @@ public class municipioBean {
         }
 
     }
-
-    public List<SelectItem> getSelectOneItemsMuni() {
-        this.selectOneItemsMuni = new ArrayList<SelectItem>();
-        MunicipioDao municipioDao = new MunicipioDaoImpl();
-        List<Municipio> ps = municipioDao.selectItems();
-               
-        for (Municipio mun : ps) {
-            SelectItem selectItem = new SelectItem(mun.getIdMunicipio(), mun.getNombre());
-            this.selectOneItemsMuni.add(selectItem);
-        }
-        return selectOneItemsMuni;
-    }
-    
 }

@@ -36,6 +36,11 @@ public class Cliente  implements java.io.Serializable {
      private Set ordenVentas = new HashSet(0);
 
     public Cliente() {
+        this.municipio = new Municipio();
+    }
+    
+    public void init(){
+        this.municipio = new Municipio();
     }
 
 	

@@ -6,16 +6,15 @@
 package dao;
 
 import java.util.List;
-import model.Municipio;
+import model.Cliente;
 
 /**
  *
  * @author Mario
  */
-public interface MunicipioDao {
-    public List<Municipio> findAll();
-    public boolean create(Municipio municipio);
-    public boolean update(Municipio municipio);
+public interface ClienteDao {
+    public List<Cliente> findAll();
+    public boolean create(Cliente cliente);
+    public boolean update(Cliente cliente);
     public boolean delete(Integer id);
-    public List<Municipio> selectItems();
 }
