@@ -1,12 +1,96 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../Template.xhtml">
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:commandButton id="btnMuniCreate" update=":formCreate" oncomplete="PF('dialogMuniCreate').show()" icon="icon-new" title="Crear" value="Crear"/>
+                </h:form>
+                <h:form id="formDataTable">
 
+                    <p:dataTable id="basicDT" var="municipio" value="#{municipioBean.municipios}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15">
+                        <f:facet name="header">
+                            Listado de municipios
+                        </f:facet>
+                        <p:column headerText="Id">
+                            <h:outputText value="#{municipio.idMunicipio}" />
+                        </p:column>
+                        <p:column headerText="Municipio" filterBy="#{municipio.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{municipio.nombre}" />
+                        </p:column>
+                        <p:column headerText="Departamento" filterMatchMode="contains" filterBy="#{municipio.departamento.nombre}">
+                            <h:outputText value="#{municipio.departamento.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Accion" style="width:100px;text-align: center">
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMuniUpdate').show()" icon="icon-edit" title="Modificar">
+                                <f:setPropertyActionListener value="#{municipio}" target="#{municipioBean.selectedMunicipio}" />
+                            </p:commandButton>
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogMuniDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{municipio}" target="#{municipioBean.selectedMunicipio}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Crear municipio" id="dlgMuniCreate" widgetVar="dialogMuniCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">                           
+                            <h:outputText value="Municipio"/>
+                            <p:inputText value="#{municipioBean.selectedMunicipio.nombre}">
+                                    <f:validateLength minimum="5" maximum="25"/>
+                                </p:inputText>
+                            <h:outputText value="Departamento"/>
+                            <p:selectOneMenu value="#{municipioBean.selectedMunicipio.departamento.idDepto}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{departamentoBean.selectOneItemsDptos}" />
+                            </p:selectOneMenu>
+                            <f:facet name="footer">
+                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogMuniCreate').hide()" actionListener="#{municipioBean.btnCreateMunicipio(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogMuniCreate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar municipio" id="dlgUsuarioUpdate" widgetVar="dialogMuniUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <h:inputHidden value="#{municipioBean.selectedMunicipio.idMunicipio}" />
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
+
+                            <h:outputText value="Municipio"/>
+                            <p:inputText value="#{municipioBean.selectedMunicipio.nombre}">
+                                    <f:validateLength minimum="5" maximum="25"/>
+                                </p:inputText>
+                            <h:outputText value="Departamento"/>
+                            <p:selectOneMenu value="#{municipioBean.selectedMunicipio.departamento.idDepto}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{departamentoBean.selectOneItemsDptos}" />
+                            </p:selectOneMenu>
+                            <f:facet name="footer">
+                                <p:commandButton actionListener="#{municipioBean.btnUpdateMunicipio(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogMuniUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogMuniUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formDelete">
+                    <p:confirmDialog id="confirmDialog" widgetVar="dialogMuniDelete" severity="alert" message="¿Esta seguro de eliminar?"
+                                     showEffect="fade" hideEffect="explode" header="Eliminar municipio">
+                        <h:inputHidden value="#{municipioBean.selectedMunicipio.idMunicipio}" />
+                        <p:commandButton actionListener="#{municipioBean.btnDeleteMuni(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogMuniDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogMuniDelete').hide()" icon="icon-cancel" />
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
         </ui:composition>
 
     </body>

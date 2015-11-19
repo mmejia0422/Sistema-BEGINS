@@ -1,5 +1,5 @@
 package model;
-// Generated 10-20-2015 11:47:24 PM by Hibernate Tools 4.3.1
+// Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="rol_menu"
-    ,catalog="gasisw_bd"
+    ,catalog="gasisw_bd1"
 )
 public class RolMenu  implements java.io.Serializable {
 

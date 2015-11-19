@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Proveedor" table="proveedor" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idProveedor" type="java.lang.Integer">
+            <column name="id_proveedor" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="municipio" class="model.Municipio" fetch="select">
+            <column name="municipio_id_municipio" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="100" not-null="true" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="8" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="100" />
+        </property>
+        <property name="nit" type="string">
+            <column name="nit" length="45" />
+        </property>
+        <set name="productoProveedors" table="producto_proveedor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PROVEEDOR_id_proveedor" not-null="true" />
+            </key>
+            <one-to-many class="model.ProductoProveedor" />
+        </set>
+        <set name="ordenCompras" table="orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="proveedor_id_proveedor" not-null="true" />
+            </key>
+            <one-to-many class="model.OrdenCompra" />
+        </set>
+    </class>
+</hibernate-mapping>

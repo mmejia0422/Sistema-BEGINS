@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.OrdenCompra" table="orden_compra" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idOrden" type="java.lang.Integer">
+            <column name="id_orden" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empleado" class="model.Empleado" fetch="select">
+            <column name="empleado_id_empleado" not-null="true" />
+        </many-to-one>
+        <many-to-one name="proveedor" class="model.Proveedor" fetch="select">
+            <column name="proveedor_id_proveedor" not-null="true" />
+        </many-to-one>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" />
+        </property>
+        <property name="fechaVence" type="date">
+            <column name="fecha_vence" length="10" />
+        </property>
+        <property name="fechaEntrega" type="date">
+            <column name="fecha_entrega" length="10" />
+        </property>
+        <set name="detaOrdenCompras" table="deta_orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="orden_compra_id_orden" not-null="true" />
+            </key>
+            <one-to-many class="model.DetaOrdenCompra" />
+        </set>
+    </class>
+</hibernate-mapping>

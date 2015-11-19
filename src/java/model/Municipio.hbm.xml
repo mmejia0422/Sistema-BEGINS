@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Municipio" table="municipio" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idMunicipio" type="java.lang.Integer">
+            <column name="id_municipio" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="departamento" class="model.Departamento" fetch="select">
+            <column name="departamento_id_depto" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="25" not-null="true" />
+        </property>
+        <set name="clientes" table="cliente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="municipio_id_municipio" not-null="true" />
+            </key>
+            <one-to-many class="model.Cliente" />
+        </set>
+        <set name="proveedors" table="proveedor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="municipio_id_municipio" not-null="true" />
+            </key>
+            <one-to-many class="model.Proveedor" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Presentacion" table="presentacion" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idPresentacion" type="java.lang.Integer">
+            <column name="id_presentacion" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="45" />
+        </property>
+        <set name="catProductos" table="cat_producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="presentacion_id_presentacion" not-null="true" />
+            </key>
+            <one-to-many class="model.CatProducto" />
+        </set>
+    </class>
+</hibernate-mapping>

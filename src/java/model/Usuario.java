@@ -1,14 +1,13 @@
 package model;
-// Generated 10-20-2015 11:47:24 PM by Hibernate Tools 4.3.1
+// Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1
 
 
-import javax.annotation.PostConstruct;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,48 +17,51 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="usuario"
-    ,catalog="gasisw_bd"
+    ,catalog="gasisw_bd1"
 )
 public class Usuario  implements java.io.Serializable {
 
 
-     private UsuarioId id;
+     private Integer idUsuario;
+     private Empleado empleado;
      private Rol rol;
      private String usuario;
      private String contrasena;
      private String estado;
 
     public Usuario() {
-        this.id = new UsuarioId();
-        //this.rol = new Rol();
+        this.empleado = new Empleado();
+        this.rol = new Rol();
     }
 
-    @PostConstruct
-public void init() {
-    this.id = new UsuarioId();
-    //this.rol = new Rol();
-}
-    
-    public Usuario(UsuarioId id,  Rol rol, String usuario, String contrasena, String estado) {
-       this.id = id;
+    public Usuario(Empleado empleado, Rol rol, String usuario, String contrasena, String estado) {
+       this.empleado = empleado;
        this.rol = rol;
        this.usuario = usuario;
        this.contrasena = contrasena;
        this.estado = estado;
     }
    
-     @EmbeddedId
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
-    @AttributeOverrides( {
-        @AttributeOverride(name="idUsuario", column=@Column(name="id_usuario", nullable=false) ), 
-        @AttributeOverride(name="rolIdRol", column=@Column(name="rol_id_rol", nullable=false) ) } )
-    public UsuarioId getId() {
-        return this.id;
+    @Column(name="id_usuario", unique=true, nullable=false)
+    public Integer getIdUsuario() {
+        return this.idUsuario;
     }
     
-    public void setId(UsuarioId id) {
-        this.id = id;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="empleado_id_empleado", nullable=false)
+    public Empleado getEmpleado() {
+        return this.empleado;
+    }
+    
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

@@ -24,13 +24,13 @@
                             Listado de paises
                         </f:facet>
                         <p:column headerText="Id">
-                            <h:outputText value="#{pais.idpais}" />
+                            <h:outputText value="#{pais.idPais}" />
                         </p:column>
                         <p:column headerText="Pais" filterBy="#{pais.nombre}" filterMatchMode="contains">
                             <h:outputText value="#{pais.nombre}" />
                         </p:column>
                         <p:column headerText="Codigo Postal">
-                            <h:outputText value="#{pais.codigopostal}" />
+                            <h:outputText value="#{pais.codigoPostal}" />
                         </p:column>
                         <p:column headerText="Accion" style="width:100px;text-align: center">
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogPaisUpdate').show()" icon="icon-edit" title="Modificar">
@@ -53,7 +53,7 @@
                             </p:inputText>
 
                             <h:outputText value="Codigo Postal" />
-                            <p:inputText value="#{paisBean.selectedPais.codigopostal}" converterMessage="Solo se permiten numeros">
+                            <p:inputText value="#{paisBean.selectedPais.codigoPostal}" converterMessage="Solo se permiten numeros">
                             </p:inputText>
                             <f:facet name="footer">
                                 <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogPaisCreate').hide()" actionListener="#{paisBean.btnCreatePais(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
@@ -64,7 +64,7 @@
                 </h:form>
                 <h:form id="formUpdate">
                     <p:dialog header="Modificar usuario" id="dlgPaisUpdate" widgetVar="dialogPaisUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
-                        <h:inputHidden value="#{paisBean.selectedPais.idpais}" />
+                        <h:inputHidden value="#{paisBean.selectedPais.idPais}" />
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
                             <h:outputText value="Pais" />
@@ -74,7 +74,7 @@
                             </p:inputText>
 
                             <h:outputText value="Codigo Postal" />
-                            <p:inputText value="#{paisBean.selectedPais.codigopostal}" converterMessage="Solo se permiten numeros">
+                            <p:inputText value="#{paisBean.selectedPais.codigoPostal}" converterMessage="Solo se permiten numeros">
                             </p:inputText>
                             <f:facet name="footer">
                                 <p:commandButton actionListener="#{paisBean.btnUpdatePais(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogPaisUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
@@ -86,7 +86,7 @@
                 <h:form id="formDelete">
                     <p:confirmDialog id="confirmDialog" widgetVar="dialogPaisDelete" severity="alert" message="¿Esta seguro de eliminar?"
                                      showEffect="fade" hideEffect="explode" header="Eliminar usuario">
-                        <h:inputHidden value="#{paisBean.selectedPais.idpais}" />
+                        <h:inputHidden value="#{paisBean.selectedPais.idPais}" />
                         <p:commandButton actionListener="#{paisBean.btnDeletePais(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogPaisDelete').hide()" icon="icon-check" value="Si"/>
                         <p:commandButton id="decline" value="No" oncomplete="PF('dialogPaisDelete').hide()" icon="icon-cancel" />
                     </p:confirmDialog>

@@ -1,16 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Pais" table="pais" catalog="gasisw_bd" optimistic-lock="version">
-        <id name="idpais" type="int">
-            <column name="id_pais"/>
-            <generator class="assigned"/>
+    <class name="model.Pais" table="pais" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idPais" type="java.lang.Integer">
+            <column name="id_pais" />
+            <generator class="identity" />
         </id>
         <property name="nombre" type="string">
-            <column name="nombre" length="50" not-null="true" />
+            <column name="nombre" length="25" not-null="true" />
         </property>
-        <property name="codigopostal" type="int">
-            <column name="codigo_postal" not-null="true" />
+        <property name="codigoPostal" type="java.lang.Integer">
+            <column name="codigo_postal" />
         </property>
-        </class>
+        <set name="departamentos" table="departamento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pais_id_pais" not-null="true" />
+            </key>
+            <one-to-many class="model.Departamento" />
+        </set>
+    </class>
 </hibernate-mapping>

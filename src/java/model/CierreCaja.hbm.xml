@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.CierreCaja" table="cierre_caja" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idCierreCaja" type="java.lang.Integer">
+            <column name="id_cierre_caja" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empleado" class="model.Empleado" fetch="select">
+            <column name="EMPLEADO_id_empleado" not-null="true" />
+        </many-to-one>
+        <property name="saldoApertura" type="java.lang.Byte">
+            <column name="saldo_apertura" precision="2" scale="0" />
+        </property>
+        <property name="saldoCierre" type="java.lang.Byte">
+            <column name="saldo_cierre" precision="2" scale="0" />
+        </property>
+        <property name="centavo" type="java.lang.Integer">
+            <column name="centavo" />
+        </property>
+        <property name="diez" type="java.lang.Integer">
+            <column name="diez" />
+        </property>
+        <property name="cuarto" type="java.lang.Integer">
+            <column name="cuarto" />
+        </property>
+        <property name="dolar" type="java.lang.Integer">
+            <column name="dolar" />
+        </property>
+        <property name="cincoD" type="java.lang.Integer">
+            <column name="cinco_d" />
+        </property>
+        <property name="diezD" type="java.lang.Integer">
+            <column name="diez_d" />
+        </property>
+        <property name="veinteD" type="java.lang.Integer">
+            <column name="veinte_d" />
+        </property>
+        <property name="montoEfectivo" type="java.lang.Byte">
+            <column name="monto_efectivo" precision="2" scale="0" />
+        </property>
+        <property name="montoVoucher" type="java.lang.Byte">
+            <column name="monto_voucher" precision="2" scale="0" />
+        </property>
+        <property name="montoCheque" type="java.lang.Byte">
+            <column name="monto_cheque" precision="2" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

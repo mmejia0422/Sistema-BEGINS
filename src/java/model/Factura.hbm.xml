@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Factura" table="factura" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idFactura" type="java.lang.Integer">
+            <column name="id_factura" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="model.Cliente" fetch="select">
+            <column name="cliente_id_cliente" not-null="true" />
+        </many-to-one>
+        <many-to-one name="detaCombustible" class="model.DetaCombustible" fetch="select">
+            <column name="DETA_COMBUSTIBLE_id_deta_combustible" not-null="true" />
+        </many-to-one>
+        <many-to-one name="empleado" class="model.Empleado" fetch="select">
+            <column name="empleado_id_empleado" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoFactura" class="model.TipoFactura" fetch="select">
+            <column name="tipo_factura_id_tipo_factura" not-null="true" />
+        </many-to-one>
+        <property name="correlativo" type="string">
+            <column name="correlativo" length="10" not-null="true" />
+        </property>
+        <property name="fechaHora" type="timestamp">
+            <column name="fecha_hora" length="19" />
+        </property>
+        <property name="ivaAplicado" type="java.lang.Long">
+            <column name="iva_aplicado" precision="10" scale="0" />
+        </property>
+        <set name="detFacturas" table="det_factura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="factura_id_factura" not-null="true" />
+            </key>
+            <one-to-many class="model.DetFactura" />
+        </set>
+        <set name="pagos" table="pago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="factura_id_factura" not-null="true" />
+            </key>
+            <one-to-many class="model.Pago" />
+        </set>
+    </class>
+</hibernate-mapping>

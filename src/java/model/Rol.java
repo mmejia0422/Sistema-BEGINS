@@ -1,13 +1,14 @@
 package model;
-// Generated 10-20-2015 11:47:24 PM by Hibernate Tools 4.3.1
+// Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,12 +18,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="rol"
-    ,catalog="gasisw_bd"
+    ,catalog="gasisw_bd1"
 )
 public class Rol  implements java.io.Serializable {
 
 
-     private int idRol;
+     private Integer idRol;
      private String tipoRol;
      private String descripcion;
      private String estado;
@@ -30,21 +31,14 @@ public class Rol  implements java.io.Serializable {
      private Set usuarios = new HashSet(0);
 
     public Rol() {
-        this.idRol = 0;
     }
 
-    @PostConstruct
-public void init() {
-    this.idRol = 0; 
-}
 	
-    public Rol(int idRol, String descripcion, String estado) {
-        this.idRol = idRol;
+    public Rol(String descripcion, String estado) {
         this.descripcion = descripcion;
         this.estado = estado;
     }
-    public Rol(int idRol, String tipoRol, String descripcion, String estado, Set rolMenus, Set usuarios) {
-       this.idRol = idRol;
+    public Rol(String tipoRol, String descripcion, String estado, Set rolMenus, Set usuarios) {
        this.tipoRol = tipoRol;
        this.descripcion = descripcion;
        this.estado = estado;
@@ -52,15 +46,15 @@ public void init() {
        this.usuarios = usuarios;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id_rol", unique=true, nullable=false)
-    public int getIdRol() {
+    public Integer getIdRol() {
         return this.idRol;
     }
     
-    public void setIdRol(int idRol) {
+    public void setIdRol(Integer idRol) {
         this.idRol = idRol;
     }
 

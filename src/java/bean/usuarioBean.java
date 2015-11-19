@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import model.Usuario;
 
 /**
@@ -30,6 +31,7 @@ public class usuarioBean {
      */
     private List<Usuario> usuarios;
     private Usuario selectedUsuario;
+    private List<SelectItem> selectOneItemsUsuario;
 
     public usuarioBean() {
         this.usuarios = new ArrayList<Usuario>();
@@ -104,7 +106,7 @@ public class usuarioBean {
         UsuarioDao usuarioDao = new UsuarioDaoImpl();
         String msg;
         //if (usuarioDao.delete(this.selectedUsuario)) {
-        if (usuarioDao.delete(this.selectedUsuario.getId().getIdUsuario())) {
+        if (usuarioDao.delete(this.selectedUsuario.getIdUsuario())) {
             msg = "Se elimino correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -114,5 +116,16 @@ public class usuarioBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
+    }
+
+    public List<SelectItem> getSelectOneItemsUsuario() {
+        this.selectOneItemsUsuario = new ArrayList<SelectItem>();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
+        List<Usuario> us = usuarioDao.selectItems();
+        for (Usuario usuario : us) {
+            SelectItem selectItem = new SelectItem(usuario.getIdUsuario(), usuario.getUsuario());
+            this.selectOneItemsUsuario.add(selectItem);
+        }
+        return selectOneItemsUsuario;
     }
 }

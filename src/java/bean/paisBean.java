@@ -47,7 +47,7 @@ public class paisBean {
         PaisDao paisDao = new PaisDaoImpl();
         List<Pais> ps = paisDao.selectItems();
         for (Pais pais : ps) {
-            SelectItem selectItem = new SelectItem(pais.getIdpais(), pais.getNombre());
+            SelectItem selectItem = new SelectItem(pais.getIdPais(), pais.getNombre());
             this.selectOneItemsPais.add(selectItem);
         }
         return selectOneItemsPais;
@@ -104,7 +104,7 @@ public class paisBean {
        public void btnDeletePais(ActionEvent actionEvent) {
         PaisDao paisDao = new PaisDaoImpl();
         String msg;
-        if (paisDao.delete(this.selectedPais.getIdpais())) {
+        if (paisDao.delete(this.selectedPais.getIdPais())) {
             msg = "Se elimino correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);

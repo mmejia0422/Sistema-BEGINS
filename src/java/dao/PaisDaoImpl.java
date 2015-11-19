@@ -56,9 +56,9 @@ public class PaisDaoImpl implements PaisDao {
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
         try {
-            Pais paisdb = (Pais) sesion.load(Pais.class, pais.getIdpais());
+            Pais paisdb = (Pais) sesion.load(Pais.class, pais.getIdPais());
             paisdb.setNombre(pais.getNombre());
-            paisdb.setCodigopostal(pais.getCodigopostal());
+            paisdb.setCodigoPostal(pais.getCodigoPostal());
             sesion.update(paisdb);
             tx.commit();
             flag = true;

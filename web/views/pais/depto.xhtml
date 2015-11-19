@@ -24,13 +24,13 @@
                             Listado de departamentos
                         </f:facet>
                         <p:column headerText="Id">
-                            <h:outputText value="#{departamento.idDpto}" />
+                            <h:outputText value="#{departamento.idDepto}" />
                         </p:column>
                         <p:column headerText="Departamento" filterBy="#{departamento.nombre}" filterMatchMode="contains">
                             <h:outputText value="#{departamento.nombre}" />
                         </p:column>
-                        <p:column headerText="Pais">
-                            <h:outputText value="#{departamento.pais.nombre}" />
+                        <p:column headerText="Pais" filterMatchMode="contains" filterBy="#{departamento.pais.nombre}">
+                            <h:outputText value="#{departamento.pais.nombre}"/>
                         </p:column>
                         <p:column headerText="Accion" style="width:100px;text-align: center">
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogDptoUpdate').show()" icon="icon-edit" title="Modificar">
@@ -53,7 +53,7 @@
                             </p:inputText>
 
                             <h:outputText value="Pais" />
-                            <p:selectOneMenu value="#{departamentoBean.selectedDptos.pais.idpais}">
+                            <p:selectOneMenu value="#{departamentoBean.selectedDptos.pais.idPais}">
                                 <f:selectItem itemLabel="Seleccione" itemValue="" />
                                 <f:selectItems value="#{paisBean.selectOneItemsPais}" />
                             </p:selectOneMenu>
@@ -66,7 +66,7 @@
                 </h:form>
                 <h:form id="formUpdate">
                     <p:dialog header="Modificar usuario" id="dlgUsuarioUpdate" widgetVar="dialogDptoUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
-                        <h:inputHidden value="#{departamentoBean.selectedDptos.idDpto}" />
+                        <h:inputHidden value="#{departamentoBean.selectedDptos.idDepto}" />
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
                             <h:outputText value="Departamento" />
@@ -76,7 +76,7 @@
                             </p:inputText>
 
                             <h:outputText value="Pais" />
-                            <p:selectOneMenu value="#{departamentoBean.selectedDptos.pais.idpais}">
+                            <p:selectOneMenu value="#{departamentoBean.selectedDptos.pais.idPais}">
                                 <f:selectItem itemLabel="Seleccione" itemValue="" />
                                 <f:selectItems value="#{paisBean.selectOneItemsPais}" />
                             </p:selectOneMenu>
@@ -90,7 +90,7 @@
                 <h:form id="formDelete">
                     <p:confirmDialog id="confirmDialog" widgetVar="dialogDptoDelete" severity="alert" message="¿Esta seguro de eliminar?"
                                      showEffect="fade" hideEffect="explode" header="Eliminar usuario">
-                        <h:inputHidden value="#{departamentoBean.selectedDptos.idDpto}" />
+                        <h:inputHidden value="#{departamentoBean.selectedDptos.idDepto}" />
                         <p:commandButton actionListener="#{departamentoBean.btnDeleteDpto(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogDptoDelete').hide()" icon="icon-check" value="Si"/>
                         <p:commandButton id="decline" value="No" oncomplete="PF('dialogDptoDelete').hide()" icon="icon-cancel" />
                     </p:confirmDialog>

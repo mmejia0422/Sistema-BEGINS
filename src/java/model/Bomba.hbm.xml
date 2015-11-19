@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Bomba" table="bomba" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idBomba" type="java.lang.Integer">
+            <column name="id_bomba" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="combustible" class="model.Combustible" fetch="select">
+            <column name="COMBUSTIBLE_id_combustible" not-null="true" />
+        </many-to-one>
+        <property name="numero" type="java.lang.Integer">
+            <column name="numero" />
+        </property>
+        <set name="detaCombustibles" table="deta_combustible" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Bomba_id_bomba" not-null="true" />
+            </key>
+            <one-to-many class="model.DetaCombustible" />
+        </set>
+    </class>
+</hibernate-mapping>

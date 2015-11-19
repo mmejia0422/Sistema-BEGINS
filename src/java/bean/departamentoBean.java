@@ -28,6 +28,7 @@ public class departamentoBean {
     
     private List<Departamento> departamentos;
     private Departamento selectedDptos;
+    private List<SelectItem> selectOneItemsDptos;
 
     /**
      * Creates a new instance of departamentoBean
@@ -95,7 +96,8 @@ public class departamentoBean {
         DepartamentoDao deptoDao = new DepartamentoDaoImpl();
         String msg;
         //if (usuarioDao.delete(this.selectedUsuario)) {
-        if (deptoDao.delete(this.selectedDptos.getIdDpto())) {
+        //if (deptoDao.delete(this.selectedDptos.getIdDpto())) {
+        if (deptoDao.delete(this.selectedDptos.getIdDepto())) {
             msg = "Se elimino correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -105,6 +107,17 @@ public class departamentoBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
+    }
+
+    public List<SelectItem> getSelectOneItemsDptos() {
+        this.selectOneItemsDptos = new ArrayList<SelectItem>();
+        DepartamentoDao departamentoDao = new DepartamentoDaoImpl();
+        List<Departamento> ps = departamentoDao.selectItems();
+        for (Departamento dpto : ps) {
+            SelectItem selectItem = new SelectItem(dpto.getIdDepto(), dpto.getNombre());
+            this.selectOneItemsDptos.add(selectItem);
+        }
+        return selectOneItemsDptos;
     }
     
 }

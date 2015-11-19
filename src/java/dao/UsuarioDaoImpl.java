@@ -7,7 +7,6 @@ package dao;
 
 import java.util.List;
 import model.Usuario;
-import model.UsuarioId;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -54,7 +53,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         List<Usuario> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Usuario u left join fetch u.rol";
+        String sql = "FROM Usuario u left join fetch u.rol left join fetch u.empleado";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();
@@ -75,7 +74,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
             flag = true;
         } catch (Exception e) {
             flag = false;
-            e.printStackTrace();
             tx.rollback();
         }
         return flag;
@@ -87,7 +85,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
         try {
-            Usuario usuariodb = (Usuario) sesion.load(Usuario.class, usuario.getId());
+            Usuario usuariodb = (Usuario) sesion.load(Usuario.class, usuario.getIdUsuario());
             usuariodb.setUsuario(usuario.getUsuario());
             usuariodb.setContrasena(usuario.getContrasena());
             usuariodb.setRol(usuario.getRol());
@@ -121,6 +119,23 @@ public class UsuarioDaoImpl implements UsuarioDao {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    @Override
+    public List<Usuario> selectItems() {
+         List<Usuario> listado = null;
+        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = s.beginTransaction();
+        String sql = "FROM Usuario";
+        try{
+            listado = s.createQuery(sql).list();
+            tx.commit();
+        } catch(RuntimeException e) {
+            e.printStackTrace();
+            tx.rollback();
+            throw e;
+        }
+        return listado;
     }
 
 }

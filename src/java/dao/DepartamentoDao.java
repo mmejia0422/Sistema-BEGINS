@@ -17,4 +17,5 @@ public interface DepartamentoDao {
     public boolean create(Departamento departamento);
     public boolean update(Departamento departamento);
     public boolean delete(Integer id);
+    public List<Departamento> selectItems();
 }

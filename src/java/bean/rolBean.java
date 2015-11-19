@@ -45,8 +45,8 @@ public class rolBean {
     public List<SelectItem> getSelectOneItemsRol() {
         this.selectOneItemsRol = new ArrayList<SelectItem>();
         RolDao rolDao = new RolDaoImpl();
-        List<Rol> roles = rolDao.selectItems();
-        for (Rol rol : roles) {
+        List<Rol> r = rolDao.selectItems();
+        for (Rol rol : r) {
             SelectItem selectItem = new SelectItem(rol.getIdRol(), rol.getDescripcion());
             this.selectOneItemsRol.add(selectItem);
         }

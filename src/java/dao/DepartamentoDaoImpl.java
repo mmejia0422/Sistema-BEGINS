@@ -57,7 +57,7 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
         try {
-            Departamento dptoBd = (Departamento) sesion.load(Departamento.class, departamento.getIdDpto());
+            Departamento dptoBd = (Departamento) sesion.load(Departamento.class, departamento.getIdDepto());
             dptoBd.setNombre(departamento.getNombre());
             dptoBd.setPais(departamento.getPais());
             sesion.update(dptoBd);
@@ -90,6 +90,22 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
             flag = false;
         }
     return flag;
+    }
+
+    @Override
+    public List<Departamento> selectItems() {
+        List<Departamento> listado = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Departamento";
+        try{
+            listado = sesion.createQuery(sql).list();
+            tx.commit();
+        } catch(Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+        return listado;
     }
     
     

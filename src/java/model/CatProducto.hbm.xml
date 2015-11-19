@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.CatProducto" table="cat_producto" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idCatProducto" type="java.lang.Integer">
+            <column name="id_cat_producto" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="categoria" class="model.Categoria" fetch="select">
+            <column name="categoria_id_categoria" not-null="true" />
+        </many-to-one>
+        <many-to-one name="marca" class="model.Marca" fetch="select">
+            <column name="marca_id_marca" not-null="true" />
+        </many-to-one>
+        <many-to-one name="presentacion" class="model.Presentacion" fetch="select">
+            <column name="presentacion_id_presentacion" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="45" />
+        </property>
+        <property name="precio" type="java.lang.Byte">
+            <column name="precio" precision="2" scale="0" />
+        </property>
+        <set name="productoProveedors" table="producto_proveedor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CAT_PRODUCTO_id_cat_producto" not-null="true" />
+            </key>
+            <one-to-many class="model.ProductoProveedor" />
+        </set>
+        <set name="productos" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cat_producto_id_cat_producto" not-null="true" />
+            </key>
+            <one-to-many class="model.Producto" />
+        </set>
+        <set name="detaOrdenCompras" table="deta_orden_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cat_producto_id_cat_producto" not-null="true" />
+            </key>
+            <one-to-many class="model.DetaOrdenCompra" />
+        </set>
+        <set name="detaOrdenVentas" table="deta_orden_venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cat_producto_id_cat_producto" not-null="true" />
+            </key>
+            <one-to-many class="model.DetaOrdenVenta" />
+        </set>
+    </class>
+</hibernate-mapping>
