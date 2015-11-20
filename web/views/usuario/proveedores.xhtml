@@ -1,13 +1,161 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./../Template.xhtml">
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:commandButton id="btnProvCreate" update=":formCreate" oncomplete="PF('dialogProvCreate').show()" icon="icon-new" title="Crear" value="Crear"/>
+                </h:form>
+                <h:form id="formDataTable">
 
+                    <p:dataTable id="basicDT" var="proveedor" value="#{proveedorBean.proveedor}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15">
+                        <f:facet name="header">
+                            Listado de proveedores
+                        </f:facet>
+                        <p:column headerText="Id">
+                            <h:outputText value="#{proveedor.idProveedor}" />
+                        </p:column>
+                        <p:column headerText="Nombre" filterBy="#{proveedor.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{proveedor.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Direccion" filterMatchMode="contains" filterBy="#{proveedor.direccion}">
+                            <h:outputText value="#{proveedor.direccion}" />
+                        </p:column>
+                        
+                        <p:column headerText="Telefono" filterMatchMode="contains" filterBy="#{proveedor.telefono}">
+                            <h:outputText value="#{proveedor.telefono}" />
+                        </p:column>
+                        
+                        <p:column headerText="Descripcion" filterMatchMode="contains" filterBy="#{proveedor.descripcion}">
+                            <h:outputText value="#{proveedor.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Nit" filterMatchMode="contains" filterBy="#{proveedor.nit}">
+                            <h:outputText value="#{proveedor.nit}"/>
+                        </p:column>
+                        <p:column headerText="Municipio" filterMatchMode="contains" filterBy="#{proveedor.municipio.nombre}">
+                            <h:outputText value="#{proveedor.municipio.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Accion" style="width:100px;text-align: center">
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogProvUpdate').show()" icon="icon-edit" title="Modificar">
+                                <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.selectedProveedor}" />
+                            </p:commandButton>
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogProvDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.selectedProveedor}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Crear proveedor" id="dlgUsuarioCreate" widgetVar="dialogProvCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
+
+                            <h:outputText value="Nombre"/>
+                            <p:inputText id="inProv" value="#{proveedorBean.selectedProveedor.nombre}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                                <f:validateRegex pattern="^[0-9a-zA-Z ]+$"/>
+                            </p:inputText>
+
+                            <h:outputText value="Direccion" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.direccion}">
+                                <f:validateLength minimum="5" maximum="100"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Telefono" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.telefono}">
+                                <f:validateLength minimum="8" maximum="8"/>
+                                <f:validateRegex pattern="^[0-9]+$"/>
+                            </p:inputText>
+                            
+
+                            <h:outputText value="Descripcion" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.descripcion}">
+                                <f:validateLength minimum="1" maximum="100"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Nit" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.nit}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Municipio" />
+                            <p:selectOneMenu value="#{proveedorBean.selectedProveedor.municipio.idMunicipio}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{municipioBean.selectOneItemsMuni}" />
+                            </p:selectOneMenu>
+                            
+                            <f:facet name="footer">
+                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogProvCreate').hide()" actionListener="#{proveedorBean.btnCreateProv(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogProvCreate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar proveedor" id="dlgUsuarioUpdate" widgetVar="dialogProvUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <h:inputHidden value="#{proveedorBean.selectedProveedor.idProveedor}" />
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
+
+                            <h:outputText value="Nombre"/>
+                            <p:inputText id="inProv" value="#{proveedorBean.selectedProveedor.nombre}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                                <f:validateRegex pattern="^[0-9a-zA-Z ]+$"/>
+                            </p:inputText>
+
+                            <h:outputText value="Direccion" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.direccion}">
+                                <f:validateLength minimum="5" maximum="100"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Telefono" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.telefono}">
+                                <f:validateLength minimum="8" maximum="8"/>
+                                <f:validateRegex pattern="^[0-9]+$"/>
+                            </p:inputText>
+                            
+
+                            <h:outputText value="Descripcion" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.descripcion}">
+                                <f:validateLength minimum="1" maximum="100"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Nit" />
+                            <p:inputText value="#{proveedorBean.selectedProveedor.nit}">
+                                <f:validateLength minimum="8" maximum="45"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Municipio" />
+                            <p:selectOneMenu value="#{proveedorBean.selectedProveedor.municipio.idMunicipio}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{municipioBean.selectOneItemsMuni}" />
+                            </p:selectOneMenu>
+                            
+                            <f:facet name="footer">
+                                <p:commandButton actionListener="#{proveedorBean.btnUpdateProv(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogProvUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogProvUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formDelete">
+                    <p:confirmDialog id="confirmDialog" widgetVar="dialogProvDelete" severity="alert" message="¿Esta seguro de eliminar?"
+                                     showEffect="fade" hideEffect="explode" header="Eliminar proveedor">
+                        <h:inputHidden value="#{proveedorBean.selectedProveedor.idProveedor}" />
+                        <p:commandButton actionListener="#{proveedorBean.btnDeleteProv(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogProvDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogProvDelete').hide()" icon="icon-cancel" />
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
         </ui:composition>
-
     </body>
 </html>

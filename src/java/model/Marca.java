@@ -29,6 +29,7 @@ public class Marca  implements java.io.Serializable {
      private Set catProductos = new HashSet(0);
 
     public Marca() {
+        this.idMarca = 0;
     }
 
     public Marca(String nombre, String descripcion, Set catProductos) {

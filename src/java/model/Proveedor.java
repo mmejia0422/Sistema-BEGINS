@@ -36,6 +36,7 @@ public class Proveedor  implements java.io.Serializable {
      private Set ordenCompras = new HashSet(0);
 
     public Proveedor() {
+        this.municipio = new Municipio();
     }
 
 	
