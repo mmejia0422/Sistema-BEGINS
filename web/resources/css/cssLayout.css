@@ -5,7 +5,11 @@
     color: white;
     padding: 5px;
     margin: 0px 0px 1px 0px;
-    height: 50px;
+    height: 75;
+    text-align: center;
+    font-size: x-large;
+    font-family: sans-serif;
+    
 }
 
 #bottom {
@@ -69,3 +73,7 @@ container{
     width: 1300px;
 }
 
+.companyHeaderGrid.ui-panelgrid>*>tr,
+.companyHeaderGrid.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}

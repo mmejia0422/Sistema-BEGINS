@@ -65,34 +65,34 @@
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
                             <h:outputText value="Nombre" />
-                            <p:inputText id="inCl" value="#{clienteBean.selectedCliente.nombre}">
+                            <p:inputText required="true" id="inCl" value="#{clienteBean.selectedCliente.nombre}">
                                 <f:validateLength minimum="8" maximum="45"/>
                                 <f:validateRegex pattern="^[a-zA-Z ]+$"/>
                             </p:inputText>
                             
                             <h:outputText value="Apellido" />
-                            <p:inputText value="#{clienteBean.selectedCliente.apellido}">
+                            <p:inputText required="true" value="#{clienteBean.selectedCliente.apellido}">
                                 <f:validateLength minimum="8" maximum="45"/>
                                 <f:validateRegex pattern="^[a-zA-Z ]+$"/>
                             </p:inputText>
                             
                             <h:outputText value="Dui" />
-                            <p:inputText value="#{clienteBean.selectedCliente.dui}">
+                            <p:inputMask required="true" value="#{clienteBean.selectedCliente.dui}" mask="99999999-9">
                                 <f:validateLength minimum="10" maximum="10"/>
-                            </p:inputText>
+                            </p:inputMask>
                             
                             <h:outputText value="Nit" />
-                            <p:inputText value="#{clienteBean.selectedCliente.nit}">
+                            <p:inputMask required="true" value="#{clienteBean.selectedCliente.nit}" mask="9999-999999-999-9">
                                 <f:validateLength minimum="8" maximum="45"/>
-                            </p:inputText>
+                            </p:inputMask>
                             
                             <h:outputText value="Telefono" />
-                            <p:inputText value="#{clienteBean.selectedCliente.telefono}">
-                                <f:validateLength minimum="8" maximum="8"/>
-                            </p:inputText>
+                            <p:inputMask required="true" value="#{clienteBean.selectedCliente.telefono}" mask="9999-9999">
+                                <f:validateLength minimum="8" maximum="9"/>
+                            </p:inputMask>
 
-                            <h:outputText value="Municipio" />
-                            <p:selectOneMenu value="#{clienteBean.selectedCliente.municipio.idMunicipio}">
+                            <h:outputText value="Municipio"/>
+                            <p:selectOneMenu required="true" value="#{clienteBean.selectedCliente.municipio.idMunicipio}">
                                 <f:selectItem itemLabel="Seleccione" itemValue="" />
                                 <f:selectItems value="#{municipioBean.selectOneItemsMuni}" />
                             </p:selectOneMenu>
@@ -120,20 +120,20 @@
                                 <f:validateRegex pattern="^[a-zA-Z ]+$"/>
                             </p:inputText>
                             
-                            <h:outputText value="Dui" />
-                            <p:inputText value="#{clienteBean.selectedCliente.dui}">
+                              <h:outputText value="Dui" />
+                            <p:inputMask required="true" value="#{clienteBean.selectedCliente.dui}" mask="99999999-9">
                                 <f:validateLength minimum="10" maximum="10"/>
-                            </p:inputText>
+                            </p:inputMask>
                             
                             <h:outputText value="Nit" />
-                            <p:inputText value="#{clienteBean.selectedCliente.nit}">
+                            <p:inputMask required="true" value="#{clienteBean.selectedCliente.nit}" mask="9999-999999-999-9">
                                 <f:validateLength minimum="8" maximum="45"/>
-                            </p:inputText>
+                            </p:inputMask>
                             
-                            <h:outputText value="Telefono" />
-                            <p:inputText value="#{clienteBean.selectedCliente.telefono}">
-                                <f:validateLength minimum="8" maximum="8"/>
-                            </p:inputText>
+                            <h:outputText value="Telefono"/>
+                            <p:inputMask required="true" value="#{clienteBean.selectedCliente.telefono}" mask="9999-9999">
+                                <f:validateLength minimum="8" maximum="9"/>
+                            </p:inputMask>
 
                             <h:outputText value="Municipio" />
                             <p:selectOneMenu value="#{clienteBean.selectedCliente.municipio.idMunicipio}">

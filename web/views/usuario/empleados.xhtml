@@ -50,21 +50,21 @@
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
                             <h:outputText value="Nombre" />
-                            <p:inputText id="inEmp" value="#{empleadoBean.selectedEmpleados.nombre}">
+                            <p:inputText id="inEmp" value="#{empleadoBean.selectedEmpleados.nombre}" required="true">
                                 <f:validateLength minimum="5" maximum="55"/>
                                 <f:validateRegex pattern="^[a-zA-Z ]+$"/>
                             </p:inputText>
 
                             <h:outputText value="Apellido" />
-                            <p:inputText value="#{empleadoBean.selectedEmpleados.apellido}">
+                            <p:inputText value="#{empleadoBean.selectedEmpleados.apellido}" required="true">
                                 <f:validateLength minimum="5" maximum="55"/>
                                 <f:validateRegex pattern="^[a-zA-Z ]+$"/>
                             </p:inputText>
                             
                             <h:outputText value="Dui" />
-                            <p:inputText value="#{empleadoBean.selectedEmpleados.dui}">
+                            <p:inputMask value="#{empleadoBean.selectedEmpleados.dui}" mask="99999999-9" required="true">
                                 <f:validateLength minimum="10" maximum="10"/>
-                            </p:inputText>
+                            </p:inputMask>
                             <f:facet name="footer">
                                 <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogEmpleadoCreate').hide()" actionListener="#{empleadoBean.btnCreateEmpleado(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
                                 <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogEmpleadoCreate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
@@ -77,21 +77,22 @@
                         <h:inputHidden value="#{empleadoBean.selectedEmpleados.idEmpleado}" />
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
-                            <h:outputText value="Nombre" />
-                            <p:inputText value="#{empleadoBean.selectedEmpleados.nombre}">
+                          <h:outputText value="Nombre" />
+                            <p:inputText id="inEmp" value="#{empleadoBean.selectedEmpleados.nombre}" required="true">
+                                <f:validateLength minimum="5" maximum="55"/>
                                 <f:validateRegex pattern="^[a-zA-Z ]+$"/>
                             </p:inputText>
-                            
-                            <h:outputText value="apellido" />
-                            <p:inputText value="#{empleadoBean.selectedEmpleados.apellido}">
+
+                            <h:outputText value="Apellido" />
+                            <p:inputText value="#{empleadoBean.selectedEmpleados.apellido}" required="true">
+                                <f:validateLength minimum="5" maximum="55"/>
                                 <f:validateRegex pattern="^[a-zA-Z ]+$"/>
                             </p:inputText>
                             
                             <h:outputText value="Dui" />
-                            <p:inputText value="#{empleadoBean.selectedEmpleados.dui}">
+                            <p:inputMask value="#{empleadoBean.selectedEmpleados.dui}" mask="99999999-9" required="true">
                                 <f:validateLength minimum="10" maximum="10"/>
-                            </p:inputText>
-                            
+                            </p:inputMask>
                             <f:facet name="footer">
                                 <p:commandButton actionListener="#{empleadoBean.btnUpdateEmpleado(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogEmpleadoUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
                                 <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogEmpleadoUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
