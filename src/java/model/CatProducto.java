@@ -38,6 +38,9 @@ public class CatProducto  implements java.io.Serializable {
      private Set detaOrdenVentas = new HashSet(0);
 
     public CatProducto() {
+        this.marca = new Marca();
+        this.categoria = new Categoria();
+        this.presentacion = new Presentacion();
     }
 
 	
@@ -45,6 +48,7 @@ public class CatProducto  implements java.io.Serializable {
         this.categoria = categoria;
         this.marca = marca;
         this.presentacion = presentacion;
+        this.precio = 0;
     }
     public CatProducto(Categoria categoria, Marca marca, Presentacion presentacion, String nombre, String descripcion, Byte precio, Set productoProveedors, Set productos, Set detaOrdenCompras, Set detaOrdenVentas) {
        this.categoria = categoria;
