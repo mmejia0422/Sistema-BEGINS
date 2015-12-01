@@ -23,7 +23,7 @@ public class MunicipioDaoImpl implements MunicipioDao{
          List<Municipio> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Municipio m, Departamento d left join fetch m.departamento left join fetch d.pais";
+        String sql = "FROM Municipio m left join fetch m.departamento dep left join fetch dep.pais";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();
