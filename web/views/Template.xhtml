@@ -43,26 +43,6 @@
                         <p:submenu label="Ventas" icon="ui-icon-document-b">
                             <p:menuitem value="Crear factura" url="#{appBean.basePath}factura/crearFactura.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
                         </p:submenu>
-
-                        <p:submenu label="Help" icon="ui-icon-help">
-                            <p:menuitem value="Contents" url="#" />
-                            <p:submenu label="Search" icon="ui-icon-search">
-                                <p:submenu label="Text">
-                                    <p:menuitem value="Workspace" url="#" />
-                                </p:submenu>
-                                <p:menuitem value="File" url="#" />
-                            </p:submenu>
-                        </p:submenu>
-
-                        <p:submenu label="Actions" icon="ui-icon-gear">
-                            <p:submenu label="Ajax" icon="ui-icon-refresh">
-                                <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk"/>
-                                <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w"/>
-                            </p:submenu>
-                            <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
-                                <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close" ajax="false"/>
-                            </p:submenu>
-                        </p:submenu>
                         <p:menuitem value="Salir" actionListener="#{loginBean.logout()}" icon="ui-icon-close" oncomplete="handleLoginRequest(xhr, status, args)"/>
                     </p:menubar>
                 </h:form>

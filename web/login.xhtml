@@ -15,14 +15,16 @@
                 <p:panel id="basic" header="Ingresar usuario y clave" style="margin-bottom:20px">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel for="username" value="Usuario:" />
-                        <p:inputText id="username" value="#{loginBean.usuario.usuario}" required="true" label="username" />
+                        <p:inputText id="username" value="#{loginBean.usuario.usuario}" required="true" label="username">      
+                        </p:inputText>
 
                         <h:outputLabel for="password" value="Clave:" />
                         <p:password id="password" value="#{loginBean.usuario.contrasena}" required="true" label="password" />
 
                         <f:facet name="footer">
                             <p:commandButton id="loginButton" value="Login" update="growl" actionListener="#{loginBean.login(event)}" 
-                                icon="icon-login" oncomplete="handleLoginRequest(xhr, status, args)" />
+                                             icon="icon-login" oncomplete="handleLoginRequest(xhr, status, args)" >
+                            </p:commandButton>
                         </f:facet>  
                     </h:panelGrid>
                 </p:panel>

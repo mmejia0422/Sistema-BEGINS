@@ -12,15 +12,62 @@
             <ui:define name="top">
                 Tienda de conveniencia
             </ui:define>
+
             <ui:define name="content">
+                <p:growl id="msg" showDetail="true" />
                 <h:form id="formDataTable">
+                    <br/>
+                    <p:separator/>
                     <p:panelGrid styleClass="companyHeaderGrid" columns="2" style="margin: 0 auto;" columnClasses="label,value">
-                        <h:outputText value="Usuario" />
-                        <p:inputText id="inFac" value="#{usuarioBean.selectedUsuario.usuario}">
-                            <f:validateLength minimum="5" maximum="10"/>
-                            <f:validateRegex pattern="^[0-9a-zA-Z ]+$"/>
-                        </p:inputText>
+                        <h:outputText value="Cajero" />
+                        <p:inputText id="inFac" value="#{usuarioBean.usuarioSesion}" disabled="true"/>
                     </p:panelGrid>
+                    <p:separator/>
+                    <br/>
+                    <h:form id="formDataTable">
+
+                        <p:dataTable id="basicDT" var="catePro" value="#{cateProductoBean.catProductos}"
+                                     paginator="true" rows="10"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,15">
+                            <f:facet name="header">
+                                Listado de productos
+                            </f:facet>
+                            <p:column headerText="Nombre" filterBy="#{catePro.nombre}" filterMatchMode="contains">
+                                <h:outputText value="#{catePro.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="Precio" filterMatchMode="contains" filterBy="#{catePro.precio}">
+                                <h:outputText value="#{catePro.precio}" />
+                            </p:column>
+
+                            <p:column headerText="Marca" filterMatchMode="contains" filterBy="#{catePro.marca.nombre}">
+                                <h:outputText value="#{catePro.marca.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="Categoria" filterMatchMode="contains" filterBy="#{catePro.categoria.nombre}">
+                                <h:outputText value="#{catePro.categoria.nombre}" />
+                            </p:column>
+                            <p:column headerText="Presentacion" filterMatchMode="contains" filterBy="#{catePro.presentacion.nombre}">
+                                <h:outputText value="#{catePro.presentacion.nombre}"/>
+                            </p:column>
+                            <p:column headerText="Seleccione" style="width:100px;text-align: center">
+                                <p:commandButton id="btnAgregar" update=":formSelected" icon="ui-icon-plus" title="Agregar">
+                                    <f:setPropertyActionListener value="#{prodCate}" target="#{cateProductoBean.selectedCatProducto}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </h:form>
+                <br/>
+                <p:separator/>
+                <h:form id="formSelected">
+                    <p:dataList value="#{cateProductoBean.catProductos}" var="prodList" type="ordered">
+                        <f:facet name="header">
+                            Productos seleccionados
+                        </f:facet>
+                        #{prodList.nombre} - #{prodList.descripcion}
+                    </p:dataList>
                 </h:form>
             </ui:define>
         </ui:composition>

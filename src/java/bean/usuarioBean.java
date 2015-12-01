@@ -10,6 +10,7 @@ import dao.UsuarioDaoImpl;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +33,7 @@ public class usuarioBean {
     private List<Usuario> usuarios;
     private Usuario selectedUsuario;
     private List<SelectItem> selectOneItemsUsuario;
+    private String usuarioSesion;
 
     public usuarioBean() {
         this.usuarios = new ArrayList<Usuario>();
@@ -127,5 +129,10 @@ public class usuarioBean {
             this.selectOneItemsUsuario.add(selectItem);
         }
         return selectOneItemsUsuario;
+    }
+
+    public String getUsuarioSesion() {
+        usuarioSesion = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        return usuarioSesion;
     }
 }
