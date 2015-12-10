@@ -1,5 +1,5 @@
 package model;
-// Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1
+// Generated 12-09-2015 09:53:51 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -24,32 +24,28 @@ public class Menu  implements java.io.Serializable {
 
 
      private Integer idmenu;
-     private int nivel;
-     private int orden;
      private String nombre;
-     private String url;
-     private String icono;
      private String estado;
+     private Integer orden;
+     private String url;
      private Set rolMenus = new HashSet(0);
+     private Set submenus = new HashSet(0);
 
     public Menu() {
     }
 
 	
-    public Menu(int nivel, int orden, String nombre, String estado) {
-        this.nivel = nivel;
-        this.orden = orden;
+    public Menu(String nombre, String estado) {
         this.nombre = nombre;
         this.estado = estado;
     }
-    public Menu(int nivel, int orden, String nombre, String url, String icono, String estado, Set rolMenus) {
-       this.nivel = nivel;
-       this.orden = orden;
+    public Menu(String nombre, String estado, Integer orden, String url, Set rolMenus, Set submenus) {
        this.nombre = nombre;
-       this.url = url;
-       this.icono = icono;
        this.estado = estado;
+       this.orden = orden;
+       this.url = url;
        this.rolMenus = rolMenus;
+       this.submenus = submenus;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -65,26 +61,6 @@ public class Menu  implements java.io.Serializable {
     }
 
     
-    @Column(name="nivel", nullable=false)
-    public int getNivel() {
-        return this.nivel;
-    }
-    
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
-    }
-
-    
-    @Column(name="orden", nullable=false)
-    public int getOrden() {
-        return this.orden;
-    }
-    
-    public void setOrden(int orden) {
-        this.orden = orden;
-    }
-
-    
     @Column(name="nombre", nullable=false, length=80)
     public String getNombre() {
         return this.nombre;
@@ -92,26 +68,6 @@ public class Menu  implements java.io.Serializable {
     
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    
-    @Column(name="url", length=120)
-    public String getUrl() {
-        return this.url;
-    }
-    
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    
-    @Column(name="icono", length=45)
-    public String getIcono() {
-        return this.icono;
-    }
-    
-    public void setIcono(String icono) {
-        this.icono = icono;
     }
 
     
@@ -124,6 +80,26 @@ public class Menu  implements java.io.Serializable {
         this.estado = estado;
     }
 
+    
+    @Column(name="orden")
+    public Integer getOrden() {
+        return this.orden;
+    }
+    
+    public void setOrden(Integer orden) {
+        this.orden = orden;
+    }
+
+    
+    @Column(name="url", length=240)
+    public String getUrl() {
+        return this.url;
+    }
+    
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
 @OneToMany(fetch=FetchType.LAZY, mappedBy="menu")
     public Set getRolMenus() {
         return this.rolMenus;
@@ -131,6 +107,15 @@ public class Menu  implements java.io.Serializable {
     
     public void setRolMenus(Set rolMenus) {
         this.rolMenus = rolMenus;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="menu")
+    public Set getSubmenus() {
+        return this.submenus;
+    }
+    
+    public void setSubmenus(Set submenus) {
+        this.submenus = submenus;
     }
 
 

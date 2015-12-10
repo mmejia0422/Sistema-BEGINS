@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12-09-2015 09:53:53 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Submenu" table="submenu" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idsubmenu" type="java.lang.Integer">
+            <column name="idsubmenu" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="menu" class="model.Menu" fetch="select">
+            <column name="menu_idmenu" not-null="true" />
+        </many-to-one>
+        <property name="nombreSubmenu" type="string">
+            <column name="nombre_submenu" length="150" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="1" not-null="true" />
+        </property>
+        <property name="url" type="string">
+            <column name="url" length="240" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

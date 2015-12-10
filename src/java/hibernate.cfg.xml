@@ -44,5 +44,6 @@
     <mapping resource="model/DetaOrdenVenta.hbm.xml"/>
     <mapping resource="model/DetaCombustible.hbm.xml"/>
     <mapping resource="model/DetaAjusteInventario.hbm.xml"/>
+    <mapping resource="model/Submenu.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -37,4 +37,5 @@
   <table-filter match-name="orden_compra"/>
   <table-filter match-name="cliente"/>
   <table-filter match-name="ajuste_inventario"/>
+  <table-filter match-name="submenu"/>
 </hibernate-reverse-engineering>
