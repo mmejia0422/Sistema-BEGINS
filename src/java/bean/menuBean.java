@@ -5,12 +5,16 @@
  */
 package bean;
 
+import dao.MenuDao;
+import dao.MenuDaoImpl;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import model.Menu;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -26,12 +30,19 @@ import org.primefaces.model.menu.MenuModel;
 public class menuBean {
     
     private MenuModel model;
+    private List<Menu> menus;
     
     public menuBean() { 
         /* The following code is new to make a dynamic menu bar*/
         
          model = new DefaultMenuModel();
-       //First submenu
+       
+         MenuDao menuDao = new MenuDaoImpl();
+         this.menus = menuDao.findAll();
+         
+         //recorrer un arreglo para agregar los submenu y menu item
+         //Encontrar un tipo que permita recibir un objeto en lugar de un String
+       
        DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
        DefaultMenuItem item = new DefaultMenuItem("External");
        item.setUrl("http://www.primefaces.org");
