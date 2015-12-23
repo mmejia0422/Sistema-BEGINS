@@ -20,7 +20,7 @@
             </div>
             <div id="menu">
                 <h:form>
-                    <p:menubar>
+                    <!--<p:menubar>
                         <p:menuitem value="Inicio" url="#{appBean.basePath}/inicio.xhtml" icon="ui-icon-home"/>
                         <p:submenu rendered="true" label="Mantenimientos" icon="ui-icon-gear">
                             <p:menuitem value="Usuarios" url="#{appBean.basePath}usuario/index.xhtml" />
@@ -44,7 +44,10 @@
                             <p:menuitem value="Crear factura" url="#{appBean.basePath}factura/crearFactura.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
                         </p:submenu>
                         <p:menuitem value="Salir" actionListener="#{loginBean.logout()}" icon="ui-icon-close" oncomplete="handleLoginRequest(xhr, status, args)"/>
-                    </p:menubar>
+                    </p:menubar>-->
+                    
+                    <p:menubar model="#{menuBean.model}"/>
+                   
                 </h:form>
             </div>
 

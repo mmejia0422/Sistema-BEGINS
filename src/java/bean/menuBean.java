@@ -5,10 +5,17 @@
  */
 package bean;
 
+import java.awt.event.ActionListener;
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuItem;
+import org.primefaces.model.menu.MenuModel;
 
 /**
  *
@@ -17,12 +24,25 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @RequestScoped
 public class menuBean {
-
-    /**
-     * Creates a new instance of menuBean
-     */
-    public menuBean() {
+    
+    private MenuModel model;
+    
+    public menuBean() { 
+        /* The following code is new to make a dynamic menu bar*/
+        
+         model = new DefaultMenuModel();
+       //First submenu
+       DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
+       DefaultMenuItem item = new DefaultMenuItem("External");
+       item.setUrl("http://www.primefaces.org");
+       item.setIcon("ui-icon-home");
+       firstSubmenu.addElement(item);
+       model.addElement(firstSubmenu);
     }
+    
+    public MenuModel getModel() {
+       return model;
+   }
 
     public void save() {
         addMessage("Success", "Data saved");

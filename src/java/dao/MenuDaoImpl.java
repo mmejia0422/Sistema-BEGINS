@@ -6,7 +6,7 @@
 package dao;
 
 import java.util.List;
-import model.Submenu;
+import model.Menu;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -15,14 +15,14 @@ import util.HibernateUtil;
  *
  * @author Mario
  */
-public class SubMenuDaoImpl implements SubMenuDao{
+public class MenuDaoImpl implements MenuDao{
 
     @Override
-    public List<Submenu> findAll() {
-         List<Submenu> listado = null;
+    public List<Menu> findAll() {
+        List<Menu> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "Here goes my query";
+        String sql = "FROM Menu";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();
