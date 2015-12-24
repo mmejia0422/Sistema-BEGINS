@@ -105,5 +105,20 @@ public class RolDaoImpl implements RolDao {
         }
         return flag;
     }
+
+    @Override
+    public List<Rol> findResp(String usuario) {
+        List<Rol> listado = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Usuario u left join fetch u.rol where u.usuario = '" + usuario + "'";
+        try {
+            listado = sesion.createQuery(sql).list();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        }
+        return listado;
+    }
     
 }

@@ -18,11 +18,11 @@ import util.HibernateUtil;
 public class MenuDaoImpl implements MenuDao{
 
     @Override
-    public List<Menu> findAll() {
+    public List<Menu> findAll(Integer rolid) {
         List<Menu> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Menu";
+        String sql = "FROM RolMenu rm left join fetch rm.menu left join fetch rm.rol where rm.rol = '" + rolid + "'";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();

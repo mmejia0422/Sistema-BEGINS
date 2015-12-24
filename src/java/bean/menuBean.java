@@ -7,6 +7,8 @@ package bean;
 
 import dao.MenuDao;
 import dao.MenuDaoImpl;
+import dao.RolDao;
+import dao.RolDaoImpl;
 import dao.SubMenuDao;
 import dao.SubMenuDaoImpl;
 import java.awt.event.ActionListener;
@@ -17,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import model.Menu;
+import model.Rol;
 import model.Submenu;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -34,17 +37,22 @@ public class menuBean {
     private MenuModel model;
     private List<Menu> menus;
     private List<Submenu> subMenus;
+    //private Integer idRol;
+    private String usuarioSesion;
+    private List<Rol> idRolUs;
     
     public menuBean() { 
         /* The following code is new to make a dynamic menu bar*/
         
          model = new DynamicMenuModel();
-       
          MenuDao menuDao = new MenuDaoImpl();
-         this.menus = menuDao.findAll();
+         this.usuarioSesion = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+         if (this.usuarioSesion != null) { //esta regresando null no recupera el usuario de sesion
+         RolDao rd = new RolDaoImpl();
+         this.idRolUs = rd.findResp(this.usuarioSesion);
+         if  (this.idRolUs != null){
+         this.menus = menuDao.findAll(this.idRolUs.get(0).getIdRol());
          
-         //recorrer un arreglo para agregar los submenu y menu item
-         //Encontrar un tipo que permita recibir un objeto en lugar de un String
        for (Menu sm : this.menus){
        DefaultSubMenu firstSubmenu = new DefaultSubMenu(sm.getNombre());
        
@@ -60,6 +68,8 @@ public class menuBean {
        firstSubmenu.addElement(item);
        model.addElement(firstSubmenu);
        //}
+       }
+         }
        }
     }
     
