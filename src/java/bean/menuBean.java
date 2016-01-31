@@ -81,14 +81,14 @@ public class menuBean implements Serializable{
                 this.subMenus = submenuDao.findByMenu(this.menus.get(0).getIdmenu());
                 
                 for (Menu sm : this.menus) {
-                    DefaultSubMenu firstSubmenu = new DefaultSubMenu(sm.getNombre());
+                    DefaultSubMenu firstSubmenu = new DefaultSubMenu(sm.getNombre(), sm.getIcono());
                     
                     for (Submenu sb : this.subMenus) {
                         
                     DefaultMenuItem item = new DefaultMenuItem(sb.getNombreSubmenu());
                     
                     item.setUrl(sb.getUrl());
-                    item.setIcon("ui-icon-home");
+                    item.setIcon(sb.getIcono());
                     firstSubmenu.addElement(item);
                     
                     }

@@ -1,35 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 12-09-2015 09:53:53 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-31-2016 04:09:45 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="gasisw_bd1" name="model.Menu" optimistic-lock="version" table="menu">
-    <id name="idmenu" type="java.lang.Integer">
-      <column name="idmenu"/>
-      <generator class="identity"/>
-    </id>
-    <property name="nombre" type="string">
-      <column length="80" name="nombre" not-null="true"/>
-    </property>
-    <property name="estado" type="string">
-      <column length="1" name="estado" not-null="true"/>
-    </property>
-    <property name="orden" type="java.lang.Integer">
-      <column name="orden"/>
-    </property>
-    <property name="url" type="string">
-      <column length="240" name="url"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="rolMenus" table="rol_menu">
-      <key>
-        <column name="menu_id" not-null="true"/>
-      </key>
-      <one-to-many class="model.RolMenu"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="submenus" table="submenu">
-      <key>
-        <column name="menu_idmenu" not-null="true"/>
-      </key>
-      <one-to-many class="model.Submenu"/>
-    </set>
-  </class>
+    <class name="model.Menu" table="menu" catalog="gasisw_bd1" optimistic-lock="version">
+        <id name="idmenu" type="java.lang.Integer">
+            <column name="idmenu" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="80" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="1" not-null="true" />
+        </property>
+        <property name="orden" type="java.lang.Integer">
+            <column name="orden" />
+        </property>
+        <property name="url" type="string">
+            <column name="url" length="240" />
+        </property>
+        <property name="icono" type="string">
+            <column name="icono" length="90" />
+        </property>
+        <set name="rolMenus" table="rol_menu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_id" not-null="true" />
+            </key>
+            <one-to-many class="model.RolMenu" />
+        </set>
+        <set name="submenus" table="submenu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_idmenu" not-null="true" />
+            </key>
+            <one-to-many class="model.Submenu" />
+        </set>
+    </class>
 </hibernate-mapping>
