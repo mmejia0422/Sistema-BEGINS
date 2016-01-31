@@ -88,9 +88,8 @@ public class menuBean implements Serializable{
                     item.setUrl(sb.getUrl());
                     item.setIcon("ui-icon-home");
                     firstSubmenu.addElement(item);
-                    //}
+                    }
                     this.model.addElement(firstSubmenu);
-                }
                 }
             }
             }
