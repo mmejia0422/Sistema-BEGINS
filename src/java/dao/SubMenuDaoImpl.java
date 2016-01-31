@@ -18,11 +18,11 @@ import util.HibernateUtil;
 public class SubMenuDaoImpl implements SubMenuDao{
 
     @Override
-    public List<Submenu> findAll() {
+    public List<Submenu> findByMenu(Integer idMenu) {
          List<Submenu> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "Here goes my query";
+        String sql = "FROM Submenu where estado = 'Y' and menu_idmenu = '" + idMenu + "'";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();

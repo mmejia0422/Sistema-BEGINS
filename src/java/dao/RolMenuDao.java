@@ -6,12 +6,12 @@
 package dao;
 
 import java.util.List;
-import model.Submenu;
+import model.RolMenu;
 
 /**
  *
  * @author Mario
  */
-public interface SubMenuDao {
-    public List<Submenu> findByMenu(Integer idMenu);
+public interface RolMenuDao {
+    public List<RolMenu> findByResp(Integer idResp);
 }

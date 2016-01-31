@@ -37,6 +37,7 @@ public class usuarioBean {
 
     public usuarioBean() {
         this.usuarios = new ArrayList<Usuario>();
+        this.selectedUsuario = new Usuario();
     }
 
     @PostConstruct
@@ -132,7 +133,8 @@ public class usuarioBean {
     }
 
     public String getUsuarioSesion() {
-        usuarioSesion = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        usuarioSesion = us.getUsuario();
         return usuarioSesion;
     }
 }

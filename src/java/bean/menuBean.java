@@ -9,89 +9,120 @@ import dao.MenuDao;
 import dao.MenuDaoImpl;
 import dao.RolDao;
 import dao.RolDaoImpl;
+import dao.RolMenuDao;
+import dao.RolMenuDaoImpl;
 import dao.SubMenuDao;
 import dao.SubMenuDaoImpl;
-import java.awt.event.ActionListener;
+import dao.UsuarioDao;
+import dao.UsuarioDaoImpl;
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.application.FacesMessage;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import model.Menu;
 import model.Rol;
+import model.RolMenu;
 import model.Submenu;
+import model.Usuario;
 import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
-import org.primefaces.model.menu.DynamicMenuModel;
 import org.primefaces.model.menu.MenuModel;
 
 /**
  *
  * @author Mario
  */
-@ManagedBean
+@ManagedBean(name = "menuBean")
 @RequestScoped
-public class menuBean {
-    
-    private MenuModel model;
-    private List<Menu> menus;
-    private List<Submenu> subMenus;
-    //private Integer idRol;
-    private String usuarioSesion;
-    private List<Rol> idRolUs;
-    
-    public menuBean() { 
-        /* The following code is new to make a dynamic menu bar*/
-        
-         model = new DynamicMenuModel();
-         MenuDao menuDao = new MenuDaoImpl();
-         this.usuarioSesion = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-         if (this.usuarioSesion != null) { //esta regresando null no recupera el usuario de sesion
-         RolDao rd = new RolDaoImpl();
-         this.idRolUs = rd.findResp(this.usuarioSesion);
-         if  (this.idRolUs != null){
-         this.menus = menuDao.findAll(this.idRolUs.get(0).getIdRol());
-         
-       for (Menu sm : this.menus){
-       DefaultSubMenu firstSubmenu = new DefaultSubMenu(sm.getNombre());
-       
-       //SubMenuDao subMenuDao = new SubMenuDaoImpl();
-       //this.subMenus = subMenuDao.findAll();
-       
-       //for (Submenu sb : this.subMenus) {
-       
-       //DefaultMenuItem item = new DefaultMenuItem(sb.getNombreSubmenu());
-       DefaultMenuItem item = new DefaultMenuItem("External");
-       item.setUrl("http://www.primefaces.org");
-       item.setIcon("ui-icon-home");
-       firstSubmenu.addElement(item);
-       model.addElement(firstSubmenu);
-       //}
-       }
-         }
-       }
-    }
-    
-    public MenuModel getModel() {
-       return model;
-   }
+public class menuBean implements Serializable{
 
-    public void save() {
-        addMessage("Success", "Data saved");
+    private List<Menu> menus;
+    private List<RolMenu> rolMenus;
+    private List<Submenu> subMenus;
+    private MenuModel model;
+    private Integer RespSesion;
+    private Usuario usuario;
+    private UsuarioDao usuarioDao;
+    /*@ManagedProperty (value="#{loginBean}")
+    private loginBean login;*/
+
+    public menuBean() {
+        this.usuarioDao = new UsuarioDaoImpl();
+        this.usuario = new Usuario();
     }
-     
-    public void update() {
-        addMessage("Success", "Data updated");
+
+    @PostConstruct
+    public void init() {
+        //model = new DynamicMenuModel();
+        model = new DefaultMenuModel();
+        this.listarMenus();
     }
-     
-    public void delete() {
-        addMessage("Success", "Data deleted");
+
+    public void listarMenus() {
+        try {
+            //The following code is used to build a dynamic menu
+
+            RolMenuDao rolMenuDao = new RolMenuDaoImpl();
+            MenuDao menuDao = new MenuDaoImpl();
+            SubMenuDao submenuDao = new SubMenuDaoImpl();
+            //this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            this.usuario = this.usuarioDao.findUser();
+            if (this.usuario != null) { 
+            this.RespSesion = this.usuario.getRol().getIdRol();
+            if (this.RespSesion != null) {
+                this.rolMenus = rolMenuDao.findByResp(this.RespSesion);
+                this.menus = menuDao.findByRolMenu(this.rolMenus.get(0).getMenu().getIdmenu());
+                //revisar la siguiente linea porque no esta bien
+                this.subMenus = submenuDao.findByMenu(this.menus.get(0).getIdmenu());
+                
+                for (Menu sm : this.menus) {
+                    DefaultSubMenu firstSubmenu = new DefaultSubMenu(sm.getNombre());
+
+                    for (Submenu sb : this.subMenus) {
+                    DefaultMenuItem item = new DefaultMenuItem(sb.getNombreSubmenu());
+                    item.setUrl(sb.getUrl());
+                    item.setIcon("ui-icon-home");
+                    firstSubmenu.addElement(item);
+                    //}
+                    this.model.addElement(firstSubmenu);
+                }
+                }
+            }
+            }
+            //Here ends the code for the dynamic menu
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.usuario = null;
     }
-     
-    public void addMessage(String summary, String detail) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
-        FacesContext.getCurrentInstance().addMessage(null, message);
+
+    public MenuModel getModel() {
+        return model;
     }
-    
+
+    public void setModel(MenuModel model) {
+        this.model = model;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    /*public loginBean getLogin() {
+        return login;
+    }
+
+    public void setLogin(loginBean login) {
+        this.login = login;
+    }*/
+
 }

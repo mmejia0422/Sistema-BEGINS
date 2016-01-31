@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+import javax.faces.context.FacesContext;
 import model.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,7 +24,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         Usuario model = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Usuario WHERE estado = 'Y' and usuario = '" + usuario.getUsuario() + "'";
+        String sql = "FROM Usuario u left join fetch u.rol WHERE u.estado = 'Y' and u.usuario = '" + usuario.getUsuario() + "'";
         try {
             //sesion.beginTransaction();
             model = (Usuario) sesion.createQuery(sql).uniqueResult();
@@ -136,6 +137,24 @@ public class UsuarioDaoImpl implements UsuarioDao {
             throw e;
         }
         return listado;
+    }
+
+    @Override
+    public Usuario findUser() {
+        Usuario model = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Usuario u left join fetch u.rol WHERE u.estado = 'Y' and u.usuario = 'mmejia'";
+        try {
+            //sesion.beginTransaction();
+            model = (Usuario) sesion.createQuery(sql).uniqueResult();
+            //sesion.beginTransaction().commit();
+            tx.commit();
+        } catch (Exception e) {
+            //sesion.beginTransaction().rollback();
+            tx.rollback();
+        }
+        return model;
     }
 
 }

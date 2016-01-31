@@ -106,7 +106,7 @@ public class RolDaoImpl implements RolDao {
         return flag;
     }
 
-    @Override
+    /*@Override
     public List<Rol> findResp(String usuario) {
         List<Rol> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -119,6 +119,6 @@ public class RolDaoImpl implements RolDao {
             tx.rollback();
         }
         return listado;
-    }
+    }*/
     
 }

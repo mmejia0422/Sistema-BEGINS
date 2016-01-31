@@ -5,17 +5,31 @@
  */
 package bean;
 
+import dao.MenuDao;
+import dao.MenuDaoImpl;
+import dao.RolMenuDao;
+import dao.RolMenuDaoImpl;
 import dao.UsuarioDao;
 import dao.UsuarioDaoImpl;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import model.Menu;
+import model.RolMenu;
+import model.Submenu;
 import model.Usuario;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.DynamicMenuModel;
+import org.primefaces.model.menu.MenuModel;
 import util.MyUtil;
 
 /**
@@ -34,8 +48,8 @@ public class loginBean implements Serializable {
     public loginBean() {
         this.usuarioDao = new UsuarioDaoImpl();
         if (this.usuario == null) {
-            this.usuario = new Usuario();
-        }
+         this.usuario = new Usuario();
+         }
     }
 
     /**
@@ -71,12 +85,15 @@ public class loginBean implements Serializable {
         FacesMessage message;
         boolean loggedIn;
         String ruta = "";
-
+        
         this.usuario = this.usuarioDao.login(this.usuario);
 
         if (this.usuario != null) {
+
             loggedIn = true;
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario.getUsuario());
+            //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario.getUsuario());
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario);
+            //this.u = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getUsuario());
             ruta = MyUtil.basepathlogin() + "views/inicio.xhtml";
         } else {
@@ -92,15 +109,15 @@ public class loginBean implements Serializable {
         context.addCallbackParam("ruta", ruta);
     }
 
-    public void logout(){
+    /*public void logout() {
         String ruta = MyUtil.basepathlogin() + "login.xhtml";
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession) facesContext.getExternalContext().getSession(false);
         sesion.invalidate();
-        
+
         context.addCallbackParam("loggedOut", true);
         context.addCallbackParam("ruta", ruta);
-    }
-    
+    }*/
+
 }

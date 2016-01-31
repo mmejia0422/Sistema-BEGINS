@@ -13,5 +13,6 @@ import model.Menu;
  * @author Mario
  */
 public interface MenuDao {
-    public List<Menu> findAll(Integer rolid);
+    //public List<Menu> findByResp(Integer idResp);
+    public List<Menu> findByRolMenu (Integer idMenu);
 }

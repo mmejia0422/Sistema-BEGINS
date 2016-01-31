@@ -43,11 +43,10 @@
                         <p:submenu rendered="true" label="Ventas" icon="ui-icon-document-b">
                             <p:menuitem value="Crear factura" url="#{appBean.basePath}factura/crearFactura.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
                         </p:submenu>
-                        <p:menuitem value="Salir" actionListener="#{loginBean.logout()}" icon="ui-icon-close" oncomplete="handleLoginRequest(xhr, status, args)"/>
+                        <p:menuitem value="Salir" actionListener="" icon="ui-icon-close" oncomplete="handleLoginRequest(xhr, status, args)"/>
                     </p:menubar>-->
-                    
-                    <p:menubar model="#{menuBean.model}"/>
-                   
+
+                    <p:menubar id="menudynamic" model="#{menuBean.model}"/>
                 </h:form>
             </div>
 
