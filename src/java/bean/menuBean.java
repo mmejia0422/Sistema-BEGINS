@@ -86,6 +86,7 @@ public class menuBean implements Serializable{
                     for (Submenu sb : this.subMenus) {
                         
                     DefaultMenuItem item = new DefaultMenuItem(sb.getNombreSubmenu());
+                    
                     item.setUrl(sb.getUrl());
                     item.setIcon("ui-icon-home");
                     firstSubmenu.addElement(item);
