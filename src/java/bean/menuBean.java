@@ -71,7 +71,10 @@ public class menuBean implements Serializable{
             MenuDao menuDao = new MenuDaoImpl();
             SubMenuDao submenuDao = new SubMenuDaoImpl();
             //this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            this.usuario = this.usuarioDao.findUser();
+            
+            usuarioBean userbean = new usuarioBean();
+            this.usuario = this.usuarioDao.findUser(userbean.getUsuarioSesion());
+            
             if (this.usuario != null) { 
             this.RespSesion = this.usuario.getRol().getIdRol();
             if (this.RespSesion != null) {

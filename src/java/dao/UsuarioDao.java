@@ -20,5 +20,5 @@ public interface UsuarioDao {
     public boolean update(Usuario usuario);
     public boolean delete(Integer id);
     public List<Usuario> selectItems();
-    public Usuario findUser();
+    public Usuario findUser(String usuarioSesion);
 }

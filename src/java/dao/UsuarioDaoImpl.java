@@ -140,11 +140,11 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public Usuario findUser() {
+    public Usuario findUser(String usuarioSesion) {
         Usuario model = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Usuario u left join fetch u.rol WHERE u.estado = 'Y' and u.usuario = 'mmejia'";
+        String sql = "FROM Usuario u left join fetch u.rol WHERE u.estado = 'Y' and u.usuario = '" + usuarioSesion + "'";
         try {
             //sesion.beginTransaction();
             model = (Usuario) sesion.createQuery(sql).uniqueResult();

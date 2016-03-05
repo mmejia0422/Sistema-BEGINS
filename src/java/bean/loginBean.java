@@ -91,9 +91,7 @@ public class loginBean implements Serializable {
         if (this.usuario != null) {
 
             loggedIn = true;
-            //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario.getUsuario());
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario);
-            //this.u = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getUsuario());
             ruta = MyUtil.basepathlogin() + "views/inicio.xhtml";
         } else {
