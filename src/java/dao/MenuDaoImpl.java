@@ -46,5 +46,20 @@ public class MenuDaoImpl implements MenuDao{
         }
         return listado;
     }*/
+
+    @Override
+    public List<Menu> findAll() {
+         List<Menu> listado = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Menu";
+        try {
+            listado = sesion.createQuery(sql).list();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        }
+        return listado;
+    }
     
 }

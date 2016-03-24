@@ -48,8 +48,7 @@ public class menuBean implements Serializable{
     private Integer RespSesion;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
-    /*@ManagedProperty (value="#{loginBean}")
-    private loginBean login;*/
+    private List<Menu> listaMenus;
 
     public menuBean() {
         this.usuarioDao = new UsuarioDaoImpl();
@@ -79,6 +78,7 @@ public class menuBean implements Serializable{
             this.RespSesion = this.usuario.getRol().getIdRol();
             if (this.RespSesion != null) {
                 this.rolMenus = rolMenuDao.findByResp(this.RespSesion);
+                //bug encontrado, no solo debe retornar la fila 0 si no todas
                 this.menus = menuDao.findByRolMenu(this.rolMenus.get(0).getMenu().getIdmenu());
                 //revisar la siguiente linea porque no esta bien
                 this.subMenus = submenuDao.findByMenu(this.menus.get(0).getIdmenu());
@@ -129,5 +129,15 @@ public class menuBean implements Serializable{
     public void setLogin(loginBean login) {
         this.login = login;
     }*/
+
+    public List<Menu> getListaMenus() {
+        MenuDao menuDao = new MenuDaoImpl();
+        listaMenus = menuDao.findAll();
+        return listaMenus;
+    }
+
+    public void setListaMenus(List<Menu> listaMenus) {
+        this.listaMenus = listaMenus;
+    }
 
 }

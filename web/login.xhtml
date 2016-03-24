@@ -22,9 +22,26 @@
                         <p:password id="password" value="#{loginBean.usuario.contrasena}" required="true" label="password" />
 
                         <f:facet name="footer">
-                            <p:commandButton id="loginButton" value="Login" update="growl" actionListener="#{loginBean.login(event)}" 
-                                             icon="icon-login" oncomplete="handleLoginRequest(xhr, status, args)" >
-                            </p:commandButton>
+                            <table>
+                                <td>
+                            <!--<p:commandButton id="loginButton" value="Login" update="growl" actionListener="#{loginBean.login(event)}" 
+                                             icon="icon-login" oncomplete="handleLoginRequest(xhr, status, args)">-->
+                                    <p:commandButton id="loginButton" value="Login"
+                                                     icon="icon-login"
+                                                     onclick="PF('pbAjax').start();
+                                                             PF('startButton2').disable();" widgetVar="startButton2">
+                                    </p:commandButton>
+                                </td>
+                                <td align="right" width="188">
+                                    <!--<p:progressBar id="progressBarClient" widgetVar="pbClient" style="width:100px"/>-->
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="#{loginBean.progress}" labelTemplate="{value}%" 
+                                                   style="width:80px; font-size:12px; color: #ffffff" global="false"
+                                                   interval="1000">
+                                        <p:ajax event="complete" update="growl" listener="#{loginBean.login(event)}"  
+                                                oncomplete="handleLoginRequest(xhr, status, args)"/>
+                                    </p:progressBar>
+                                </td>
+                            </table>
                         </f:facet>  
                     </h:panelGrid>
                 </p:panel>

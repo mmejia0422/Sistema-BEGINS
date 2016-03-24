@@ -43,7 +43,8 @@ import util.MyUtil;
 public class loginBean implements Serializable {
 
     private Usuario usuario;
-    private UsuarioDao usuarioDao;
+    private UsuarioDao usuarioDao;  
+    private Integer progress;
 
     public loginBean() {
         this.usuarioDao = new UsuarioDaoImpl();
@@ -105,6 +106,25 @@ public class loginBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
         context.addCallbackParam("ruta", ruta);
+    }
+    
+     public Integer getProgress() {
+                  
+        if(progress == null) {
+            progress = 0;
+        }
+        else {
+            progress = progress + (int)(Math.random() * 35);
+             
+            if(progress > 100)
+                progress = 100;
+          }
+         
+        return progress;
+    }
+     
+     public void setProgress(Integer progress) {
+        this.progress = progress;
     }
 
     /*public void logout() {

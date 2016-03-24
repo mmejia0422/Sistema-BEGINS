@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../Template.xhtml">
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:commandButton id="btnMarcaCreate" update=":formCreate" oncomplete="PF('dialogMenuCreate').show()" icon="icon-new" title="Crear" value="Crear"/>
+                </h:form>
+                <h:form id="formDataTable">
+                    <p:dataTable id="basicDT" var="menu" value="#{menuBean.listaMenus}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15">
+                        <f:facet name="header">
+                            Listado de menus
+                        </f:facet>
+                        <p:column headerText="Menu" filterBy="#{menu.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{menu.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Estado" filterMatchMode="contains" filterBy="#{menu.estado}">
+                            <h:outputText value="#{menu.estado}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Url" filterMatchMode="contains" filterBy="#{menu.url}">
+                            <h:outputText value="#{menu.url}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Icono" filterMatchMode="contains" filterBy="#{menu.icono}">
+                            <h:outputText value="#{menu.icono}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Orden" filterMatchMode="contains" filterBy="#{menu.orden}">
+                            <h:outputText value="#{menu.orden}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Accion" style="width:100px;text-align: center">
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMenuUpdate').show()" icon="icon-edit" title="Modificar">
+                                <f:setPropertyActionListener value="#{marca}" target="#{marcaBean.selectedMarca}" />
+                            </p:commandButton>
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogMenuDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{marca}" target="#{marcaBean.selectedMarca}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
