@@ -11,6 +11,7 @@ import dao.RolMenuDao;
 import dao.RolMenuDaoImpl;
 import dao.UsuarioDao;
 import dao.UsuarioDaoImpl;
+import java.applet.Applet;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import model.Menu;
@@ -45,6 +47,7 @@ public class loginBean implements Serializable {
     private Usuario usuario;
     private UsuarioDao usuarioDao;  
     private Integer progress;
+    //private String previousPage = null;
 
     public loginBean() {
         this.usuarioDao = new UsuarioDaoImpl();
@@ -122,6 +125,34 @@ public class loginBean implements Serializable {
          
         return progress;
     }
+     
+     /*public void cancelProgress(){
+         this.progress = null;
+     }*/
+     
+  
+ //Revisando si se refresca la pagina
+  /*public void checkF5() {
+    String msg = "";
+		UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
+		String id = viewRoot.getViewId();
+		if (previousPage == null) {
+			//msg = "First page ever";
+                    //cancelProgress();
+		} else if (previousPage.equals(id)) {
+			msg = "F5 or reload";
+                    cancelProgress();
+		} else if (FacesContext.getCurrentInstance().isPostback()) {
+			msg = "It's a postback";
+                    cancelProgress();
+		} else
+			msg = "It's a navigation";
+                    cancelProgress();
+                
+		previousPage = id;
+		FacesMessage fm = new FacesMessage(msg);
+		FacesContext.getCurrentInstance().addMessage(null, fm);
+  }*/
      
      public void setProgress(Integer progress) {
         this.progress = progress;
