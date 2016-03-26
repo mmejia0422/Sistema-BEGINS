@@ -39,7 +39,7 @@ import org.primefaces.model.menu.MenuModel;
  */
 @ManagedBean(name = "menuBean")
 @RequestScoped
-public class menuBean implements Serializable{
+public class menuBean implements Serializable {
 
     private List<Menu> menus;
     private List<RolMenu> rolMenus;
@@ -70,34 +70,44 @@ public class menuBean implements Serializable{
             MenuDao menuDao = new MenuDaoImpl();
             SubMenuDao submenuDao = new SubMenuDaoImpl();
             //this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            
+
             usuarioBean userbean = new usuarioBean();
             this.usuario = this.usuarioDao.findUser(userbean.getUsuarioSesion());
-            
-            if (this.usuario != null) { 
-            this.RespSesion = this.usuario.getRol().getIdRol();
-            if (this.RespSesion != null) {
-                this.rolMenus = rolMenuDao.findByResp(this.RespSesion);
-                //bug encontrado, no solo debe retornar la fila 0 si no todas
-                this.menus = menuDao.findByRolMenu(this.rolMenus.get(0).getMenu().getIdmenu());
-                //revisar la siguiente linea porque no esta bien
-                this.subMenus = submenuDao.findByMenu(this.menus.get(0).getIdmenu());
-                
-                for (Menu sm : this.menus) {
-                    DefaultSubMenu firstSubmenu = new DefaultSubMenu(sm.getNombre(), sm.getIcono());
-                    
-                    for (Submenu sb : this.subMenus) {
+
+            if (this.usuario != null) {
+                this.RespSesion = this.usuario.getRol().getIdRol();
+                if (this.RespSesion != null) {
+                    this.rolMenus = rolMenuDao.findByResp(this.RespSesion);
+
+                    for (int i = 0; i < this.rolMenus.size(); i++) {
+                        this.menus = menuDao.findByRolMenu(this.rolMenus.get(i).getMenu().getIdmenu());
                         
-                    DefaultMenuItem item = new DefaultMenuItem(sb.getNombreSubmenu());
-                    
-                    item.setUrl(sb.getUrl());
-                    item.setIcon(sb.getIcono());
-                    firstSubmenu.addElement(item);
-                    
+                        DefaultSubMenu firstSubmenu = new DefaultSubMenu(this.menus.get(0).getNombre(), this.menus.get(0).getIcono());
+
+                        this.subMenus = submenuDao.findByMenu(this.menus.get(0).getIdmenu());
+                        
+                        if(this.subMenus.isEmpty()) {
+                            DefaultMenuItem item = new DefaultMenuItem(this.menus.get(0).getNombre());
+
+                            item.setUrl(this.menus.get(0).getUrl());
+                            item.setIcon(this.menus.get(0).getIcono());
+                            
+                            this.model.addElement(item);
+                            
+                        } else{
+
+                        for (int j = 0; j < this.subMenus.size(); j++) {
+                            DefaultMenuItem item = new DefaultMenuItem(this.subMenus.get(j).getNombreSubmenu());
+
+                            item.setUrl(this.subMenus.get(j).getUrl());
+                            item.setIcon(this.subMenus.get(j).getIcono());
+                            firstSubmenu.addElement(item);
+                        }
+                        this.model.addElement(firstSubmenu);
+                        }   
+                        
                     }
-                    this.model.addElement(firstSubmenu);
                 }
-            }
             }
             //Here ends the code for the dynamic menu
         } catch (Exception e) {
@@ -123,13 +133,12 @@ public class menuBean implements Serializable{
     }
 
     /*public loginBean getLogin() {
-        return login;
-    }
+     return login;
+     }
 
-    public void setLogin(loginBean login) {
-        this.login = login;
-    }*/
-
+     public void setLogin(loginBean login) {
+     this.login = login;
+     }*/
     public List<Menu> getListaMenus() {
         MenuDao menuDao = new MenuDaoImpl();
         listaMenus = menuDao.findAll();

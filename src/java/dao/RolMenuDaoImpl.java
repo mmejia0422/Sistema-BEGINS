@@ -22,7 +22,7 @@ public class RolMenuDaoImpl implements RolMenuDao{
         List<RolMenu> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM RolMenu rm left join fetch rm.menu left join fetch rm.rol where rm.rol = '" + idResp + "'";
+        String sql = "FROM RolMenu rm left join fetch rm.menu menu left join fetch rm.rol rol where rm.rol = '" + idResp + "' order by menu.orden";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();
