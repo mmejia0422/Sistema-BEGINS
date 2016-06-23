@@ -47,6 +47,7 @@ public class loginBean implements Serializable {
     private Usuario usuario;
     private UsuarioDao usuarioDao;  
     private Integer progress;
+    private boolean cargar = false;
     //private String previousPage = null;
 
     public loginBean() {
@@ -92,13 +93,15 @@ public class loginBean implements Serializable {
         
         this.usuario = this.usuarioDao.login(this.usuario);
 
-        if (this.usuario != null) {
-
+        if (this.usuario != null) {            
+            
+            this.cargar = true;
             loggedIn = true;
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getUsuario());
             ruta = MyUtil.basepathlogin() + "views/inicio.xhtml";
         } else {
+            this.progress = null;
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Usuario y/o clave incorrecta");
             if (this.usuario == null) {
@@ -112,11 +115,14 @@ public class loginBean implements Serializable {
     }
     
      public Integer getProgress() {
-                  
+         
         if(progress == null) {
             progress = 0;
         }
-        else {
+        /*else if (this.progress != null && this.cargar == false) { //se ejecuta antes del metodo login
+            this.progress = null;
+        }*/
+        else if (this.progress != null /*&& this.cargar == true*/) {
             progress = progress + (int)(Math.random() * 35);
              
             if(progress > 100)
@@ -125,35 +131,7 @@ public class loginBean implements Serializable {
          
         return progress;
     }
-     
-     /*public void cancelProgress(){
-         this.progress = null;
-     }*/
-     
-  
- //Revisando si se refresca la pagina
-  /*public void checkF5() {
-    String msg = "";
-		UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-		String id = viewRoot.getViewId();
-		if (previousPage == null) {
-			//msg = "First page ever";
-                    //cancelProgress();
-		} else if (previousPage.equals(id)) {
-			msg = "F5 or reload";
-                    cancelProgress();
-		} else if (FacesContext.getCurrentInstance().isPostback()) {
-			msg = "It's a postback";
-                    cancelProgress();
-		} else
-			msg = "It's a navigation";
-                    cancelProgress();
-                
-		previousPage = id;
-		FacesMessage fm = new FacesMessage(msg);
-		FacesContext.getCurrentInstance().addMessage(null, fm);
-  }*/
-     
+      
      public void setProgress(Integer progress) {
         this.progress = progress;
     }

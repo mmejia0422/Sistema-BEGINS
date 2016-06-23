@@ -8,6 +8,8 @@ package bean;
 import dao.UsuarioDao;
 import dao.UsuarioDaoImpl;
 import java.awt.event.ActionEvent;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +80,32 @@ public class usuarioBean {
     public void btnCreateUsuario(ActionEvent actionEvent) {
         UsuarioDao usuarioDao = new UsuarioDaoImpl();
         String msg;
+        
+        /*NUEVO CODIGO*/
+        
+        try{
+        // Create MessageDigest instance for MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            //Add password bytes to digest
+            md.update(this.selectedUsuario.getContrasena().getBytes());
+            //Get the hash's bytes 
+            byte[] bytes = md.digest();
+            //This bytes[] has bytes in decimal format;
+            //Convert it to hexadecimal format
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            //Get complete hashed password in hex format
+            this.selectedUsuario.setContrasena(sb.toString());
+        } catch (NoSuchAlgorithmException e) 
+        {
+            e.printStackTrace();
+            
+        }
+        /*FIN*/
+            
 
         if (usuarioDao.create(this.selectedUsuario)) {
             msg = "Se guardo correctamente el registro";
