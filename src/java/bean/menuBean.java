@@ -82,15 +82,15 @@ public class menuBean implements Serializable {
                     for (int i = 0; i < this.rolMenus.size(); i++) {
                         this.menus = menuDao.findByRolMenu(this.rolMenus.get(i).getMenu().getIdmenu());
                         
-                        DefaultSubMenu firstSubmenu = new DefaultSubMenu(this.menus.get(0).getNombre(), this.menus.get(0).getIcono());
-
+                        DefaultSubMenu firstSubmenu = new DefaultSubMenu(this.menus.get(0).getNombre(), this.menus.get(0).getIcono().getReferencia());
+                        
                         this.subMenus = submenuDao.findByMenu(this.menus.get(0).getIdmenu());
                         
                         if(this.subMenus.isEmpty()) {
                             DefaultMenuItem item = new DefaultMenuItem(this.menus.get(0).getNombre());
 
                             item.setUrl(this.menus.get(0).getUrl());
-                            item.setIcon(this.menus.get(0).getIcono());
+                            item.setIcon(this.menus.get(0).getIcono().getReferencia());
                             
                             this.model.addElement(item);
                             
