@@ -81,7 +81,7 @@ public class usuarioBean {
         UsuarioDao usuarioDao = new UsuarioDaoImpl();
         String msg;
         
-        /*NUEVO CODIGO*/
+        /*CODIGO PARA ENCRIPTAR PASS*/
         
         try{
         // Create MessageDigest instance for MD5
