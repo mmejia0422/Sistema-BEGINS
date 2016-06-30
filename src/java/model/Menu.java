@@ -1,5 +1,5 @@
 package model;
-// Generated 01-31-2016 04:09:44 PM by Hibernate Tools 4.3.1
+// Generated 06-29-2016 08:46:51 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,11 +12,11 @@ public class Menu  implements java.io.Serializable {
 
 
      private Integer idmenu;
+     private Icono icono;
      private String nombre;
      private String estado;
      private Integer orden;
      private String url;
-     private String icono;
      private Set rolMenus = new HashSet(0);
      private Set submenus = new HashSet(0);
 
@@ -28,12 +28,12 @@ public class Menu  implements java.io.Serializable {
         this.nombre = nombre;
         this.estado = estado;
     }
-    public Menu(String nombre, String estado, Integer orden, String url, String icono, Set rolMenus, Set submenus) {
+    public Menu(Icono icono, String nombre, String estado, Integer orden, String url, Set rolMenus, Set submenus) {
+       this.icono = icono;
        this.nombre = nombre;
        this.estado = estado;
        this.orden = orden;
        this.url = url;
-       this.icono = icono;
        this.rolMenus = rolMenus;
        this.submenus = submenus;
     }
@@ -44,6 +44,13 @@ public class Menu  implements java.io.Serializable {
     
     public void setIdmenu(Integer idmenu) {
         this.idmenu = idmenu;
+    }
+    public Icono getIcono() {
+        return this.icono;
+    }
+    
+    public void setIcono(Icono icono) {
+        this.icono = icono;
     }
     public String getNombre() {
         return this.nombre;
@@ -72,13 +79,6 @@ public class Menu  implements java.io.Serializable {
     
     public void setUrl(String url) {
         this.url = url;
-    }
-    public String getIcono() {
-        return this.icono;
-    }
-    
-    public void setIcono(String icono) {
-        this.icono = icono;
     }
     public Set getRolMenus() {
         return this.rolMenus;

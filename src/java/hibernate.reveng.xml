@@ -38,4 +38,5 @@
   <table-filter match-name="cliente"/>
   <table-filter match-name="ajuste_inventario"/>
   <table-filter match-name="submenu"/>
+  <table-filter match-name="icono"/>
 </hibernate-reverse-engineering>

@@ -22,7 +22,7 @@ public class MenuDaoImpl implements MenuDao{
         List<Menu> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Menu where idMenu = '" + idMenu + "'";
+        String sql = "FROM Menu m left join fetch m.icono where idMenu = '" + idMenu + "'";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();

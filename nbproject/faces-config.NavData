@@ -6,6 +6,7 @@
         <Node id="views/producto/presentaciones.xhtml" x="150" y="600" zoom="true"/>
         <Node id="views/producto/cateProductos.xhtml" x="900" y="150" zoom="true"/>
         <Node id="views/usuario/roles.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="views/usuario/menu.xhtml" x="1150" y="300" zoom="true"/>
         <Node id="views/pais/municipio.xhtml" x="650" y="300" zoom="true"/>
         <Node id="views/usuario/empleados.xhtml" x="400" y="600" zoom="true"/>
         <Node id="views/inicio.xhtml" x="150" y="150" zoom="true"/>
@@ -15,8 +16,8 @@
         <Node id="views/usuario/index.xhtml" x="400" y="450" zoom="true"/>
         <Node id="views/Template.xhtml" x="1400" y="150" zoom="true"/>
         <Node id="views/usuario/proveedores.xhtml" x="650" y="450" zoom="true"/>
-        <Node id="views/producto/marcas.xhtml" x="400" y="300" zoom="true"/>
         <Node id="views/factura/crearFactura.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="views/producto/marcas.xhtml" x="400" y="300" zoom="true"/>
         <Node id="views/pais/depto.xhtml" x="1150" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>

@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-31-2016 04:09:45 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 06-29-2016 08:46:51 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="model.Menu" table="menu" catalog="gasisw_bd1" optimistic-lock="version">
         <id name="idmenu" type="java.lang.Integer">
             <column name="idmenu" />
             <generator class="identity" />
         </id>
+        <many-to-one name="icono" class="model.Icono" fetch="select">
+            <column name="icono_id_icono" />
+        </many-to-one>
         <property name="nombre" type="string">
             <column name="nombre" length="80" not-null="true" />
         </property>
@@ -19,9 +22,6 @@
         </property>
         <property name="url" type="string">
             <column name="url" length="240" />
-        </property>
-        <property name="icono" type="string">
-            <column name="icono" length="90" />
         </property>
         <set name="rolMenus" table="rol_menu" inverse="true" lazy="true" fetch="select">
             <key>
