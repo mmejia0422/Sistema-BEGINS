@@ -90,7 +90,7 @@ public class menuBean implements Serializable {
                             DefaultMenuItem item = new DefaultMenuItem(this.menus.get(0).getNombre());
 
                             item.setUrl(this.menus.get(0).getUrl());
-                            item.setIcon(this.menus.get(0).getIcono().getReferencia());
+                            //item.setIcon(this.menus.get(0).getIcono().getReferencia());
                             
                             this.model.addElement(item);
                             
@@ -100,7 +100,7 @@ public class menuBean implements Serializable {
                             DefaultMenuItem item = new DefaultMenuItem(this.subMenus.get(j).getNombreSubmenu());
 
                             item.setUrl(this.subMenus.get(j).getUrl());
-                            item.setIcon(this.subMenus.get(j).getIcono());
+                            item.setIcon(this.subMenus.get(j).getIcono().getReferencia());
                             firstSubmenu.addElement(item);
                         }
                         this.model.addElement(firstSubmenu);

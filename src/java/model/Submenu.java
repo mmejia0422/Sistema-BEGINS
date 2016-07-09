@@ -1,5 +1,5 @@
 package model;
-// Generated 01-31-2016 04:09:44 PM by Hibernate Tools 4.3.1
+// Generated 07-08-2016 05:51:52 PM by Hibernate Tools 4.3.1
 
 
 
@@ -10,11 +10,11 @@ public class Submenu  implements java.io.Serializable {
 
 
      private Integer idsubmenu;
+     private Icono icono;
      private Menu menu;
      private String nombreSubmenu;
      private String estado;
      private String url;
-     private String icono;
 
     public Submenu() {
     }
@@ -26,12 +26,12 @@ public class Submenu  implements java.io.Serializable {
         this.estado = estado;
         this.url = url;
     }
-    public Submenu(Menu menu, String nombreSubmenu, String estado, String url, String icono) {
+    public Submenu(Icono icono, Menu menu, String nombreSubmenu, String estado, String url) {
+       this.icono = icono;
        this.menu = menu;
        this.nombreSubmenu = nombreSubmenu;
        this.estado = estado;
        this.url = url;
-       this.icono = icono;
     }
    
     public Integer getIdsubmenu() {
@@ -40,6 +40,13 @@ public class Submenu  implements java.io.Serializable {
     
     public void setIdsubmenu(Integer idsubmenu) {
         this.idsubmenu = idsubmenu;
+    }
+    public Icono getIcono() {
+        return this.icono;
+    }
+    
+    public void setIcono(Icono icono) {
+        this.icono = icono;
     }
     public Menu getMenu() {
         return this.menu;
@@ -68,13 +75,6 @@ public class Submenu  implements java.io.Serializable {
     
     public void setUrl(String url) {
         this.url = url;
-    }
-    public String getIcono() {
-        return this.icono;
-    }
-    
-    public void setIcono(String icono) {
-        this.icono = icono;
     }
 
 

@@ -22,7 +22,7 @@ public class SubMenuDaoImpl implements SubMenuDao{
          List<Submenu> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Submenu where estado = 'Y' and menu_idmenu = '" + idMenu + "'";
+        String sql = "FROM Submenu s left join fetch s.icono where s.estado = 'Y' and menu_idmenu = '" + idMenu + "'";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();

@@ -1,5 +1,5 @@
 package model;
-// Generated 06-29-2016 08:46:51 PM by Hibernate Tools 4.3.1
+// Generated 07-08-2016 05:51:52 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,6 +15,7 @@ public class Icono  implements java.io.Serializable {
      private String referencia;
      private String accion;
      private String descripcion;
+     private Set submenus = new HashSet(0);
      private Set menus = new HashSet(0);
 
     public Icono() {
@@ -26,10 +27,11 @@ public class Icono  implements java.io.Serializable {
         this.accion = accion;
         this.descripcion = descripcion;
     }
-    public Icono(String referencia, String accion, String descripcion, Set menus) {
+    public Icono(String referencia, String accion, String descripcion, Set submenus, Set menus) {
        this.referencia = referencia;
        this.accion = accion;
        this.descripcion = descripcion;
+       this.submenus = submenus;
        this.menus = menus;
     }
    
@@ -60,6 +62,13 @@ public class Icono  implements java.io.Serializable {
     
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    public Set getSubmenus() {
+        return this.submenus;
+    }
+    
+    public void setSubmenus(Set submenus) {
+        this.submenus = submenus;
     }
     public Set getMenus() {
         return this.menus;
