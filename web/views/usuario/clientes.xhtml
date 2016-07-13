@@ -55,7 +55,7 @@
                                 <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}" />
                             </p:commandButton>
                             <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogClDelete').show()" icon="icon-delete" title="Eliminar">
-                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}}" />
+                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
