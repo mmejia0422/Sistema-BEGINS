@@ -100,7 +100,9 @@ public class menuBean implements Serializable {
                             DefaultMenuItem item = new DefaultMenuItem(this.subMenus.get(j).getNombreSubmenu());
 
                             item.setUrl(this.subMenus.get(j).getUrl());
+                            if(this.subMenus.get(j).getIcono() != null) {
                             item.setIcon(this.subMenus.get(j).getIcono().getReferencia());
+                            }
                             firstSubmenu.addElement(item);
                         }
                         this.model.addElement(firstSubmenu);
