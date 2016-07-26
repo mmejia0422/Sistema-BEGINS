@@ -94,11 +94,9 @@ public class loginBean implements Serializable {
         boolean loggedIn;
         String ruta = "";
         
-        this.cuenta++;
-        
         /*CODIGO PARA DESENCRIPTAR*/
        
-        if (this.cuenta > 1 && this.usuario.getContrasena() != null) {
+        if (this.usuario.getContrasena() != null) {
         
         try{
         // Create MessageDigest instance for MD5
@@ -169,7 +167,7 @@ public class loginBean implements Serializable {
         this.progress = progress;
     }
 
-    /*public void logout() {
+   public void logout() {
         String ruta = MyUtil.basepathlogin() + "login.xhtml";
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -178,6 +176,6 @@ public class loginBean implements Serializable {
 
         context.addCallbackParam("loggedOut", true);
         context.addCallbackParam("ruta", ruta);
-    }*/
+    }
 
 }

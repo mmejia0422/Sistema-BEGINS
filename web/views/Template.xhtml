@@ -18,6 +18,13 @@
             <div id="top" class = "ui-widget-header ui-corner-all">
                 <ui:insert name="top">GASISW</ui:insert>
             </div>
+            <h:form>
+                <div align="right">
+                    <p:commandButton id="logutButton" value="Salir" icon="ui-icon-close" 
+                                     actionListener="#{loginBean.logout()}" styleClass="ui-priority-primary"
+                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                </div>
+            </h:form>
             <div id="menu">
                 <h:form>
                     <!--<p:menubar>
