@@ -15,4 +15,7 @@ import model.Menu;
 public interface MenuDao {
     public List<Menu> findByRolMenu (Integer idMenu);
     public List<Menu> findAll();
+    public boolean create(Menu menu);
+    public boolean update(Menu menu);
+    public boolean delete(Integer id);
 }

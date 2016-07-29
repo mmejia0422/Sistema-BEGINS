@@ -14,4 +14,7 @@ import model.Submenu;
  */
 public interface SubMenuDao {
     public List<Submenu> findByMenu(Integer idMenu);
+    public boolean create(Submenu subMenu);
+    public boolean update(Submenu subMenu);
+    public boolean delete(Integer id);
 }

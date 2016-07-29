@@ -57,7 +57,6 @@ public class menuBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        //model = new DynamicMenuModel();
         model = new DefaultMenuModel();
         this.listarMenus();
     }
@@ -134,13 +133,6 @@ public class menuBean implements Serializable {
         this.usuario = usuario;
     }
 
-    /*public loginBean getLogin() {
-     return login;
-     }
-
-     public void setLogin(loginBean login) {
-     this.login = login;
-     }*/
     public List<Menu> getListaMenus() {
         MenuDao menuDao = new MenuDaoImpl();
         listaMenus = menuDao.findAll();
@@ -151,4 +143,8 @@ public class menuBean implements Serializable {
         this.listaMenus = listaMenus;
     }
 
+    //the following code is to give maintenance to menus
+    
+    //Here ends the code for maintenance
+    
 }

@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import model.Submenu;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -30,6 +31,67 @@ public class SubMenuDaoImpl implements SubMenuDao{
             tx.rollback();
         }
         return listado;
+    }
+
+    @Override
+    public boolean create(Submenu subMenu) {
+       boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        try {
+            sesion.save(subMenu);
+            tx.commit();
+            flag = true;
+        }catch (Exception e) {
+            flag = false;
+            tx.rollback();
+            e.printStackTrace();
+        }
+        
+        return flag;
+    }
+
+    @Override
+    public boolean update(Submenu subMenu) {
+         boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        try {
+            Submenu subMenuBd = (Submenu) sesion.load(Submenu.class, subMenu.getIdsubmenu());
+            subMenuBd.setNombreSubmenu(subMenu.getNombreSubmenu());
+            subMenuBd.setEstado(subMenu.getEstado());
+            subMenuBd.setUrl(subMenu.getUrl());
+            subMenuBd.setIcono(subMenu.getIcono());
+            tx.commit();
+            flag = true;
+        }catch(Exception e){
+            flag = false;
+            tx.rollback();
+            e.printStackTrace();
+        }
+        
+        return flag;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+         boolean flag;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        
+        try {
+            Query q = sesion.createQuery("from Submenu where idsubmenu = :idsubmenu");
+            q.setParameter("idsubmenu", id);
+            Submenu subMenuDb = (Submenu) q.list().get(0);
+
+            sesion.delete(subMenuDb);
+            tx.commit();
+            flag = true;
+        }catch(Exception e){
+            flag = false;
+            tx.rollback();
+        }
+       return flag;
     }
     
 }
