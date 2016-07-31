@@ -15,9 +15,11 @@ import dao.SubMenuDao;
 import dao.SubMenuDaoImpl;
 import dao.UsuarioDao;
 import dao.UsuarioDaoImpl;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -49,6 +51,7 @@ public class menuBean implements Serializable {
     private Usuario usuario;
     private UsuarioDao usuarioDao;
     private List<Menu> listaMenus;
+    private Menu selectedMenu;
 
     public menuBean() {
         this.usuarioDao = new UsuarioDaoImpl();
@@ -59,6 +62,7 @@ public class menuBean implements Serializable {
     public void init() {
         model = new DefaultMenuModel();
         this.listarMenus();
+        this.selectedMenu = new Menu();
     }
 
     public void listarMenus() {
@@ -145,6 +149,30 @@ public class menuBean implements Serializable {
 
     //the following code is to give maintenance to menus
     
+    public void btnCreate(ActionEvent actionEvent) {
+        MenuDao menuDao = new MenuDaoImpl();
+        String msg;
+
+        if (menuDao.create(this.selectedMenu)) {
+            msg = "Se guardo correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al crear el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+    
     //Here ends the code for maintenance
+
+    public Menu getSelectedMenu() {
+        return selectedMenu;
+    }
+
+    public void setSelectedMenu(Menu selectedMenu) {
+        this.selectedMenu = selectedMenu;
+    }
     
 }

@@ -84,7 +84,7 @@
                             </p:selectOneMenu>
                             
                             <h:outputText value="Estado" />
-                            <p:selectOneMenu value="#{usuarioBean.selectedUsuario.estado}">
+                            <p:selectOneMenu required="true" value="#{usuarioBean.selectedUsuario.estado}">
                                 <f:selectItem itemLabel="Activo" itemValue="Y" />
                                 <f:selectItem itemLabel="Inactivo" itemValue="N" />
                             </p:selectOneMenu>

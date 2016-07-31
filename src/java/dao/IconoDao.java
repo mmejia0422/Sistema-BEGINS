@@ -17,4 +17,5 @@ public interface IconoDao {
     public boolean create(Icono icono);
     public boolean update(Icono icono);
     public boolean delete(Integer id);
+    public List<Icono> selectItems();
 }

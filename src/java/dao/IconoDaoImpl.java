@@ -92,5 +92,21 @@ public class IconoDaoImpl implements IconoDao {
         }
     return flag;
     }
+
+    @Override
+    public List<Icono> selectItems() {
+       List<Icono> listado = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Icono";
+        try{
+            listado = sesion.createQuery(sql).list();
+            tx.commit();
+        } catch(Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+        return listado;
+    }
     
 }

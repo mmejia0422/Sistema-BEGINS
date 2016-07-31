@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import model.Icono;
 
 /**
@@ -27,6 +28,7 @@ public class iconoBean {
 
     private List<Icono> iconos;
     private Icono selectedIcono;
+    private List<SelectItem> selectOneItemsIco;
     
     public iconoBean() {
         this.iconos = new ArrayList<Icono>();
@@ -107,6 +109,18 @@ public class iconoBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
+    }
+
+    public List<SelectItem> getSelectOneItemsIco() {
+        this.selectOneItemsIco = new ArrayList<SelectItem>();
+        IconoDao iconooDao = new IconoDaoImpl();
+        List<Icono> ps = iconooDao.selectItems();
+               
+        for (Icono ico : ps) {
+            SelectItem selectItem = new SelectItem(ico.getIdicono(), ico.getReferencia());
+            this.selectOneItemsIco.add(selectItem);
+        }
+        return selectOneItemsIco;
     }
     
 }

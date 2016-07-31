@@ -38,7 +38,7 @@ public class MenuDaoImpl implements MenuDao{
          List<Menu> listado = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = sesion.beginTransaction();
-        String sql = "FROM Menu";
+        String sql = "FROM Menu m left join fetch m.icono order by orden asc";
         try {
             listado = sesion.createQuery(sql).list();
             tx.commit();
