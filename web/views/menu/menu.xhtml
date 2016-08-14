@@ -42,14 +42,17 @@
                             <h:outputText value="#{menu.orden}"/>
                         </p:column>
 
-                        <!-- <p:column headerText="Accion" style="width:100px;text-align: center">
-                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMenuUpdate').show()" icon="icon-edit" title="Modificar">
-                                 <f:setPropertyActionListener value="#{marca}" target="#{marcaBean.selectedMarca}" />
-                             </p:commandButton>
-                             <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogMenuDelete').show()" icon="icon-delete" title="Eliminar">
-                                 <f:setPropertyActionListener value="#{marca}" target="#{marcaBean.selectedMarca}" />
-                             </p:commandButton>
-                         </p:column>-->
+                        <p:column headerText="Accion" style="width:100px;text-align: center">
+                            <p:commandButton id="btnManage" update="" oncomplete="" icon="icon-tools" title="Administrar">
+                                <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}" />
+                            </p:commandButton>
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMenuUpdate').show()" icon="icon-edit" title="Modificar">
+                                <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}" />
+                            </p:commandButton>
+                            <p:commandButton id="btnDelete" update=":formDelete" oncomplete="PF('dialogMenuDelete').show()" icon="icon-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}" />
+                            </p:commandButton>
+                        </p:column>
                     </p:dataTable>
                 </h:form>
 
@@ -89,6 +92,54 @@
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>
+
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar menu" id="dlgMenuUpdate" widgetVar="dialogMenuUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
+                        <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
+
+                            <h:outputText value="Nombre menu"/>
+                            <p:inputText required="true" value="#{menuBean.selectedMenu.nombre}" >
+                                <f:validateLength minimum="3" maximum="15"/>
+                            </p:inputText>
+
+                            <h:outputText value="Estado"/>
+                            <p:selectOneMenu value="#{menuBean.selectedMenu.estado}">
+                                <f:selectItem itemLabel="Activo" itemValue="Y" />
+                                <f:selectItem itemLabel="Inactivo" itemValue="N" />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Url"/>
+                            <p:inputText value="#{menuBean.selectedMenu.url}"/>
+
+                            <h:outputText value="Icono"/>
+                            <p:selectOneMenu required="true" value="#{menuBean.selectedMenu.icono.idicono}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{iconoBean.selectOneItemsIco}" />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Orden"/>
+                            <p:inputText value="#{menuBean.selectedMenu.orden}">
+                                <f:validateLongRange minimum="1" maximum="15"/>
+                            </p:inputText>
+
+                            <f:facet name="footer">
+                                <p:commandButton actionListener="#{menuBean.btnUpdate(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogMenuUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogMenuUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formDelete">
+                    <p:confirmDialog id="confirmDialog" widgetVar="dialogMenuDelete" severity="alert" message="¿Esta seguro de eliminar?"
+                                     showEffect="fade" hideEffect="explode" header="Eliminar menu">
+                        <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
+                        <p:commandButton actionListener="#{menuBean.btnDelete(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogMenuDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton id="decline" value="No" oncomplete="PF('dialogMenuDelete').hide()" icon="icon-cancel" />
+                    </p:confirmDialog>
+                </h:form>
+
             </ui:define>
         </ui:composition>
 

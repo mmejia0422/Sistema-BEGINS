@@ -59,3 +59,7 @@ a:link:hover, a:visited:hover  {
 .ui-state-default .icon-mtto{
     background-image: url(../images/icons/mantenimiento.png);
 }
+
+.ui-state-default .icon-tools{
+    background-image: url(../images/icons/tools.png);
+}

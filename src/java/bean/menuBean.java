@@ -56,13 +56,13 @@ public class menuBean implements Serializable {
     public menuBean() {
         this.usuarioDao = new UsuarioDaoImpl();
         this.usuario = new Usuario();
+        this.selectedMenu = new Menu();
     }
 
     @PostConstruct
     public void init() {
         model = new DefaultMenuModel();
         this.listarMenus();
-        this.selectedMenu = new Menu();
     }
 
     public void listarMenus() {
@@ -159,6 +159,37 @@ public class menuBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         } else {
             msg = "Error al crear el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+    
+     public void btnUpdate(ActionEvent actionEvent) {
+        MenuDao menuDao = new MenuDaoImpl();
+        String msg;
+
+        if (menuDao.update(this.selectedMenu)) {
+            msg = "Se guardo correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al crear el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+    
+    public void btnDelete(ActionEvent actionEvent) {
+        MenuDao menuDao = new MenuDaoImpl();
+        String msg;
+        if (menuDao.delete(this.selectedMenu.getIdmenu())) {
+            msg = "Se elimino correctamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error al eliminar el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
