@@ -6,7 +6,6 @@
         <Node id="views/producto/presentaciones.xhtml" x="150" y="600" zoom="true"/>
         <Node id="views/producto/cateProductos.xhtml" x="900" y="150" zoom="true"/>
         <Node id="views/usuario/roles.xhtml" x="900" y="300" zoom="true"/>
-        <Node id="views/usuario/menu.xhtml" x="1150" y="300" zoom="true"/>
         <Node id="views/pais/municipio.xhtml" x="650" y="300" zoom="true"/>
         <Node id="views/usuario/empleados.xhtml" x="400" y="600" zoom="true"/>
         <Node id="views/inicio.xhtml" x="150" y="150" zoom="true"/>

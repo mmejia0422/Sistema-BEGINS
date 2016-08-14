@@ -4,55 +4,55 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
-<!--<f:metadata>
-    <f:viewAction action="#" onPostback="true"/>
-</f:metadata>-->
-    
+
     <h:head>
         <title>Login</title>
         <link href="#{appBean.baseUrl}resources/css/login.css" type="text/css" rel="stylesheet"/>
     </h:head>
+    <div class="container_bg ui-widget-content">
     <h:body>
-        <div class="conteiner">
-            <p:growl id="growl" showDetail="true" life="3000" />
-            <h:form id="formLogin">
-                <p:panel id="basic" header="Ingresar usuario y clave" style="margin-bottom:20px">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="username" value="Usuario:" />
-                        <p:inputText id="username" value="#{loginBean.usuario.usuario}" required="true" label="username">      
-                        </p:inputText>
+        
+        <div class="container">
+           
+                <p:growl id="growl" showDetail="true" life="3000" />
+                <h:form id="formLogin">
+                    <p:panel id="basic" header="Ingresar usuario y clave" style="margin-bottom:20px">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="username" value="Usuario:" />
+                            <p:inputText id="username" value="#{loginBean.usuario.usuario}" required="true" label="username">      
+                            </p:inputText>
 
-                        <h:outputLabel for="password" value="Clave:" />
-                        <p:password id="password" value="#{loginBean.usuario.contrasena}" required="true" label="password" />
+                            <h:outputLabel for="password" value="Clave:" />
+                            <p:password id="password" value="#{loginBean.usuario.contrasena}" required="true" label="password" />
 
-                        <f:facet name="footer">
-                            <table>
-                                <td>
-                                    <p:commandButton id="loginButton" value="Login"
-                                                     icon="icon-login"
-                                                     onclick="PF('pbAjax').start();
-                                                             PF('startButton2').disable();"
-                                                             widgetVar="startButton2">
-                                    </p:commandButton>
-                                </td>
-                                <td align="right" width="188">
-                                    <!--<p:progressBar id="progressBarClient" widgetVar="pbClient" style="width:100px"/>-->
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="#{loginBean.progress}" labelTemplate="{value}%" 
-                                                   style="width:80px; font-size:12px; color: #ffffff" global="false"
-                                                   interval="1000">
-                                        <p:ajax event="complete" update="growl" listener="#{loginBean.login(event)}"  
-                                                oncomplete="handleLoginRequest(xhr, status, args)"/>
-                                    </p:progressBar>
-                                </td>
-                            </table>
-                        </f:facet>  
-                    </h:panelGrid>
-                </p:panel>
-            </h:form>
+                            <f:facet name="footer">
+                                <table>
+                                    <td>
+                                        <p:commandButton id="loginButton" value="Login"
+                                                         icon="icon-login"
+                                                         onclick="PF('pbAjax').start();
+                                                                 PF('startButton2').disable();"
+                                                         widgetVar="startButton2">
+                                        </p:commandButton>
+                                    </td>
+                                    <td align="right" width="188">
+                                        <!--<p:progressBar id="progressBarClient" widgetVar="pbClient" style="width:100px"/>-->
+                                        <p:progressBar widgetVar="pbAjax" ajax="true" value="#{loginBean.progress}" labelTemplate="{value}%" 
+                                                       style="width:80px; font-size:12px; color: #ffffff" global="false"
+                                                       interval="1000">
+                                            <p:ajax event="complete" update="growl" listener="#{loginBean.login(event)}"  
+                                                    oncomplete="handleLoginRequest(xhr, status, args)"/>
+                                        </p:progressBar>
+                                    </td>
+                                </table>
+                            </f:facet>  
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
         </div>
-        <script type="text/javascript" language="javascript">
             
+        <script type="text/javascript" language="javascript">
+
             function handleLoginRequest(xhr, status, args) {
                 if (args.validationFailed || !args.loggedIn) {
                     jQuery('#formLogin').effect("shake", {times: 3}, 100);
@@ -61,10 +61,11 @@
                     location.href = args.ruta;
                 }
             }
-            
+
         </script>
-        
-        
+
+
     </h:body>
+        </div>
 </html>
 

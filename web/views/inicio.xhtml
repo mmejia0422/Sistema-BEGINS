@@ -10,7 +10,14 @@
 
         <ui:composition template="./Template.xhtml">
             <ui:define name="content">
-                Bienvenido!
+                <br/>
+                <br/>
+                <br/>
+                <center>
+                <p:galleria value="#{imagenBean.images}" var="image" panelWidth="800" panelHeight="500" showCaption="true">
+                    <p:graphicImage value="/resources/images/galeria/#{image}" alt="Image Description for #{image}" title="#{image}"/>
+                </p:galleria>
+                </center>
             </ui:define>
         </ui:composition>
 
