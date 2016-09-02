@@ -43,7 +43,7 @@
                         </p:column>
 
                         <p:column headerText="Accion" style="width:100px;text-align: center">
-                            <p:commandButton id="btnManage" update="" oncomplete="" icon="icon-tools" title="Administrar">
+                            <p:commandButton id="btnManage" update=":formManage" oncomplete="PF('dialogManage').show()" icon="icon-tools" title="Administrar">
                                 <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}" />
                             </p:commandButton>
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMenuUpdate').show()" icon="icon-edit" title="Modificar">
@@ -138,6 +138,18 @@
                         <p:commandButton actionListener="#{menuBean.btnDelete(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogMenuDelete').hide()" icon="icon-check" value="Si"/>
                         <p:commandButton id="decline" value="No" oncomplete="PF('dialogMenuDelete').hide()" icon="icon-cancel" />
                     </p:confirmDialog>
+                </h:form>
+
+                <h:form id="formManage">
+                    <p:dialog header="Administrar menu #{menuBean.selectedMenu.nombre}" id="dlgMenuMg" widgetVar="dialogManage" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
+                        <p:panelGrid columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+                            <h:outputText value="Listado de SubMenus"/>
+                            <p:commandButton id="btnCrearSm" update="" oncomplete="" icon="icon-new" title="Crear"/>
+                        </p:panelGrid>
+                        <br/>
+                        <p:pickList id="pickList" value="#{subMenuBean.subMenus}" var="subMenu" itemLabel="#{subMenu}" itemValue="#{subMenu}" />
+                    </p:dialog>
                 </h:form>
 
             </ui:define>
