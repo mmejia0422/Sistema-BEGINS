@@ -5,42 +5,38 @@
  */
 package bean;
 
+import dao.SubMenuDao;
+import dao.SubMenuDaoImpl;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import model.Menu;
+import model.Submenu;
 import org.primefaces.model.DualListModel;
 
 /**
  *
  * @author Mario
  */
-@ManagedBean
+@ManagedBean (name = "subMenuBean")
 @RequestScoped
-public class subMenuBean {
+public class subMenuBean implements Serializable{
+    
+    
+    
+    private DualListModel<String> subMenus;
+    private List<Submenu> sbMenuTarget;
+    private Menu menu;
     
     public subMenuBean() {
     }
     
-    private DualListModel<String> subMenus;
-    
      @PostConstruct
-    public void init() {
-        //Cities
-        List<String> sbSource = new ArrayList<String>();
-        List<String> sbTarget = new ArrayList<String>();
-         
-        sbSource.add("San Francisco");
-        sbSource.add("London");
-        sbSource.add("Paris");
-        sbSource.add("Istanbul");
-        sbSource.add("Berlin");
-        sbSource.add("Barcelona");
-        sbSource.add("Rome");
-        
-        this.subMenus = new DualListModel<String>(sbSource, sbTarget);
-        
+    public void init() {        
     }
 
     public DualListModel<String> getSubMenus() {

@@ -14,7 +14,7 @@
                 <h:form>
                     <p:commandButton id="btnMenuCreate" update=":formCreate" oncomplete="PF('dialogMenuCreate').show()" icon="icon-new" title="Crear" value="Crear"/>
                 </h:form>
-                <h:form id="formDataTable">
+                <h:form id="formId">
                     <p:dataTable id="basicDT" var="menu" value="#{menuBean.listaMenus}"
                                  paginator="true" rows="10"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -22,6 +22,11 @@
                         <f:facet name="header">
                             Listado de menus
                         </f:facet>
+                        <p:column rendered="true">
+                            <p:autoComplete disabled="true" id="acSimple" value="#{autoCompleteBean.idMenu}" completeMethod="#{autoCompleteView.llenarPicklist(menu.idmenu)}" />
+                        </p:column>
+
+
                         <p:column headerText="Menu" filterBy="#{menu.nombre}" filterMatchMode="contains">
                             <h:outputText value="#{menu.nombre}" />
                         </p:column>
@@ -86,7 +91,7 @@
                             </p:inputText>
 
                             <f:facet name="footer">
-                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogMenuCreate').hide()" actionListener="#{menuBean.btnCreate(actionEvent)}" update=":formDataTable, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton id="btnCreateAceptar" oncomplete="PF('dialogMenuCreate').hide()" actionListener="#{menuBean.btnCreate(actionEvent)}" update=":formId, :msgs" icon="icon-save" title="Guardar" value="Guardar"/>
                                 <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogMenuCreate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
                             </f:facet>
                         </p:panelGrid>
@@ -124,7 +129,7 @@
                             </p:inputText>
 
                             <f:facet name="footer">
-                                <p:commandButton actionListener="#{menuBean.btnUpdate(actionEvent)}" id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogMenuUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
+                                <p:commandButton actionListener="#{menuBean.btnUpdate(actionEvent)}" id="btnUpdateAceptar" update=":formId, :msgs" oncomplete="PF('dialogMenuUpdate').hide()" icon="icon-save" title="Guardar" value="Guardar"/>
                                 <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogMenuUpdate').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
                             </f:facet>
                         </p:panelGrid>
@@ -135,20 +140,29 @@
                     <p:confirmDialog id="confirmDialog" widgetVar="dialogMenuDelete" severity="alert" message="¿Esta seguro de eliminar?"
                                      showEffect="fade" hideEffect="explode" header="Eliminar menu">
                         <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
-                        <p:commandButton actionListener="#{menuBean.btnDelete(actionEvent)}" id="confirm" update=":formDataTable, :msgs" oncomplete="PF('dialogMenuDelete').hide()" icon="icon-check" value="Si"/>
+                        <p:commandButton actionListener="#{menuBean.btnDelete(actionEvent)}" id="confirm" update=":formId, :msgs" oncomplete="PF('dialogMenuDelete').hide()" icon="icon-check" value="Si"/>
                         <p:commandButton id="decline" value="No" oncomplete="PF('dialogMenuDelete').hide()" icon="icon-cancel" />
                     </p:confirmDialog>
                 </h:form>
 
                 <h:form id="formManage">
-                    <p:dialog header="Administrar menu #{menuBean.selectedMenu.nombre}" id="dlgMenuMg" widgetVar="dialogManage" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                    <p:dialog header="Administrar menu #{menuBean.selectedMenu.nombre}" responsive="true" id="dlgMenuMg" widgetVar="dialogManage" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
                         <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
-                        <p:panelGrid columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
-                            <h:outputText value="Listado de SubMenus"/>
-                            <p:commandButton id="btnCrearSm" update="" oncomplete="" icon="icon-new" title="Crear"/>
-                        </p:panelGrid>
-                        <br/>
-                        <p:pickList id="pickList" value="#{subMenuBean.subMenus}" var="subMenu" itemLabel="#{subMenu}" itemValue="#{subMenu}" />
+                        <h3>
+                            <p:panelGrid columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+                                <h:outputText value="Listado de SubMenus"/>
+                                <p:commandButton id="btnCrearSm" update="" oncomplete="" icon="icon-new" title="Crear"/>
+                            </p:panelGrid>
+                        </h3>
+                        <p:pickList id="pickList" value="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" var="autoComplete" itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
+                            <f:facet name="sourceCaption">
+                                <h:outputLabel value="Sin asignar" />
+                            </f:facet>
+                            <f:facet name="targetCaption">
+                                <h:outputLabel value="Asignados" />
+                            </f:facet>
+                        </p:pickList>
+
                     </p:dialog>
                 </h:form>
 

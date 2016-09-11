@@ -17,7 +17,9 @@ import dao.UsuarioDao;
 import dao.UsuarioDaoImpl;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -30,6 +32,7 @@ import model.Rol;
 import model.RolMenu;
 import model.Submenu;
 import model.Usuario;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -62,7 +65,7 @@ public class menuBean implements Serializable {
     @PostConstruct
     public void init() {
         model = new DefaultMenuModel();
-        this.listarMenus();
+        this.listarMenus();            
     }
 
     public void listarMenus() {
@@ -84,33 +87,33 @@ public class menuBean implements Serializable {
 
                     for (int i = 0; i < this.rolMenus.size(); i++) {
                         this.menus = menuDao.findByRolMenu(this.rolMenus.get(i).getMenu().getIdmenu());
-                        
+
                         DefaultSubMenu firstSubmenu = new DefaultSubMenu(this.menus.get(0).getNombre(), this.menus.get(0).getIcono().getReferencia());
-                        
+
                         this.subMenus = submenuDao.findByMenu(this.menus.get(0).getIdmenu());
-                        
-                        if(this.subMenus.isEmpty()) {
+
+                        if (this.subMenus.isEmpty()) {
                             DefaultMenuItem item = new DefaultMenuItem(this.menus.get(0).getNombre());
 
                             item.setUrl(this.menus.get(0).getUrl());
                             item.setIcon(this.menus.get(0).getIcono().getReferencia());
-                            
+
                             this.model.addElement(item);
-                            
-                        } else{
 
-                        for (int j = 0; j < this.subMenus.size(); j++) {
-                            DefaultMenuItem item = new DefaultMenuItem(this.subMenus.get(j).getNombreSubmenu());
+                        } else {
 
-                            item.setUrl(this.subMenus.get(j).getUrl());
-                            if(this.subMenus.get(j).getIcono() != null) {
-                            item.setIcon(this.subMenus.get(j).getIcono().getReferencia());
+                            for (int j = 0; j < this.subMenus.size(); j++) {
+                                DefaultMenuItem item = new DefaultMenuItem(this.subMenus.get(j).getNombreSubmenu());
+
+                                item.setUrl(this.subMenus.get(j).getUrl());
+                                if (this.subMenus.get(j).getIcono() != null) {
+                                    item.setIcon(this.subMenus.get(j).getIcono().getReferencia());
+                                }
+                                firstSubmenu.addElement(item);
                             }
-                            firstSubmenu.addElement(item);
+                            this.model.addElement(firstSubmenu);
                         }
-                        this.model.addElement(firstSubmenu);
-                        }   
-                        
+
                     }
                 }
             }
@@ -148,7 +151,6 @@ public class menuBean implements Serializable {
     }
 
     //the following code is to give maintenance to menus
-    
     public void btnCreate(ActionEvent actionEvent) {
         MenuDao menuDao = new MenuDaoImpl();
         String msg;
@@ -164,8 +166,8 @@ public class menuBean implements Serializable {
         }
 
     }
-    
-     public void btnUpdate(ActionEvent actionEvent) {
+
+    public void btnUpdate(ActionEvent actionEvent) {
         MenuDao menuDao = new MenuDaoImpl();
         String msg;
 
@@ -180,7 +182,7 @@ public class menuBean implements Serializable {
         }
 
     }
-    
+
     public void btnDelete(ActionEvent actionEvent) {
         MenuDao menuDao = new MenuDaoImpl();
         String msg;
@@ -195,9 +197,9 @@ public class menuBean implements Serializable {
         }
 
     }
-    
-    //Here ends the code for maintenance
 
+    //Here ends the code for maintenance
+    
     public Menu getSelectedMenu() {
         return selectedMenu;
     }
@@ -205,5 +207,5 @@ public class menuBean implements Serializable {
     public void setSelectedMenu(Menu selectedMenu) {
         this.selectedMenu = selectedMenu;
     }
-    
+
 }

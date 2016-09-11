@@ -17,6 +17,8 @@ public class Submenu  implements java.io.Serializable {
      private String url;
 
     public Submenu() {
+        this.icono = new Icono();
+        this.menu = new Menu();
     }
 
 	
