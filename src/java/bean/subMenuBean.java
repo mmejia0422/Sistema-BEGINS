@@ -25,12 +25,7 @@ import org.primefaces.model.DualListModel;
 @ManagedBean (name = "subMenuBean")
 @RequestScoped
 public class subMenuBean implements Serializable{
-    
-    
-    
-    private DualListModel<String> subMenus;
-    private List<Submenu> sbMenuTarget;
-    private Menu menu;
+
     
     public subMenuBean() {
     }
@@ -39,13 +34,5 @@ public class subMenuBean implements Serializable{
     public void init() {        
     }
 
-    public DualListModel<String> getSubMenus() {
-        return subMenus;
-    }
-
-    public void setSubMenus(DualListModel<String> subMenus) {
-        this.subMenus = subMenus;
-    }
-        
     
 }

@@ -22,10 +22,6 @@
                         <f:facet name="header">
                             Listado de menus
                         </f:facet>
-                        <p:column rendered="true">
-                            <p:autoComplete disabled="true" id="acSimple" value="#{autoCompleteBean.idMenu}" completeMethod="#{autoCompleteView.llenarPicklist(menu.idmenu)}" />
-                        </p:column>
-
 
                         <p:column headerText="Menu" filterBy="#{menu.nombre}" filterMatchMode="contains">
                             <h:outputText value="#{menu.nombre}" />

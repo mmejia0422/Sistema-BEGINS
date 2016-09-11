@@ -21,7 +21,6 @@ import org.primefaces.model.DualListModel;
 @ManagedBean(name = "autoCompleteBean")
 public class autoCompleteBean {
 
-    private Integer idMenu;
     private List<Submenu> sbMenuTarget;
     private DualListModel<String> pickSbMenu;
 
@@ -59,14 +58,6 @@ public class autoCompleteBean {
         }
 
         return this.pickSbMenu;
-    }
-
-    public Integer getIdMenu() {
-        return idMenu;
-    }
-
-    public void setIdMenu(Integer idMenu) {
-        this.idMenu = idMenu;
     }
 
     public DualListModel<String> getPickSbMenu() {
