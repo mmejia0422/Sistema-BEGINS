@@ -10,10 +10,10 @@
         <link href="#{appBean.baseUrl}resources/css/login.css" type="text/css" rel="stylesheet"/>
     </h:head>
     <div class="container_bg ui-widget-content">
-    <h:body>
-        
-        <div class="container">
-           
+        <h:body>
+
+            <div class="container">
+
                 <p:growl id="growl" showDetail="true" life="3000" />
                 <h:form id="formLogin">
                     <p:panel id="basic" header="Ingresar usuario y clave" style="margin-bottom:20px">
@@ -28,44 +28,37 @@
                             <f:facet name="footer">
                                 <table>
                                     <td>
-                                        <p:commandButton id="loginButton" value="Login"
-                                                         icon="icon-login"
-                                                         onclick="PF('pbAjax').start();
-                                                                 PF('startButton2').disable();"
-                                                         widgetVar="startButton2">
-                                        </p:commandButton>
+                                        <p:commandButton id="loginButton" value="Login" update="growl" 
+                                                         actionListener="#{loginBean.login(event)}" 
+                                                         icon="icon-login" oncomplete="handleLoginRequest(xhr, status, args)"
+                                                         styleClass="ui-priority-primary"/>
                                     </td>
-                                    <td align="right" width="188">
-                                        <!--<p:progressBar id="progressBarClient" widgetVar="pbClient" style="width:100px"/>-->
-                                        <p:progressBar widgetVar="pbAjax" ajax="true" value="#{loginBean.progress}" labelTemplate="{value}%" 
-                                                       style="width:80px; font-size:12px; color: #ffffff" global="false"
-                                                       interval="1000">
-                                            <p:ajax event="complete" update="growl" listener="#{loginBean.login(event)}"  
-                                                    oncomplete="handleLoginRequest(xhr, status, args)"/>
-                                        </p:progressBar>
-                                    </td>
+                                        <p:ajaxStatus onstart="PF('loading').show()" onsuccess="PF('loading').hide()" />
+                                        <p:dialog widgetVar="loading" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                                            <img src="resources/images/icons/load/loader.gif"/>
+                                        </p:dialog>
                                 </table>
                             </f:facet>  
                         </h:panelGrid>
                     </p:panel>
                 </h:form>
-        </div>
-            
-        <script type="text/javascript" language="javascript">
+            </div>
 
-            function handleLoginRequest(xhr, status, args) {
-                if (args.validationFailed || !args.loggedIn) {
-                    jQuery('#formLogin').effect("shake", {times: 3}, 100);
+            <script type="text/javascript" language="javascript">
+
+                function handleLoginRequest(xhr, status, args) {
+                    if (args.validationFailed || !args.loggedIn) {
+                        jQuery('#formLogin').effect("shake", {times: 3}, 100);
+                    }
+                    else {
+                        location.href = args.ruta;
+                    }
                 }
-                else {
-                    location.href = args.ruta;
-                }
-            }
 
-        </script>
+            </script>
 
 
-    </h:body>
-        </div>
+        </h:body>
+    </div>
 </html>
 

@@ -47,8 +47,7 @@ import util.MyUtil;
 public class loginBean implements Serializable {
 
     private Usuario usuario;
-    private UsuarioDao usuarioDao;  
-    private Integer progress;
+    private UsuarioDao usuarioDao;
     private boolean cargar = false;
     //private String previousPage = null;
     private Integer cuenta = 0;
@@ -132,7 +131,6 @@ public class loginBean implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getUsuario());
             ruta = MyUtil.basepathlogin() + "views/inicio.xhtml";
         } else {
-            this.progress = null;
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Usuario y/o clave incorrecta");
             if (this.usuario == null) {
@@ -145,28 +143,6 @@ public class loginBean implements Serializable {
         context.addCallbackParam("ruta", ruta);
     }
     
-     public Integer getProgress() {
-         
-        if(progress == null) {
-            progress = 0;
-        }
-        /*else if (this.progress != null && this.cargar == false) { //se ejecuta antes del metodo login
-            this.progress = null;
-        }*/
-        else if (this.progress != null /*&& this.cargar == true*/) {
-            progress = progress + (int)(Math.random() * 35);
-             
-            if(progress > 100)
-                progress = 100;
-          }
-         
-        return progress;
-    }
-      
-     public void setProgress(Integer progress) {
-        this.progress = progress;
-    }
-
    public void logout() {
         String ruta = MyUtil.basepathlogin() + "login.xhtml";
         RequestContext context = RequestContext.getCurrentInstance();
