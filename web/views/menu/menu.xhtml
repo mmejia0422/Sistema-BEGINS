@@ -39,7 +39,7 @@
                             <h:outputText value="#{menu.icono.referencia}"/>
                         </p:column>
 
-                        <p:column headerText="Orden" filterMatchMode="contains" filterBy="#{menu.orden}">
+                        <p:column headerText="Orden" resizable="true" filterMatchMode="contains" filterBy="#{menu.orden}">
                             <h:outputText value="#{menu.orden}"/>
                         </p:column>
 
@@ -144,21 +144,26 @@
                 <h:form id="formManage">
                     <p:dialog header="Administrar menu #{menuBean.selectedMenu.nombre}" responsive="true" id="dlgMenuMg" widgetVar="dialogManage" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
                         <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
-                        <h3>
-                            <p:panelGrid columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
-                                <h:outputText value="Listado de SubMenus"/>
-                                <p:commandButton id="btnCrearSm" update="" oncomplete="" icon="icon-new" title="Crear"/>
-                            </p:panelGrid>
-                        </h3>
-                        <p:pickList id="pickList" value="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" var="autoComplete" itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
-                            <f:facet name="sourceCaption">
-                                <h:outputLabel value="Sin asignar" />
-                            </f:facet>
-                            <f:facet name="targetCaption">
-                                <h:outputLabel value="Asignados" />
-                            </f:facet>
-                        </p:pickList>
 
+                        <p:panelGrid id="grid" columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+                            <h:outputText value="Listado de SubMenus"/>
+                            <p:commandButton id="btnCrearSm" icon="icon-new" title="Crear" type="button">
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:grid" />
+                            </p:commandButton>
+                            <h:outputText id="output" rendered="#{autoCompleteBean.mostrar}" value="Nombre"/>
+                            <p:inputText id="input" rendered="#{autoCompleteBean.mostrar}" value=""/>
+                        </p:panelGrid>
+                        <p:separator />
+                        <p:panelGrid id="pickGrid" columns="1" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+                            <p:pickList id="pickList" value="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" var="autoComplete" itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
+                                <f:facet name="sourceCaption">
+                                    <h:outputLabel value="Sin asignar" />
+                                </f:facet>
+                                <f:facet name="targetCaption">
+                                    <h:outputLabel value="Asignados" />
+                                </f:facet>
+                            </p:pickList>
+                        </p:panelGrid>
                     </p:dialog>
                 </h:form>
 

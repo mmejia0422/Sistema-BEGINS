@@ -22,7 +22,9 @@ import org.primefaces.model.DualListModel;
 public class autoCompleteBean {
 
     private List<Submenu> sbMenuTarget;
+    private List<Submenu> sbMenuSource;
     private DualListModel<String> pickSbMenu;
+    private Boolean mostrar = false;
 
     public autoCompleteBean() {
     }
@@ -35,21 +37,21 @@ public class autoCompleteBean {
             List<String> sbTarget = new ArrayList<String>();
             SubMenuDao sbMenu = new SubMenuDaoImpl();
 
-            sbSource.add("San Francisco");
-            sbSource.add("London");
-            sbSource.add("Paris");
-            sbSource.add("Istanbul");
-            sbSource.add("Berlin");
-            sbSource.add("Barcelona");
-            sbSource.add("Rome");
-
             sbMenuTarget = new ArrayList<Submenu>();
+            sbMenuSource = new ArrayList<Submenu>();
 
             this.sbMenuTarget = sbMenu.manageSubMenuTarget(id);
+            this.sbMenuSource = sbMenu.manageSubMenuSource();
 
             if(this.sbMenuTarget.size() > 0){
             for (int i = 0; i <= this.sbMenuTarget.size() - 1; i++) {
                 sbTarget.add(this.sbMenuTarget.get(i).getNombreSubmenu());
+            }
+            }
+            
+            if(this.sbMenuSource.size() > 0){
+            for (int j = 0; j <= this.sbMenuSource.size() - 1; j++) {
+                sbSource.add(this.sbMenuSource.get(j).getNombreSubmenu());
             }
             }
 
@@ -59,6 +61,10 @@ public class autoCompleteBean {
 
         return this.pickSbMenu;
     }
+    
+    public void mostrarForma(){
+         this.mostrar = true;
+    }
 
     public DualListModel<String> getPickSbMenu() {
         return pickSbMenu;
@@ -66,6 +72,14 @@ public class autoCompleteBean {
 
     public void setPickSbMenu(DualListModel<String> pickSbMenu) {
         this.pickSbMenu = pickSbMenu;
+    }
+
+    public Boolean getMostrar() {
+        return mostrar;
+    }
+
+    public void setMostrar(Boolean mostrar) {
+        this.mostrar = mostrar;
     }
 
 }

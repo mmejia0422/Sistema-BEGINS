@@ -17,6 +17,6 @@ public interface SubMenuDao {
     public boolean create(Submenu subMenu);
     public boolean update(Submenu subMenu);
     public boolean delete(Integer id);
-    public List<Submenu> manageSubMenuSource(Integer idMenu);
+    public List<Submenu> manageSubMenuSource();
     public List<Submenu> manageSubMenuTarget(Integer idMenu);
 }

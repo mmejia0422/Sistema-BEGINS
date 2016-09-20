@@ -110,8 +110,18 @@ public class SubMenuDaoImpl implements SubMenuDao{
     }
 
     @Override
-    public List<Submenu> manageSubMenuSource(Integer idMenu) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Submenu> manageSubMenuSource(){
+         List<Submenu> listado = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Submenu s left join fetch s.menu where s.estado = 'Y' and menu_idmenu is null";
+        try {
+            listado = sesion.createQuery(sql).list();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        }
+        return listado;
     }
     
 }
