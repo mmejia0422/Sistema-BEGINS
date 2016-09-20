@@ -58,7 +58,7 @@
                 </h:form>
 
                 <h:form id="formCreate">
-                    <p:dialog header="Crear menu" id="dlgMenuCreate" widgetVar="dialogMenuCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                    <p:dialog header="Crear menu" id="dlgMenuCreate" widgetVar="dialogMenuCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="true">
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
                             <h:outputText value="Nombre menu"/>
@@ -73,7 +73,7 @@
                             </p:selectOneMenu>
 
                             <h:outputText value="Url"/>
-                            <p:inputText value="#{menuBean.selectedMenu.url}"/>
+                            <p:inputText required="true" value="#{menuBean.selectedMenu.url}"/>
 
                             <h:outputText value="Icono"/>
                             <p:selectOneMenu required="true" value="#{menuBean.selectedMenu.icono.idicono}">
@@ -82,7 +82,7 @@
                             </p:selectOneMenu>
 
                             <h:outputText value="Orden"/>
-                            <p:inputText value="#{menuBean.selectedMenu.orden}">
+                            <p:inputText required="true" value="#{menuBean.selectedMenu.orden}">
                                 <f:validateLongRange minimum="1" maximum="15"/>
                             </p:inputText>
 
@@ -111,7 +111,7 @@
                             </p:selectOneMenu>
 
                             <h:outputText value="Url"/>
-                            <p:inputText value="#{menuBean.selectedMenu.url}"/>
+                            <p:inputText required="true" value="#{menuBean.selectedMenu.url}"/>
 
                             <h:outputText value="Icono"/>
                             <p:selectOneMenu required="true" value="#{menuBean.selectedMenu.icono.idicono}">
@@ -120,7 +120,7 @@
                             </p:selectOneMenu>
 
                             <h:outputText value="Orden"/>
-                            <p:inputText value="#{menuBean.selectedMenu.orden}">
+                            <p:inputText required="true" value="#{menuBean.selectedMenu.orden}">
                                 <f:validateLongRange minimum="1" maximum="15"/>
                             </p:inputText>
 
@@ -142,28 +142,41 @@
                 </h:form>
 
                 <h:form id="formManage">
-                    <p:dialog header="Administrar menu #{menuBean.selectedMenu.nombre}" responsive="true" id="dlgMenuMg" widgetVar="dialogManage" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                    <p:dialog header="Administrar menu #{menuBean.selectedMenu.nombre}" responsive="true" id="dlgMenuMg" widgetVar="dialogManage" modal="true" showEffect="fade" hideEffect="explode" resizable="true">
                         <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
 
                         <p:panelGrid id="grid" columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
                             <h:outputText value="Listado de SubMenus"/>
                             <p:commandButton id="btnCrearSm" icon="icon-new" title="Crear" type="button">
-                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:grid" />
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:gridAdd" />
                             </p:commandButton>
-                            <h:outputText id="output" rendered="#{autoCompleteBean.mostrar}" value="Nombre"/>
-                            <p:inputText id="input" rendered="#{autoCompleteBean.mostrar}" value=""/>
                         </p:panelGrid>
-                        <p:separator />
-                        <p:panelGrid id="pickGrid" columns="1" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
-                            <p:pickList id="pickList" value="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" var="autoComplete" itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
-                                <f:facet name="sourceCaption">
-                                    <h:outputLabel value="Sin asignar" />
-                                </f:facet>
-                                <f:facet name="targetCaption">
-                                    <h:outputLabel value="Asignados" />
-                                </f:facet>
-                            </p:pickList>
+
+                        <p:panelGrid id="gridAdd" columns="2" style="margin: 0 auto;" columnClasses="ui-grid-col-2"  styleClass="companyHeaderGrid">
+
+                            <h:outputText rendered="#{autoCompleteBean.mostrar}" value="Nombre"/>
+                            <p:inputText rendered="#{autoCompleteBean.mostrar}" value="#{subMenuBean.selectedSubMenu.nombreSubmenu}"/>
+
+                            <h:outputText rendered="#{autoCompleteBean.mostrar}" value="Estado"/>
+                            <p:selectOneMenu rendered="#{autoCompleteBean.mostrar}" value="#{subMenuBean.selectedSubMenu.estado}">
+                                <f:selectItem itemLabel="Activo" itemValue="Y" />
+                                <f:selectItem itemLabel="Inactivo" itemValue="N" />
+                            </p:selectOneMenu>
+
+                            <h:outputText rendered="#{autoCompleteBean.mostrar}" value="Url"/>
+                            <p:inputText rendered="#{autoCompleteBean.mostrar}" value="#{subMenuBean.selectedSubMenu.url}"/>
+
+                            <h:outputText rendered="#{autoCompleteBean.mostrar}" value="Icono"/>
+                            <p:selectOneMenu rendered="#{autoCompleteBean.mostrar}" required="true" value="#{subMenuBean.selectedSubMenu.icono.idicono}">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItems value="#{iconoBean.selectOneItemsIco}" />
+                            </p:selectOneMenu>
+                            <p:commandButton id="btnCAceptar" update=":formManage:gridAdd, :msgs" rendered="#{autoCompleteBean.mostrar}"  actionListener="#{subMenuBean.btnCreate(actionEvent, menuBean.selectedMenu.idmenu)}" icon="icon-save" title="Guardar" value="Guardar"/>
+                            <p:commandButton id="btnCCancelar" rendered="#{autoCompleteBean.mostrar}"  oncomplete="PF('dialogManage').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
                         </p:panelGrid>
+
+                        <p:separator/>
+
                     </p:dialog>
                 </h:form>
 
