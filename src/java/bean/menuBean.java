@@ -200,6 +200,12 @@ public class menuBean implements Serializable {
 
     //Here ends the code for maintenance
     
+    public void sesionMenu(){
+        
+        Integer id = this.selectedMenu.getIdmenu();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idMenu", id);
+    }
+    
     public Menu getSelectedMenu() {
         return selectedMenu;
     }
