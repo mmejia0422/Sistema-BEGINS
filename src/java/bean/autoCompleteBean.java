@@ -42,7 +42,7 @@ public class autoCompleteBean {
         this.pickSbMenu = new DualListModel<String>();
 
         this.sessionId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idMenu");
-
+        
         if (this.sessionId != null) {
             List<String> sbSource = new ArrayList<String>();
             List<String> sbTarget = new ArrayList<String>();
@@ -70,12 +70,12 @@ public class autoCompleteBean {
         }
     }
 
-    public void llenarPicklist() {
+    public void llenarPicklist(Integer id) {
 
         this.pickSbMenu = new DualListModel<String>();
 
-        this.sessionId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idMenu");
-
+        this.sessionId = id;
+        
         if (this.sessionId != null) {
             List<String> sbSource = new ArrayList<String>();
             List<String> sbTarget = new ArrayList<String>();
@@ -103,37 +103,6 @@ public class autoCompleteBean {
         }
     }
 
-    public DualListModel<String> actualizarPicklist(Integer id) {
-
-        DualListModel<String> updatePL = new DualListModel<String>();
-
-        List<String> sbSource = new ArrayList<String>();
-        List<String> sbTarget = new ArrayList<String>();
-        SubMenuDao sbMenu = new SubMenuDaoImpl();
-
-        sbMenuTarget = new ArrayList<Submenu>();
-        sbMenuSource = new ArrayList<Submenu>();
-
-        this.sbMenuTarget = sbMenu.manageSubMenuTarget(id);
-        this.sbMenuSource = sbMenu.manageSubMenuSource();
-
-        if (this.sbMenuTarget.size() > 0) {
-            for (int i = 0; i <= this.sbMenuTarget.size() - 1; i++) {
-                sbTarget.add(this.sbMenuTarget.get(i).getNombreSubmenu());
-            }
-        }
-
-        if (this.sbMenuSource.size() > 0) {
-            for (int j = 0; j <= this.sbMenuSource.size() - 1; j++) {
-                sbSource.add(this.sbMenuSource.get(j).getNombreSubmenu());
-            }
-        }
-
-        updatePL = new DualListModel<String>(sbSource, sbTarget);
-
-        return updatePL;
-
-    }
 
     public void mostrarForma() {
         if (this.mostrar != true) {

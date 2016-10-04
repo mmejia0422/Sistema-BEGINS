@@ -44,7 +44,7 @@
                         </p:column>
 
                         <p:column headerText="Accion" style="width:100px;text-align: center">
-                            <p:commandButton id="btnManage" update=":formManage" action="#{menuBean.sesionMenu()}" oncomplete="PF('dialogManage').show()" icon="icon-tools" title="Administrar">
+                            <p:commandButton id="btnManage" update=":formManage" action="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" oncomplete="PF('dialogManage').show()" icon="icon-tools" title="Administrar">
                                 <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}"/>
                             </p:commandButton>
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMenuUpdate').show()" icon="icon-edit" title="Modificar">
@@ -172,7 +172,7 @@
                                 <f:selectItems value="#{iconoBean.selectOneItemsIco}" />
                             </p:selectOneMenu>
                             <p:commandButton id="btnCAceptar" update=":formManage:gridAdd, :formManage:pickGrid, :msgs" rendered="#{autoCompleteBean.mostrar}"  actionListener="#{subMenuBean.btnCreate(actionEvent, menuBean.selectedMenu.idmenu)}" icon="icon-save" title="Guardar" value="Guardar">
-                                <f:actionListener binding="#{autoCompleteBean.llenarPicklist()}" />
+                                <f:actionListener binding="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}"/>
                             </p:commandButton>
                             <p:commandButton id="btnCCancelar" rendered="#{autoCompleteBean.mostrar}"  oncomplete="PF('dialogManage').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
                         </p:panelGrid>
