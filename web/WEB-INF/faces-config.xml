@@ -6,4 +6,13 @@
 <lifecycle>
  <phase-listener>util.AuthorizationListener</phase-listener>
 </lifecycle>
+<application>
+     	<locale-config>
+     		<default-locale>en</default-locale>
+     	</locale-config>
+		<resource-bundle>
+			<base-name>resources.mensajes</base-name>
+			<var>msg</var>
+		</resource-bundle>
+     </application>
 </faces-config>
