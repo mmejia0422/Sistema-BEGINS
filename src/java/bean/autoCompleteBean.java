@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import model.Submenu;
@@ -30,6 +29,7 @@ public class autoCompleteBean {
     private List<Submenu> sbMenuSource;
     private DualListModel<String> pickSbMenu;
     private Boolean mostrar;
+    private Boolean mostrarPL;
     private Integer sessionId;
 
     public autoCompleteBean() {
@@ -38,6 +38,7 @@ public class autoCompleteBean {
     @PostConstruct
     public void init() {
         this.mostrar = false;
+        this.mostrarPL = false;
         
         this.pickSbMenu = new DualListModel<String>();
 
@@ -110,6 +111,23 @@ public class autoCompleteBean {
         } else {
             this.mostrar = false;
         }
+        
+        if(this.mostrarPL = true){
+            this.mostrarPL = false;
+        }
+        
+    }
+    
+    public void mostrarPickList() {
+          if (this.mostrarPL != true) {
+            this.mostrarPL = true;
+        } else if (this.mostrarPL = true) {
+            this.mostrarPL = false;
+        }
+          
+          if(this.mostrar = true){
+              this.mostrar = false;
+          }
     }
 
     public DualListModel<String> getPickSbMenu() {
@@ -134,6 +152,14 @@ public class autoCompleteBean {
 
     public void setSessionId(Integer sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public Boolean getMostrarPL() {
+        return mostrarPL;
+    }
+
+    public void setMostrarPL(Boolean mostrarPL) {
+        this.mostrarPL = mostrarPL;
     }
 
 }

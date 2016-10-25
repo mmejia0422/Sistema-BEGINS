@@ -58,7 +58,7 @@
                 </h:form>
 
                 <h:form id="formCreate">
-                    <p:dialog header="Crear menu" id="dlgMenuCreate" widgetVar="dialogMenuCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="true">
+                    <p:dialog header="Crear menu" id="dlgMenuCreate" responsive="true" widgetVar="dialogMenuCreate" modal="true" showEffect="fade" hideEffect="explode" resizable="true">
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
                             <h:outputText value="Nombre menu"/>
@@ -95,7 +95,7 @@
                 </h:form>
 
                 <h:form id="formUpdate">
-                    <p:dialog header="Modificar menu" id="dlgMenuUpdate" widgetVar="dialogMenuUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                    <p:dialog header="Modificar menu" responsive="true" id="dlgMenuUpdate" widgetVar="dialogMenuUpdate" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
                         <h:inputHidden value="#{menuBean.selectedMenu.idmenu}" />
                         <p:panelGrid  columns="2" style="margin: 0 auto;" columnClasses="label,value">
 
@@ -145,14 +145,19 @@
                     <p:dialog header="Administrar menu #{menuBean.selectedMenu.nombre}" responsive="true" id="dlgMenuMg" widgetVar="dialogManage" modal="true" showEffect="fade" hideEffect="explode" resizable="true">
                         <h:inputHidden value="#{menuBean.selectedMenu.idmenu}"/>
 
-                        <p:panelGrid id="grid" columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
-                            <h:outputText value="Listado de SubMenus"/>
+                        <p:panelGrid id="grid" columns="3" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
                             <p:commandButton id="btnCrearSm" icon="icon-new" title="Crear" type="button">
-                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:gridAdd" />
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:gridAdd, :formManage:pickGrid"/>
+                            </p:commandButton>
+                            <p:commandButton id="btnManageSm" icon="icon-manageCookie" title="Administrar" type="button">
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarPickList()}" update=":formManage:pickGrid, :formManage:gridAdd"/>
+                            </p:commandButton>
+                            <p:commandButton id="btnEliminarSm" icon="icon-delete" title="Eliminar" type="button">
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:EliminarSM" />
                             </p:commandButton>
                         </p:panelGrid>
 
-                        <p:panelGrid id="gridAdd" columns="2" style="margin: 0 auto;" columnClasses="ui-grid-col-2"  styleClass="companyHeaderGrid">
+                        <p:panelGrid id="gridAdd" columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
 
                             <h:outputText rendered="#{autoCompleteBean.mostrar}" value="Nombre"/>
                             <p:inputText rendered="#{autoCompleteBean.mostrar}" value="#{subMenuBean.selectedSubMenu.nombreSubmenu}"/>
@@ -177,18 +182,27 @@
                             <p:commandButton id="btnCCancelar" rendered="#{autoCompleteBean.mostrar}"  oncomplete="PF('dialogManage').hide()" icon="icon-cancel" title="Cancelar" value="Cancelar"/>
                         </p:panelGrid>
 
-                        <p:separator/>
-
-                        <p:panelGrid id="pickGrid" columns="1" style="margin: 0 auto;" columnClasses="ui-grid-col-2" styleClass="companyHeaderGrid">
-                            <p:pickList id="pickList" value="#{autoCompleteBean.pickSbMenu}" var="autoComplete" itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
-                                <f:facet name="sourceCaption">
-                                    <h:outputLabel value="Sin asignar" />
+                        <p:panelGrid id="pickGrid" columns="1" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+                            <p:panel rendered="#{autoCompleteBean.mostrarPL}" header="#{msg['listadoSm']}">
+                            <p:pickList rendered="#{autoCompleteBean.mostrarPL}" responsive="true" showCheckbox="true" effect="bounce" showSourceControls="true" 
+                                        showTargetControls="true"
+                                        value="#{autoCompleteBean.pickSbMenu}" var="autoComplete" 
+                                        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
+                                        itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
+                                <f:facet rendered="#{autoCompleteBean.mostrarPL}" name="sourceCaption">
+                                    <h:outputLabel value="#{msg['sinAsignar']}" />
                                 </f:facet>
-                                <f:facet name="targetCaption">
-                                    <h:outputLabel value="Asignados" />
+                                <f:facet rendered="#{autoCompleteBean.mostrarPL}" name="targetCaption">
+                                    <h:outputLabel value="#{msg['Asignados']}" />
                                 </f:facet>
                             </p:pickList>
+                                </p:panel>
                         </p:panelGrid>
+                        
+                        <p:panelGrid id="EliminarSM" columns="1" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+                            
+                        </p:panelGrid>
+
                     </p:dialog>
                 </h:form>
 

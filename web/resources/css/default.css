@@ -32,6 +32,10 @@ a:link:hover, a:visited:hover  {
     background-image: url(../images/icons/nuevo.png);
 }
 
+.ui-state-default .icon-manageCookie{
+    background-image: url(../images/icons/cookie.png);
+}
+
 .ui-state-default .icon-edit{
     background-image: url(../images/icons/modificar.png);
 }
