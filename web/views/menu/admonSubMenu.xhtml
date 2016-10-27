@@ -16,9 +16,9 @@
                     <h:inputHidden value="#{menuBean.selectedMenu.idmenu}"/>
 
                     <p:panelGrid id="grid" columns="3" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
-                        <p:commandButton id="btnCrearSm" update=":formManage" oncomplete="PF('dialogAddSb').show()" icon="icon-new" title="Crear"/>
+                        <p:commandButton id="btnCrearSm" update=":formManage" oncomplete="PF('dialogAddSb').show()" icon="icon-new" title="#{msg['btnCrear']}"/>
                         <p:commandButton id="btnManageSm" icon="icon-manageCookie" title="Administrar"/>
-                        <p:commandButton id="btnEliminarSm" icon="icon-delete" title="Eliminar"/>
+                        <p:commandButton id="btnEliminarSm" update=":formMng, :msgs" action="#{autoCompleteBean.llenarDataTable()}" actionListener="#{subMenuBean.eliminarMultiplesSm(autoCompleteBean.selectedSubMenu)}" icon="icon-delete" title="#{msg['btnEliminar']}"/>
                     </p:panelGrid>
 
                     <p:separator/>
@@ -31,17 +31,17 @@
                         <f:facet name="header">
                             #{msg['listadoSm']}
                         </f:facet>
-                        <p:column selectionMode="multiple"/>
-                        <p:column headerText="Nombre" >
+                        <p:column headerText="#{msg['chkEliminar']}" selectionMode="multiple"/>
+                        <p:column headerText="#{msg['nombre']}" >
                             <h:outputText value="#{autoC.nombreSubmenu}"/>
                         </p:column>
                         <p:column headerText="Url" >
                             <h:outputText value="#{autoC.url}"/>
                         </p:column>
-                        <p:column headerText="Icono" >
+                        <p:column headerText="#{msg['icono']}" >
                             <h:outputText value="#{autoC.icono.referencia}"/>
                         </p:column>
-                        <p:column headerText="estado">
+                        <p:column headerText="#{msg['estado']}">
                             <h:outputText value="#{autoC.estado}"/>
                         </p:column>
                     </p:dataTable>
@@ -74,7 +74,7 @@
                                 <table align="center">
                                     <td>
                                         <p:commandButton id="btnCAceptar" actionListener="#{subMenuBean.btnCreate(actionEvent)}" 
-                                                         update=":formMng, :msgs" icon="icon-save" title="#{msg['guardar']}" 
+                                                         update=":formMng, :msgs" icon="icon-save" title="#{msg['btnCrear']}" 
                                                          oncomplete="PF('dialogAddSb').hide()" value="#{msg['guardar']}"/>
                                     </td>
                                     <td>

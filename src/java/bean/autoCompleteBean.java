@@ -83,8 +83,8 @@ public class autoCompleteBean {
         }
     }
     
-    public void llenarDataTable(Integer id){
-        
+    public void llenarDataTable(){
+        Integer id = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idMenu");
         SubMenuDao subMenuDao = new SubMenuDaoImpl();
         this.listaSubMenusDlte = subMenuDao.findAll(id);
     }
@@ -123,7 +123,7 @@ public class autoCompleteBean {
             this.pickSbMenu = new DualListModel<String>(sbSource, sbTarget);
         }
         
-        llenarDataTable(id);
+        llenarDataTable();
         
         //forward to another page
         return "admonSubMenu";

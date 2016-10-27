@@ -54,7 +54,7 @@
                                              action="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" icon="icon-tools" 
                                              title="Administrar">
                                 <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}"/>
-                                <f:actionListener binding="#{autoCompleteBean.llenarDataTable(menuBean.selectedMenu.idmenu)}"/>
+                                <f:actionListener binding="#{autoCompleteBean.llenarDataTable()}"/>
                             </p:commandButton>
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMenuUpdate').show()" icon="icon-edit" title="Modificar">
                                 <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}"/>

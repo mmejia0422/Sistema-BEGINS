@@ -24,27 +24,27 @@ import org.primefaces.model.DualListModel;
  *
  * @author Mario
  */
-@ManagedBean (name = "subMenuBean")
+@ManagedBean(name = "subMenuBean")
 @RequestScoped
-public class subMenuBean implements Serializable{
+public class subMenuBean implements Serializable {
 
     private Submenu selectedSubMenu;
-    
+
     public subMenuBean() {
         this.selectedSubMenu = new Submenu();
     }
-    
-     @PostConstruct
-    public void init() {        
+
+    @PostConstruct
+    public void init() {
     }
 
     public void btnCreate(ActionEvent actionEvent) {
         SubMenuDao subMenuDao = new SubMenuDaoImpl();
         String msg;
-        
+
         Integer id = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idMenu");
         this.selectedSubMenu.getMenu().setIdmenu(id);
-        
+
         if (subMenuDao.create(this.selectedSubMenu)) {
             msg = "Se guardo correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
@@ -73,10 +73,10 @@ public class subMenuBean implements Serializable{
 
     }
 
-    public void btnDelete(ActionEvent actionEvent) {
+    public void btnDelete(Integer idSubmenu) {
         SubMenuDao subMenuDao = new SubMenuDaoImpl();
         String msg;
-        if (subMenuDao.delete(this.selectedSubMenu.getIdsubmenu())) {
+        if (subMenuDao.delete(idSubmenu)) {
             msg = "Se elimino correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -86,6 +86,33 @@ public class subMenuBean implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
+    }
+
+    public void eliminarMultiplesSm(List<Submenu> eliminarLista) {
+        String msg = null;
+        
+      if(eliminarLista != null){  
+        SubMenuDao subMenuDao = new SubMenuDaoImpl();
+        
+        
+        try{
+        
+        for (int i = 0; i < eliminarLista.size(); i++) {
+            subMenuDao.delete(eliminarLista.get(i).getIdsubmenu());
+            }
+        } catch(Exception e){
+            msg = "Error al intentar eliminar registro: " + e.toString();
+        }
+
+       if (msg == null){
+           msg = "Resgitros eliminados con exito";
+       }
+      }else {
+          msg = "Por favor seleccione para eliminar";
+      }
+       
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public Submenu getSelectedSubMenu() {
