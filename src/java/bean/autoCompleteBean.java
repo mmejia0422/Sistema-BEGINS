@@ -126,7 +126,7 @@ public class autoCompleteBean {
         llenarDataTable();
         
         //forward to another page
-        return "admonSubMenu";
+        return MyUtil.fwdManageSm();
     }
 
 

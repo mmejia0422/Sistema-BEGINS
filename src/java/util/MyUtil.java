@@ -21,4 +21,8 @@ public class MyUtil {
     public static String basepath(){
         return "/faces/views/";
     }
+    
+    public static String fwdManageSm(){
+        return "admonSubMenu";
+    }
 }

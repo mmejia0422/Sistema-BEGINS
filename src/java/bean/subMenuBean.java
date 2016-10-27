@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -90,8 +91,9 @@ public class subMenuBean implements Serializable {
 
     public void eliminarMultiplesSm(List<Submenu> eliminarLista) {
         String msg = null;
+        Severity tipoMsg = null;
         
-      if(eliminarLista != null){  
+      if(eliminarLista.size() > 0){  
         SubMenuDao subMenuDao = new SubMenuDaoImpl();
         
         
@@ -102,16 +104,19 @@ public class subMenuBean implements Serializable {
             }
         } catch(Exception e){
             msg = "Error al intentar eliminar registro: " + e.toString();
+            tipoMsg = FacesMessage.SEVERITY_ERROR;
         }
 
        if (msg == null){
-           msg = "Resgitros eliminados con exito";
+           msg = "Total de registros eliminados con exito: " + eliminarLista.size();
+           tipoMsg = FacesMessage.SEVERITY_INFO;
        }
       }else {
           msg = "Por favor seleccione para eliminar";
+          tipoMsg = FacesMessage.SEVERITY_WARN;
       }
        
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+        FacesMessage message = new FacesMessage(tipoMsg, msg, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
