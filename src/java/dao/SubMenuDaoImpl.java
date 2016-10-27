@@ -123,5 +123,20 @@ public class SubMenuDaoImpl implements SubMenuDao{
         }
         return listado;
     }
+
+    @Override
+    public List<Submenu> findAll(Integer idMenu) {
+         List<Submenu> listado = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = sesion.beginTransaction();
+        String sql = "FROM Submenu s left join fetch s.icono left join fetch s.menu where menu_idmenu = '" + idMenu + "'";
+        try {
+            listado = sesion.createQuery(sql).list();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        }
+        return listado;
+    }
     
 }

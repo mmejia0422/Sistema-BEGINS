@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../Template.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form id="formMng">
+                    <h:inputHidden value="#{menuBean.selectedMenu.idmenu}"/>
+
+                    <p:panelGrid id="grid" columns="3" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+                        <p:commandButton id="btnCrearSm" update=":formManage" oncomplete="PF('dialogAddSb').show()" icon="icon-new" title="Crear"/>
+                        <p:commandButton id="btnManageSm" icon="icon-manageCookie" title="Administrar"/>
+                        <p:commandButton id="btnEliminarSm" icon="icon-delete" title="Eliminar"/>
+                    </p:panelGrid>
+
+                    <p:separator/>
+
+                    <p:dataTable id="myTable"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15" resizableColumns="true" 
+                                 var="autoC" value="#{autoCompleteBean.listaSubMenusDlte}" selection="#{autoCompleteBean.selectedSubMenu}" rowKey="#{autoC.idsubmenu}">
+                        <f:facet name="header">
+                            #{msg['listadoSm']}
+                        </f:facet>
+                        <p:column selectionMode="multiple"/>
+                        <p:column headerText="Nombre" >
+                            <h:outputText value="#{autoC.nombreSubmenu}"/>
+                        </p:column>
+                        <p:column headerText="Url" >
+                            <h:outputText value="#{autoC.url}"/>
+                        </p:column>
+                        <p:column headerText="Icono" >
+                            <h:outputText value="#{autoC.icono.referencia}"/>
+                        </p:column>
+                        <p:column headerText="estado">
+                            <h:outputText value="#{autoC.estado}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+
+                <h:form id="formManage">
+                    <p:dialog header="#{msg['crearSm']}" responsive="true" id="dlgAddSb" widgetVar="dialogAddSb" modal="true" showEffect="fade" hideEffect="explode" resizable="false">
+                        <p:panelGrid id="gridAdd" columns="2" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
+
+                            <h:outputText value="#{msg['nombre']}"/>
+                            <p:inputText value="#{subMenuBean.selectedSubMenu.nombreSubmenu}"/>
+
+                            <h:outputText value="#{msg['estado']}"/>
+                            <p:selectOneMenu value="#{subMenuBean.selectedSubMenu.estado}">
+                                <f:selectItem itemLabel="Activo" itemValue="Y" />
+                                <f:selectItem itemLabel="Inactivo" itemValue="N" />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Url"/>
+                            <p:inputText value="#{subMenuBean.selectedSubMenu.url}"/>
+
+                            <h:outputText value="#{msg['icono']}"/>
+                            <p:selectOneMenu required="true" value="#{subMenuBean.selectedSubMenu.icono.idicono}">
+                                <f:selectItem itemLabel="#{msg['seleccione']}" itemValue="" />
+                                <f:selectItems value="#{iconoBean.selectOneItemsIco}" />
+                            </p:selectOneMenu>
+
+                            <f:facet name="footer">
+                                <table align="center">
+                                    <td>
+                                        <p:commandButton id="btnCAceptar" actionListener="#{subMenuBean.btnCreate(actionEvent)}" 
+                                                         update=":formMng, :msgs" icon="icon-save" title="#{msg['guardar']}" 
+                                                         oncomplete="PF('dialogAddSb').hide()" value="#{msg['guardar']}"/>
+                                    </td>
+                                    <td>
+                                        <p:commandButton id="btnCCancelar" oncomplete="PF('dialogAddSb').hide()" icon="icon-cancel" title="#{msg['cancelar']}" value="#{msg['cancelar']}"/>
+                                    </td>
+                                </table>   
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

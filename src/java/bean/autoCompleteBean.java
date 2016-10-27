@@ -11,17 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import model.Submenu;
 import org.primefaces.model.DualListModel;
+import util.MyUtil;
 
 /**
  *
  * @author Mario
  */
 @ManagedBean(name = "autoCompleteBean")
-@ViewScoped
+@RequestScoped
 
 public class autoCompleteBean {
 
@@ -30,7 +32,10 @@ public class autoCompleteBean {
     private DualListModel<String> pickSbMenu;
     private Boolean mostrar;
     private Boolean mostrarPL;
+    private Boolean mostrarDlte;
     private Integer sessionId;
+    private List<Submenu> listaSubMenusDlte;
+    private List<Submenu> selectedSubMenu; //lista seleccionada para borrar
 
     public autoCompleteBean() {
     }
@@ -39,6 +44,13 @@ public class autoCompleteBean {
     public void init() {
         this.mostrar = false;
         this.mostrarPL = false;
+        this.mostrarDlte = false;
+        
+        //llenado de variable para datatable
+        SubMenuDao subMenuDao = new SubMenuDaoImpl();
+        this.listaSubMenusDlte = subMenuDao.findAll((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idMenu"));
+        
+        //llenado de picklist
         
         this.pickSbMenu = new DualListModel<String>();
 
@@ -70,14 +82,22 @@ public class autoCompleteBean {
             this.pickSbMenu = new DualListModel<String>(sbSource, sbTarget);
         }
     }
+    
+    public void llenarDataTable(Integer id){
+        
+        SubMenuDao subMenuDao = new SubMenuDaoImpl();
+        this.listaSubMenusDlte = subMenuDao.findAll(id);
+    }
 
-    public void llenarPicklist(Integer id) {
+    public String llenarPicklist(Integer id) {
 
         this.pickSbMenu = new DualListModel<String>();
 
+        
         this.sessionId = id;
         
         if (this.sessionId != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idMenu", this.sessionId);
             List<String> sbSource = new ArrayList<String>();
             List<String> sbTarget = new ArrayList<String>();
             SubMenuDao sbMenu = new SubMenuDaoImpl();
@@ -102,6 +122,11 @@ public class autoCompleteBean {
 
             this.pickSbMenu = new DualListModel<String>(sbSource, sbTarget);
         }
+        
+        llenarDataTable(id);
+        
+        //forward to another page
+        return "admonSubMenu";
     }
 
 
@@ -116,6 +141,10 @@ public class autoCompleteBean {
             this.mostrarPL = false;
         }
         
+        if(this.mostrarDlte = true){
+              this.mostrarDlte = false;
+          }
+        
     }
     
     public void mostrarPickList() {
@@ -128,6 +157,26 @@ public class autoCompleteBean {
           if(this.mostrar = true){
               this.mostrar = false;
           }
+          
+          if(this.mostrarDlte = true){
+              this.mostrarDlte = false;
+          }
+    }
+    
+    public void mostrarDataDlte(){
+         if (this.mostrarDlte != true) {
+            this.mostrarDlte = true;
+        } else if (this.mostrarDlte = true) {
+            this.mostrarDlte = false;
+        }
+         
+         if(this.mostrar = true){
+              this.mostrar = false;
+          }
+         
+          if(this.mostrarPL = true){
+            this.mostrarPL = false;
+        }
     }
 
     public DualListModel<String> getPickSbMenu() {
@@ -162,4 +211,30 @@ public class autoCompleteBean {
         this.mostrarPL = mostrarPL;
     }
 
+    public List<Submenu> getListaSubMenusDlte() {
+        return this.listaSubMenusDlte;
+    }
+
+    public void setListaSubMenusDlte(List<Submenu> listaSubMenusDlte) {
+        this.listaSubMenusDlte = listaSubMenusDlte;
+    }
+
+    public List<Submenu> getSelectedSubMenu() {
+        return selectedSubMenu;
+    }
+
+    public void setSelectedSubMenu(List<Submenu> selectedSubMenu) {
+        this.selectedSubMenu = selectedSubMenu;
+    }
+
+    public Boolean getMostrarDlte() {
+        return mostrarDlte;
+    }
+
+    public void setMostrarDlte(Boolean mostrarDlte) {
+        this.mostrarDlte = mostrarDlte;
+    }
+
+    
+    
 }

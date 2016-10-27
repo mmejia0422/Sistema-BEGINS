@@ -19,4 +19,5 @@ public interface SubMenuDao {
     public boolean delete(Integer id);
     public List<Submenu> manageSubMenuSource();
     public List<Submenu> manageSubMenuTarget(Integer idMenu);
+    public List<Submenu> findAll(Integer idMenu);
 }

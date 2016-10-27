@@ -38,18 +38,17 @@ public class subMenuBean implements Serializable{
     public void init() {        
     }
 
-    public void btnCreate(ActionEvent actionEvent, Integer id) {
+    public void btnCreate(ActionEvent actionEvent) {
         SubMenuDao subMenuDao = new SubMenuDaoImpl();
         String msg;
         
+        Integer id = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idMenu");
         this.selectedSubMenu.getMenu().setIdmenu(id);
         
         if (subMenuDao.create(this.selectedSubMenu)) {
             msg = "Se guardo correctamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
-            
-            this.selectedSubMenu = new Submenu();
         } else {
             msg = "Error al crear el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);

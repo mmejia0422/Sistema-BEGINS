@@ -1,0 +1,9 @@
+form
+{
+   margin:auto;
+   alignment-adjust: central;
+}
+
+.myTable td:nth-child(1) {
+    width: 20px;
+}

@@ -6,6 +6,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/cssComponent.css"/>
+        <title>Super Bakery</title>
+    </h:head>
+
     <body>
 
         <ui:composition template="./../Template.xhtml">
@@ -44,8 +50,11 @@
                         </p:column>
 
                         <p:column headerText="Accion" style="width:100px;text-align: center">
-                            <p:commandButton id="btnManage" update=":formManage" action="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" oncomplete="PF('dialogManage').show()" icon="icon-tools" title="Administrar">
+                            <p:commandButton id="btnManage" 
+                                             action="#{autoCompleteBean.llenarPicklist(menuBean.selectedMenu.idmenu)}" icon="icon-tools" 
+                                             title="Administrar">
                                 <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}"/>
+                                <f:actionListener binding="#{autoCompleteBean.llenarDataTable(menuBean.selectedMenu.idmenu)}"/>
                             </p:commandButton>
                             <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogMenuUpdate').show()" icon="icon-edit" title="Modificar">
                                 <f:setPropertyActionListener value="#{menu}" target="#{menuBean.selectedMenu}"/>
@@ -147,13 +156,13 @@
 
                         <p:panelGrid id="grid" columns="3" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
                             <p:commandButton id="btnCrearSm" icon="icon-new" title="Crear" type="button">
-                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:gridAdd, :formManage:pickGrid"/>
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:gridAdd, :formManage:pickGrid, :formManage:EliminarSM"/>
                             </p:commandButton>
                             <p:commandButton id="btnManageSm" icon="icon-manageCookie" title="Administrar" type="button">
-                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarPickList()}" update=":formManage:pickGrid, :formManage:gridAdd"/>
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarPickList()}" update=":formManage:pickGrid, :formManage:gridAdd, :formManage:EliminarSM"/>
                             </p:commandButton>
                             <p:commandButton id="btnEliminarSm" icon="icon-delete" title="Eliminar" type="button">
-                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarForma()}" update=":formManage:EliminarSM" />
+                                <p:ajax event="click" listener="#{autoCompleteBean.mostrarDataDlte()}" update=":formManage:EliminarSM, :formManage:pickGrid, :formManage:gridAdd" />
                             </p:commandButton>
                         </p:panelGrid>
 
@@ -184,25 +193,37 @@
 
                         <p:panelGrid id="pickGrid" columns="1" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
                             <p:panel rendered="#{autoCompleteBean.mostrarPL}" header="#{msg['listadoSm']}">
-                            <p:pickList rendered="#{autoCompleteBean.mostrarPL}" responsive="true" showCheckbox="true" effect="bounce" showSourceControls="true" 
-                                        showTargetControls="true"
-                                        value="#{autoCompleteBean.pickSbMenu}" var="autoComplete" 
-                                        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
-                                        itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
-                                <f:facet rendered="#{autoCompleteBean.mostrarPL}" name="sourceCaption">
-                                    <h:outputLabel value="#{msg['sinAsignar']}" />
-                                </f:facet>
-                                <f:facet rendered="#{autoCompleteBean.mostrarPL}" name="targetCaption">
-                                    <h:outputLabel value="#{msg['Asignados']}" />
-                                </f:facet>
-                            </p:pickList>
-                                </p:panel>
-                        </p:panelGrid>
-                        
-                        <p:panelGrid id="EliminarSM" columns="1" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid">
-                            
+                                <p:pickList rendered="#{autoCompleteBean.mostrarPL}" responsive="true" showCheckbox="true" effect="bounce" showSourceControls="true" 
+                                            showTargetControls="true"
+                                            value="#{autoCompleteBean.pickSbMenu}" var="autoComplete" 
+                                            showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
+                                            itemLabel="#{autoComplete}" itemValue="#{autoComplete}">
+                                    <f:facet rendered="#{autoCompleteBean.mostrarPL}" name="sourceCaption">
+                                        <h:outputLabel value="#{msg['sinAsignar']}" />
+                                    </f:facet>
+                                    <f:facet rendered="#{autoCompleteBean.mostrarPL}" name="targetCaption">
+                                        <h:outputLabel value="#{msg['Asignados']}" />
+                                    </f:facet>
+                                </p:pickList>
+                            </p:panel>
                         </p:panelGrid>
 
+                        <p:panelGrid id="EliminarSM" columns="1" style="margin: 0 auto;" columnClasses="label,value" styleClass="companyHeaderGrid"> 
+                            <p:dataTable id="myTable" rendered="#{autoCompleteBean.mostrarDlte}" 
+                                         paginator="true" rows="5"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="10,15"
+                                         var="autoC" value="#{autoCompleteBean.listaSubMenusDlte}" selection="#{autoCompleteBean.selectedSubMenu}" rowKey="#{autoC.idsubmenu}">
+                                <f:facet rendered="#{autoCompleteBean.mostrarDlte}" name="header">
+                                    #{msg['eliminarSB']}
+                                </f:facet>
+                                <p:column rendered="#{autoCompleteBean.mostrarDlte}" selectionMode="multiple" style="width:1px;"/>
+                                <p:column rendered="#{autoCompleteBean.mostrarDlte}" headerText="Nombre" style="width:20px;">
+                                    <h:outputText value="#{autoC.nombreSubmenu}"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panelGrid>
                     </p:dialog>
                 </h:form>
 

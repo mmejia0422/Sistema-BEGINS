@@ -32,11 +32,13 @@ import model.Rol;
 import model.RolMenu;
 import model.Submenu;
 import model.Usuario;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
+import util.MyUtil;
 
 /**
  *
@@ -65,7 +67,7 @@ public class menuBean implements Serializable {
     @PostConstruct
     public void init() {
         model = new DefaultMenuModel();
-        this.listarMenus();            
+        this.listarMenus();
     }
 
     public void listarMenus() {
@@ -75,7 +77,6 @@ public class menuBean implements Serializable {
             RolMenuDao rolMenuDao = new RolMenuDaoImpl();
             MenuDao menuDao = new MenuDaoImpl();
             SubMenuDao submenuDao = new SubMenuDaoImpl();
-            //this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 
             usuarioBean userbean = new usuarioBean();
             this.usuario = this.usuarioDao.findUser(userbean.getUsuarioSesion());
@@ -199,8 +200,8 @@ public class menuBean implements Serializable {
     }
 
     //Here ends the code for maintenance
-    
-    
+
+
     public Menu getSelectedMenu() {
         return selectedMenu;
     }
