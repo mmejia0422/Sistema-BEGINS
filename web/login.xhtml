@@ -11,7 +11,7 @@
     </h:head>
     <h:form>
         <h:panelGrid columns="2">
-            Language:
+            #{msg['lenguaje']}
             <h:selectOneMenu value="#{languageBean.localeCode}" onchange="submit()"
                              valueChangeListener="#{languageBean.countryLocaleCodeChanged}">
                 <f:selectItems value="#{languageBean.countriesInMap}" />
@@ -24,7 +24,7 @@
 
                 <p:growl id="growl" showDetail="true" life="3000" />
                 <h:form id="formLogin">                    
-                    <p:panel id="basic" header="Super Bakery" style="margin-bottom:20px">
+                    <p:panel id="basic" header="#{msg['bienvenido']}" style="margin-bottom:20px">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="username" value="#{msg['usuario']}"/>
                             <p:inputText id="username" value="#{loginBean.usuario.usuario}" required="true" label="username">      

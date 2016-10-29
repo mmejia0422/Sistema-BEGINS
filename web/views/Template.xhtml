@@ -10,13 +10,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
-        <title>Super Bakery</title>
+        <title>#{paramBean.companyName()}</title>
     </h:head>
 
     <h:body>
         <div id="container">
             <div id="top" class = "ui-widget-header ui-corner-all">
-                <ui:insert name="top">SUPER BAKERY</ui:insert>
+                <ui:insert name="top">#{paramBean.companyName()}</ui:insert>
             </div>
             <h:form>
                 <div align="right">
@@ -61,7 +61,7 @@
                 <ui:insert name="content">Content</ui:insert>
             </div>
             <div id="bottom" class = "ui-widget-header ui-corner-all">
-                <ui:insert name="bottom">&copy; 2015</ui:insert>
+                <ui:insert name="bottom">&copy; 2016</ui:insert>
             </div>
         </div>
         <script type="text/javascript">
