@@ -16,10 +16,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import model.Submenu;
 import org.primefaces.model.DualListModel;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import util.MyUtil;
 
 /**
@@ -45,7 +41,7 @@ public class autoCompleteBean {
     }
 
     @PostConstruct
-    public void init() {        
+    public void init() {
         this.mostrar = false;
         this.mostrarPL = false;
         this.mostrarDlte = false;
@@ -182,7 +178,7 @@ public class autoCompleteBean {
             this.mostrarPL = false;
         }
     }
-    
+
     public DualListModel<String> getPickSbMenu() {
         return pickSbMenu;
     }

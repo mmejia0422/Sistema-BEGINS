@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 10-30-2016 07:08:51 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Cliente" table="cliente" catalog="db_invernadero" optimistic-lock="version">
+    <class name="model.Cliente" table="cliente" catalog="gasisw_bd1" optimistic-lock="version">
         <id name="idCliente" type="java.lang.Integer">
             <column name="id_cliente" />
             <generator class="identity" />
@@ -18,13 +18,13 @@
             <column name="apellido" length="45" not-null="true" />
         </property>
         <property name="dui" type="string">
-            <column name="dui" length="10" />
+            <column name="dui" length="9" />
         </property>
         <property name="nit" type="string">
             <column name="nit" length="45" />
         </property>
         <property name="telefono" type="string">
-            <column name="telefono" length="9" />
+            <column name="telefono" length="8" />
         </property>
         <set name="facturas" table="factura" inverse="true" lazy="true" fetch="select">
             <key>
