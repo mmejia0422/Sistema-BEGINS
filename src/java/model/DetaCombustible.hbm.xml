@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11-18-2015 05:01:00 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 10-30-2016 07:08:51 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.DetaCombustible" table="deta_combustible" catalog="gasisw_bd1" optimistic-lock="version">
+    <class name="model.DetaCombustible" table="deta_combustible" catalog="db_invernadero" optimistic-lock="version">
         <id name="idDetaCombustible" type="java.lang.Integer">
             <column name="id_deta_combustible" />
             <generator class="identity" />

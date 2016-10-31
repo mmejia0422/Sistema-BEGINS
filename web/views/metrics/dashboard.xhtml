@@ -8,17 +8,15 @@
 
     <body>
 
-        <ui:composition template="./Template.xhtml">
+        <ui:composition template="./../Template.xhtml">
+
             <ui:define name="content">
-                <br/>
-                <br/>
-                <br/>
-                <center>
-                <p:galleria value="#{imagenBean.images}" var="image" panelWidth="350" panelHeight="200" showCaption="true">
-                    <p:graphicImage value="/resources/images/galeria/#{image}" alt="Esto es una descripcion" title="Tomates"/>
-                </p:galleria>
-                </center>
+                <h:form id="dashBoard">
+                    <p:chart id="chart" type="line" model="#{dashboardBean.lineModel1}" style="height:300px;"/>
+                    <p:poll interval="3" listener="#{dashboardBean.createLineModels()}" update="chart" />
+               </h:form>
             </ui:define>
+
         </ui:composition>
 
     </body>

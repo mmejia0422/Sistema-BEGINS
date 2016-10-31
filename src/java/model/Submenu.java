@@ -1,5 +1,5 @@
 package model;
-// Generated 07-08-2016 05:51:52 PM by Hibernate Tools 4.3.1
+// Generated 10-30-2016 07:08:51 PM by Hibernate Tools 4.3.1
 
 
 
@@ -22,8 +22,7 @@ public class Submenu  implements java.io.Serializable {
     }
 
 	
-    public Submenu(Menu menu, String nombreSubmenu, String estado, String url) {
-        this.menu = menu;
+    public Submenu(String nombreSubmenu, String estado, String url) {
         this.nombreSubmenu = nombreSubmenu;
         this.estado = estado;
         this.url = url;
